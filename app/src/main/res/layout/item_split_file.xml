@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_content_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingTop="18dp"
+    android:paddingEnd="20dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/bg_split_file_item"
+    android:paddingBottom="18dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:ignore="ContentDescription">
+
+    <ImageView
+        android:id="@+id/item_option_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_split_remove"/>
+
+    <ImageView
+        android:id="@+id/split_file_text_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_split_pdf_item_full" />
+
+    <TextView
+        android:id="@+id/item_description_view"
+        style="@style/HuyCommonTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text_primary_60"
+        android:textSize="10sp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="@dimen/common_padding_big"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@id/item_option_view"
+        app:layout_constraintStart_toEndOf="@id/split_file_text_icon"
+        app:layout_constraintTop_toBottomOf="@id/item_name_view"
+        tools:ignore="SmallSp"
+        tools:text="Page list: " />
+
+    <TextView
+        android:id="@+id/item_name_view"
+        style="@style/HuyCommonTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:textSize="@dimen/title_third_component_text_size"
+        android:layout_marginEnd="@dimen/common_padding_big"
+        app:layout_constraintEnd_toStartOf="@id/item_option_view"
+        app:layout_constraintStart_toEndOf="@id/split_file_text_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Sample PDF File_split_1.pdf" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

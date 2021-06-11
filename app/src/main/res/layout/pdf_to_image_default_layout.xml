@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/content_view">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/common_toolbar"/>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/bg_border_line_common"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="30dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            tools:ignore="ContentDescription">
+
+            <ImageView
+                android:id="@+id/split_file_text_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_all_pdf_file_full" />
+
+            <TextView
+                android:id="@+id/description_file"
+                style="@style/HuyCommonTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="start"
+                android:textColor="@color/text_primary_60"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@id/name_file"
+                app:layout_constraintTop_toBottomOf="@id/name_file"
+                tools:ignore="SmallSp"
+                tools:text="Total pages: 100" />
+
+            <TextView
+                android:id="@+id/name_file"
+                style="@style/HuyCommonTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:textSize="@dimen/title_second_component_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/split_file_text_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="File Sample.docx" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_info"
+            app:layout_constraintBottom_toTopOf="@id/option_pdf"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="@dimen/common_padding_big">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    style="@style/HuyCommonTextStyleImportProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/from_page"
+                    android:layout_marginTop="@dimen/common_padding"/>
+
+                <EditText
+                    android:id="@+id/enter_start_page_edt"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:inputType="number"
+                    android:textSize="@dimen/title_second_component_text_size"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    style="@style/HuyCommonTextStyleImportProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/to_page"
+                    android:layout_marginTop="@dimen/common_margin_top_small"/>
+
+                <EditText
+                    android:id="@+id/enter_end_page_edt"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:inputType="number"
+                    android:textSize="@dimen/title_second_component_text_size"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/option_pdf"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginBottom="@dimen/common_padding_big"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_find_images"
+                style="@style/HuyCommonButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pdf_to_image_find_all_images"
+                android:textStyle="bold"
+                android:textColor="@color/button_background_secondary"
+                android:background="@drawable/bg_button_common_secondary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_extract_images"
+                style="@style/HuyCommonButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pdf_to_image_extract_to_images"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

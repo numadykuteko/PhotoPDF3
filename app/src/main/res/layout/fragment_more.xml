@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/content_more"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/common_margin_top_small"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fragment_more_item_height"
+                    android:orientation="horizontal">
+                    <include
+                        android:id="@+id/image_to_pdf"
+                        layout="@layout/item_home_function"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent" />
+                    <include
+                        android:id="@+id/word_to_pdf"
+                        layout="@layout/item_home_function"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="@dimen/common_padding"
+                        android:layout_marginEnd="@dimen/common_padding"
+                        android:layout_weight="1"
+                        android:layout_height="@dimen/fragment_more_item_height" />
+                    <include
+                        android:id="@+id/excel_to_pdf"
+                        layout="@layout/item_home_function"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="@dimen/fragment_more_item_height"/>
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/native_ads"
+                    layout="@layout/layout_native_control"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_padding_big"
+                    android:layout_marginBottom="@dimen/common_padding_big"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fragment_more_item_height"
+                    android:orientation="horizontal">
+                    <include
+                        android:id="@+id/new_pdf"
+                        layout="@layout/item_home_function"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <include
+                        android:id="@+id/pdf_to_image"
+                        layout="@layout/item_home_function"
+                        android:layout_marginStart="@dimen/common_padding"
+                        android:layout_marginEnd="@dimen/common_padding"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <include
+                        android:id="@+id/pdf_to_text"
+                        layout="@layout/item_home_function"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fragment_more_item_height"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/common_margin_top">
+                    <include
+                        android:id="@+id/add_water_mark"
+                        layout="@layout/item_home_function"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <include
+                        android:id="@+id/protect_pdf"
+                        layout="@layout/item_home_function"
+                        android:layout_marginStart="@dimen/common_padding"
+                        android:layout_marginEnd="@dimen/common_padding"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <include
+                        android:id="@+id/unlock_pdf"
+                        layout="@layout/item_home_function"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fragment_more_item_height"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/common_margin_top"
+                    android:layout_marginBottom="@dimen/common_margin_top">
+                    <include
+                        android:id="@+id/edit_pdf"
+                        layout="@layout/item_home_function"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <include
+                        android:id="@+id/merge_pdf"
+                        layout="@layout/item_home_function"
+                        android:layout_marginStart="@dimen/common_padding"
+                        android:layout_marginEnd="@dimen/common_padding"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <include
+                        android:id="@+id/split_pdf"
+                        layout="@layout/item_home_function"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_dialog_common"
+    android:layout_margin="16dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:id="@+id/layout_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/HuyCommonTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="@string/edit_page_swap_pages"
+        android:textSize="@dimen/title_first_component_text_size" />
+
+    <TextView
+        android:id="@+id/question"
+        style="@style/HuyCommonTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_padding_big"
+        android:gravity="center"
+        android:text="@string/edit_pdf_fast_swap_content"
+        android:textSize="14sp"
+        android:textColor="@color/button_background_secondary_50" />
+
+    <TextView
+        style="@style/HuyCommonTextStyleImportProperties"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/from_page"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginTop="@dimen/common_margin_top_small"/>
+
+    <EditText
+        android:id="@+id/enter_start_page_edt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/title_second_component_text_size"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"/>
+
+    <TextView
+        style="@style/HuyCommonTextStyleImportProperties"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to_page"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginTop="@dimen/common_margin_top_small"/>
+
+    <EditText
+        android:id="@+id/enter_end_page_edt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/title_second_component_text_size"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layout_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/common_margin_top_small"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_no"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/HuyCommonButtonDialogLeftStyle"
+            android:text="@string/cancel"/>
+
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            style="@style/HuyCommonButtonDialogRightStyle"
+            android:text="@string/ok"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

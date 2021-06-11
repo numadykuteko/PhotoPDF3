@@ -1,0 +1,241 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/orange_theme_color</item>
+        <item name="colorPrimaryDark">@color/orange_theme_darker_color</item>
+        <item name="colorAccent">@color/blackHaft</item>
+        <item name="android:statusBarColor">@color/orange_theme_darker_color</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="searchViewStyle">@style/searchViewStyle</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/black</item>
+    </style>
+
+    <style name="BlueAppTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/blue_theme_color</item>
+        <item name="colorPrimaryDark">@color/blue_theme_darker_color</item>
+        <item name="colorAccent">@color/blackHaft</item>
+        <item name="android:statusBarColor">@color/blue_theme_related_color</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="searchViewStyle">@style/searchViewStyle</item>
+        <item name="base_color">@color/blue_theme_color</item>
+        <item name="base_darker_color">@color/blue_theme_darker_color</item>
+        <item name="base_related_color">@color/blue_theme_related_color</item>
+        <item name="base_text_color">@color/blue_theme_text_color</item>
+        <item name="base_lighter_text_color">@color/blue_theme_text_color</item>
+    </style>
+
+    <style name="OrangeAppTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/orange_theme_color</item>
+        <item name="colorPrimaryDark">@color/orange_theme_darker_color</item>
+        <item name="colorAccent">@color/blackHaft</item>
+        <item name="android:statusBarColor">@color/orange_theme_related_color</item>
+        <item name="base_color">@color/orange_theme_color</item>
+        <item name="base_darker_color">@color/orange_theme_darker_color</item>
+        <item name="base_related_color">@color/orange_theme_related_color</item>
+        <item name="base_text_color">@color/orange_theme_text_color</item>
+        <item name="base_lighter_text_color">@color/orange_theme_lighter_text_color</item>
+    </style>
+
+    <style name="VioletAppTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/violet_theme_color</item>
+        <item name="colorPrimaryDark">@color/violet_theme_darker_color</item>
+        <item name="colorAccent">@color/blackHaft</item>
+        <item name="android:statusBarColor">@color/violet_theme_related_color</item>
+        <item name="base_color">@color/violet_theme_color</item>
+        <item name="base_darker_color">@color/violet_theme_darker_color</item>
+        <item name="base_related_color">@color/violet_theme_related_color</item>
+        <item name="base_text_color">@color/violet_theme_text_color</item>
+        <item name="base_lighter_text_color">@color/violet_theme_lighter_text_color</item>
+    </style>
+
+    <style name="JadeAppTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/jade_theme_color</item>
+        <item name="colorPrimaryDark">@color/jade_theme_darker_color</item>
+        <item name="colorAccent">@color/blackHaft</item>
+        <item name="android:statusBarColor">@color/jade_theme_related_color</item>
+        <item name="base_color">@color/jade_theme_color</item>
+        <item name="base_darker_color">@color/jade_theme_related_color</item>
+        <item name="base_related_color">@color/jade_theme_related_color</item>
+        <item name="base_text_color">@color/jade_theme_text_color</item>
+        <item name="base_lighter_text_color">@color/jade_theme_lighter_text_color</item>
+    </style>
+
+    <style name="searchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">@color/black_overlay</item>
+        <item name="android:textColor">@color/black_totally</item>
+        <item name="closeIconVisible">false</item>
+        <item name="closeIconEnabled">false</item>
+        <item name="closeIconSize">0dp</item>
+    </style>
+
+    <style name="AppThemeFullScreen" parent="Theme.Design.Light.NoActionBar">
+        <item name="colorPrimary">?attr/base_color</item>
+        <item name="colorPrimaryDark">?attr/base_darker_color</item>
+        <item name="colorAccent">@color/blackHaft</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="materialButtonStyle">@style/Widget.AppCompat.Button.ButtonBar.AlertDialog</item>
+        <item name="android:statusBarColor">@color/jade_theme_color</item>
+        <item name="base_color">@color/jade_theme_color</item>
+        <item name="base_darker_color">@color/jade_theme_related_color</item>
+        <item name="base_related_color">@color/jade_theme_related_color</item>
+        <item name="base_text_color">@color/jade_theme_text_color</item>
+        <item name="base_lighter_text_color">@color/jade_theme_lighter_text_color</item>
+    </style>
+
+    <style name="AppTheme.AdAttribution">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/ad_attribution</item>
+        <item name="android:background">#FFCC66</item>
+        <item name="android:width">20dp</item>
+        <item name="android:height">20dp</item>
+    </style>
+
+    <style name="imageCreatePdfStatus" parent="@android:style/Widget.Holo.Light.ProgressBar.Horizontal">
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="layout_constraintDimensionRatio">1:1</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_marginStart">50dp</item>
+        <item name="android:layout_marginEnd">50dp</item>
+        <item name="android:layout_marginBottom">200dp</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+    </style>
+
+    <style name="textCreatePdfStatus">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">120dp</item>
+        <item name="android:textSize">@dimen/title_first_component_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+    </style>
+
+    <style name="textProgressCreatePdf">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_marginBottom">190dp</item>
+        <item name="android:textSize">@dimen/title_big_component_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+    </style>
+
+    <style name="checkbox_style">
+        <item name="buttonTint">@color/black_totally</item>
+    </style>
+
+    <style name="searchview_style" parent="Widget.AppCompat.Light.SearchView">
+        <item name="android:textColor">@color/black_totally</item>
+        <item name="android:textSize">@dimen/title_second_component_text_size</item>
+    </style>
+
+    <style name="sheet_dialog_style" parent="Theme.Design.Light.BottomSheetDialog">
+        <!--<item name="android:windowCloseOnTouchOutside">false</item>-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackground">     @android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="RateUsDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="backgroundColor">@color/colorWhite</item>
+        <item name="paddingEnd">20dp</item>
+        <item name="paddingStart">20dp</item>
+    </style>
+
+    <style name="OptimalDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="NavigationTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="NavigationTheme" parent="AppTheme">
+        <item name="listPreferredItemHeightSmall">53dp</item><!-- menu item height- vary as u need -->
+    </style>
+
+    <style name="HomeTabLayoutText" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/title_second_component_text_size</item>
+    </style>
+
+    <style name="HuyCommonTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="HuyCommonTextStyleSelected" parent="HuyCommonTextStyle">
+        <item name="android:textColor">@color/text_primary_selected</item>
+    </style>
+
+    <style name="HuyCommonTextStyleImportProperties" parent="HuyCommonTextStyle">
+        <item name="android:textColor">@color/import_file_text_properties</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="HuyCommonLayoutGridStyle">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_rowWeight">1</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="HuyCommonButtonStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:background">@drawable/bg_button_common_primary</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="HuyCommonButtonDialogLeftStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:background">@drawable/bg_button_common_dialog_left</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="HuyCommonButtonDialogRightStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:background">@drawable/bg_button_common_dialog_right</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+</resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:background="@color/white_totally"
+
+            app:layout_constraintBottom_toTopOf="@id/banner_ads"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:id="@+id/content_history_activity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layout_header_list_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="vertical">
+
+                    <com.ogaclejapan.smarttablayout.SmartTabLayout
+                        android:id="@+id/tab_type_filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_tab_view"
+
+                        app:stl_indicatorThickness="40dp"
+                        app:stl_indicatorWidth="auto"
+                        app:stl_indicatorInterpolation="smart"
+                        app:stl_indicatorCornerRadius="@dimen/big_background_radius"
+                        app:stl_indicatorColor="@color/word_file_color"
+
+                        app:stl_underlineColor="@color/word_file_color"
+                        app:stl_underlineThickness="0dp"
+
+                        app:stl_dividerThickness="0dp"
+
+                        app:stl_customTabTextLayoutId="@layout/custom_small_tab_indicator"
+                        app:stl_customTabTextViewId="@id/custom_text"
+
+                        app:stl_distributeEvenly="true" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_body_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/viewpager_type_filter"
+                        android:layout_marginTop="@dimen/common_padding"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <include
+            android:id="@+id/banner_ads"
+            layout="@layout/layout_banner_control"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            android:layout_marginTop="@dimen/common_padding" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

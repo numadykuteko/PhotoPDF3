@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_file_option">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        tools:ignore="ContentDescription">
+
+        <ImageView
+            android:id="@+id/more_locked_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_all_pdf_file_full" />
+
+        <ImageView
+            android:id="@+id/more_locked_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_locked_file_upload" />
+
+        <ImageView
+            android:id="@+id/more_locked_locked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@id/more_locked_name"
+            app:layout_constraintTop_toBottomOf="@id/more_locked_name"
+            app:srcCompat="@drawable/ic_all_pdf_lock" />
+
+        <TextView
+            android:id="@+id/more_locked_name"
+            style="@style/HuyCommonTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/title_second_component_text_size"
+            android:maxLines="1"
+            android:layout_marginEnd="@dimen/common_padding_big"
+            app:layout_constraintEnd_toStartOf="@id/more_locked_upload"
+            app:layout_constraintStart_toEndOf="@id/more_locked_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sample Locked File.pdf" />
+
+        <TextView
+            android:id="@+id/more_locked_date"
+            style="@style/HuyCommonTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textColor="@color/text_primary_60"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/more_locked_locked"
+            app:layout_constraintStart_toEndOf="@id/more_locked_locked"
+            app:layout_constraintTop_toTopOf="@id/more_locked_locked"
+            tools:ignore="SmallSp"
+            tools:text="12 Apr 2021" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="@dimen/common_padding_big"
+        android:background="@drawable/bg_border_line_common"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/more_locked_layout_add_bm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:paddingStart="30dp"
+        android:foreground="?attr/selectableItemBackground"
+        tools:ignore="ContentDescription">
+
+        <ImageView
+            android:id="@+id/more_locked_imageview_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_locked_file_add_bm" />
+
+        <TextView
+            android:id="@+id/more_locked_textview_name"
+            style="@style/HuyCommonTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_weight="1"
+            android:text="@string/more_locked_add_bm"
+            android:textSize="@dimen/title_second_component_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/more_locked_imageview_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/more_locked_layout_remove_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:paddingStart="30dp"
+        android:foreground="?attr/selectableItemBackground"
+        tools:ignore="ContentDescription">
+
+        <ImageView
+            android:id="@+id/more_locked_imageview_remove_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_locked_file_remove_pass" />
+
+        <TextView
+            android:id="@+id/more_locked_textview_remove_pass"
+            style="@style/HuyCommonTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_weight="1"
+            android:text="@string/more_locked_remove_pass"
+            android:textSize="@dimen/title_second_component_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/more_locked_imageview_remove_pass"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/more_locked_layout_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:paddingStart="30dp"
+        android:foreground="?attr/selectableItemBackground"
+        tools:ignore="ContentDescription">
+
+        <ImageView
+            android:id="@+id/more_locked_imageview_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_locked_file_share" />
+
+        <TextView
+            android:id="@+id/more_locked_textview_share"
+            style="@style/HuyCommonTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_weight="1"
+            android:text="@string/more_locked_share"
+            android:textSize="@dimen/title_second_component_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/more_locked_imageview_share"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/more_locked_layout_rename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:paddingStart="30dp"
+        android:foreground="?attr/selectableItemBackground"
+        tools:ignore="ContentDescription">
+
+        <ImageView
+            android:id="@+id/more_locked_imageview_rename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_locked_file_rename" />
+
+        <TextView
+            android:id="@+id/more_locked_textview_rename"
+            style="@style/HuyCommonTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_weight="1"
+            android:text="@string/more_locked_rename"
+            android:textSize="@dimen/title_second_component_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/more_locked_imageview_rename"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/more_locked_layout_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:paddingStart="30dp"
+        android:foreground="?attr/selectableItemBackground"
+        tools:ignore="ContentDescription">
+
+        <ImageView
+            android:id="@+id/more_locked_imageview_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_locked_file_delete" />
+
+        <TextView
+            android:id="@+id/more_locked_textview_delete"
+            style="@style/HuyCommonTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_weight="1"
+            android:text="@string/more_locked_delete"
+            android:textSize="@dimen/title_second_component_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/more_locked_imageview_delete"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

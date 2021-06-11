@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/content_view">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_edt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_padding_big"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_all_pdf_search_field"
+            android:queryHint="@string/all_pdf_search_hint"
+            android:theme="@style/searchview_style"
+            app:queryBackground="@android:color/transparent"
+            app:defaultQueryHint="@string/all_pdf_search_hint"
+            app:queryHint="@string/all_pdf_search_hint"
+            app:searchIcon="@drawable/ic_all_pdf_search"
+            app:iconifiedByDefault="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <ImageView
+            android:id="@+id/btn_layout_select_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            app:srcCompat="@drawable/ic_import_file_folder"
+            app:layout_constraintTop_toTopOf="@id/search_edt"
+            app:layout_constraintBottom_toBottomOf="@id/search_edt"
+            app:layout_constraintEnd_toEndOf="@id/search_edt"
+            android:layout_marginEnd="16dp"
+            android:padding="4dp"/>
+
+        <LinearLayout
+            android:id="@+id/import_file_rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/common_padding_big"
+            android:layout_marginBottom="@dimen/common_padding_big"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_edt"
+            android:orientation="vertical">
+            <include
+                android:id="@+id/file_selector_layout"
+                layout="@layout/file_selector_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/common_toolbar" />
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/bg_border_line_common"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

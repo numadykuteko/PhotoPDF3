@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:id="@+id/content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="ContentDescription">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/common_toolbar"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/bg_border_line_common"/>
+
+        <ScrollView
+            android:id="@+id/content_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/HuyCommonTextStyleImportProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wm_text" />
+
+                <EditText
+                    android:id="@+id/watermark_text_edt"
+                    style="@style/HuyCommonTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/wm_text_hint"
+                    android:textColorHint="@color/text_black_25" />
+
+                <TextView
+                    style="@style/HuyCommonTextStyleImportProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wm_angle"
+                    android:layout_marginTop="8dp"/>
+
+                <EditText
+                    android:id="@+id/watermark_angle_edt"
+                    style="@style/HuyCommonTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/wm_angle_hint"
+                    android:textColorHint="@color/text_black_25"/>
+
+                <TextView
+                    style="@style/HuyCommonTextStyleImportProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/import_font_size"
+                    android:layout_marginTop="8dp"/>
+
+                <EditText
+                    android:id="@+id/watermark_font_size_edt"
+                    style="@style/HuyCommonTextStyle"
+                    android:layout_width="match_parent"
+                    android:inputType="number"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/text_black_25"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/HuyCommonTextStyleImportProperties"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/color"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/add_wm_color"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        app:cardElevation="0dp"
+                        app:cardCornerRadius="18dp"
+                        app:cardBackgroundColor="@color/black_large_transparent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/common_margin_top_small"
+                    android:paddingBottom="@dimen/common_margin_top_small"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/HuyCommonTextStyleImportProperties"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/import_font_family"/>
+
+                    <TextView
+                        android:id="@+id/add_wm_font_family"
+                        style="@style/HuyCommonTextStyle"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        tools:text="Arial"
+                        android:layout_height="wrap_content"
+                        app:drawableEndCompat="@drawable/ic_import_file_drop_down" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/common_margin_top_small"
+                    android:paddingBottom="@dimen/common_margin_top_small"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/HuyCommonTextStyleImportProperties"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/font_style"/>
+
+                    <TextView
+                        android:id="@+id/add_wm_font_style"
+                        style="@style/HuyCommonTextStyle"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        tools:text="Normal"
+                        android:layout_height="wrap_content"
+                        app:drawableEndCompat="@drawable/ic_import_file_drop_down" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/common_margin_top_small"
+                    android:paddingBottom="@dimen/common_margin_top_small"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/HuyCommonTextStyleImportProperties"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/watermark_position"/>
+
+                    <TextView
+                        android:id="@+id/add_wm_position"
+                        style="@style/HuyCommonTextStyle"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        tools:text="Center"
+                        android:layout_height="wrap_content"
+                        app:drawableEndCompat="@drawable/ic_import_file_drop_down" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_start_add_watermark"
+            style="@style/HuyCommonButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/common_padding_big"
+            android:text="@string/add_water_mark"
+            android:textStyle="bold"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/navigation_home"
+            android:icon="@drawable/ic_home_black"
+            android:title="@string/menu_drawer_home" />
+
+        <item
+            android:id="@+id/navigation_tool"
+            android:icon="@drawable/ic_menu_drawer_tool"
+            android:title="@string/menu_drawer_tool" />
+
+        <item
+            android:id="@+id/navigation_browser"
+            android:icon="@drawable/ic_menu_drawer_browse"
+            android:title="@string/menu_drawer_browser" />
+
+    </group>
+
+    <group>
+
+        <item
+            android:id="@+id/navigation_rate"
+            android:icon="@drawable/ic_star"
+            android:title="@string/menu_drawer_rate_us" />
+
+        <item
+            android:id="@+id/navigation_feedback"
+            android:icon="@drawable/ic_menu_drawer_feedback"
+            android:title="@string/menu_drawer_feedback" />
+
+        <item
+            android:id="@+id/navigation_drawer_privacy"
+            android:icon="@drawable/ic_menu_drawer_privacy"
+            android:title="@string/menu_drawer_privacy" />
+
+        <item
+            android:id="@+id/navigation_drawer_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/menu_drawer_share_app" />
+
+        <item
+            android:id="@+id/navigation_drawer_more_app"
+            android:icon="@drawable/ic_menu_more_app"
+            android:title="@string/menu_drawer_more_app" />
+
+        <item
+            android:id="@+id/navigation_drawer_pro_version"
+            android:icon="@drawable/ic_menu_pro"
+            android:title="@string/menu_drawer_pro_version" />
+
+    </group>
+</menu>

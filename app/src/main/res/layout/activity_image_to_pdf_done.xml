@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:ignore="ContentDescription">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/common_toolbar" />
+
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/bg_border_line_common"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_toolbar"/>
+
+            <TextView
+                android:id="@+id/create_status_text"
+                style="@style/HuyCommonTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="@dimen/title_first_component_text_size" />
+
+            <TextView
+                android:id="@+id/txtProgress"
+                style="@style/HuyCommonTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_padding"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="0%"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/create_error"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="@dimen/common_margin_top"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@drawable/ic_error_create" />
+
+            <LinearLayout
+                android:id="@+id/create_status_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/common_margin_top">
+                <ImageView
+                    android:id="@+id/create_success"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center_horizontal"
+                    app:srcCompat="@drawable/ic_success" />
+
+                <TextView
+                    android:id="@+id/convert_success_edit_name"
+                    style="@style/HuyCommonTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_margin_top"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/common_margin_top"
+                    android:layout_marginEnd="@dimen/common_margin_top"
+                    android:drawablePadding="16dp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:layout_gravity="center_horizontal"
+                    app:drawableEndCompat="@drawable/ic_success_pencil"
+                    tools:text="Text to PDF 12-Apr-2021.pdf" />
+
+                <TextView
+                    android:id="@+id/convert_success_location"
+                    style="@style/HuyCommonTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/common_margin_top_small"
+                    android:drawablePadding="8dp"
+                    android:layout_marginStart="@dimen/common_margin_top"
+                    android:layout_marginEnd="@dimen/common_margin_top"
+                    android:gravity="center"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:textColor="@color/text_black_50"
+                    android:textSize="14sp"
+                    app:drawableStartCompat="@drawable/ic_success_location"
+                    tools:text="Location:" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/native_ads"
+            layout="@layout/layout_small_native_control"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+
+            app:layout_constraintBottom_toTopOf="@id/btn_open"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/btn_share"
+            style="@style/HuyCommonButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_button_common_secondary"
+            android:text="@string/share"
+            android:textColor="@color/button_background_secondary"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/btn_open"
+            style="@style/HuyCommonButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/open"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/btn_share"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

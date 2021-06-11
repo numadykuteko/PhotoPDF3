@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_content_view"
+    android:layout_width="120dp"
+    android:layout_height="120dp"
+    android:orientation="horizontal"
+    android:padding="@dimen/common_padding"
+    android:background="@color/transparent"
+    tools:ignore="ContentDescription"
+    android:layout_gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="@dimen/small_background_radius"
+        app:cardBackgroundColor="@color/import_file_add_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/item_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/item_camera_view"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_capture_image"/>
+
+        <View
+            android:id="@+id/item_selected_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_select_image_item"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/item_order_view"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="@color/image_selected_border_color"
+            android:layout_gravity="end|top"
+            android:layout_marginTop="@dimen/common_padding_big"
+            android:layout_marginEnd="@dimen/common_padding_big">
+            <TextView
+                android:id="@+id/item_order_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/title_third_component_text_size"
+                android:text="1"
+                android:textColor="@color/white_totally"
+                android:layout_gravity="center"/>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

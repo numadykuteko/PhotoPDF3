@@ -1,0 +1,143 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.pdfconverter.jpg2pdf.pdf.converter"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField('String', 'banner_id', '"ca-app-pub-3940256099942544/6300978111"')
+            buildConfigField('String', 'full_home_id', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'full_my_pdf_id', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'full_done_id', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'full_view_pdf_from_other_id', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'full_splash_id', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'native_id', '"ca-app-pub-3940256099942544/2247696110"')
+            resValue "string", "app_id", "ca-app-pub-3940256099942544~3347511713"
+            resValue "bool", "FIREBASE_ANALYTICS_DEACTIVATED", "true"
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField('String', 'banner_id', '"ca-app-pub-2767013993881421/8042340381"')
+            buildConfigField('String', 'full_home_id', '"ca-app-pub-2767013993881421/1612663402"')
+            buildConfigField('String', 'full_my_pdf_id', '"ca-app-pub-2767013993881421/5799320423"')
+            buildConfigField('String', 'full_done_id', '"ca-app-pub-2767013993881421/6920830401"')
+            buildConfigField('String', 'full_view_pdf_from_other_id', '"ca-app-pub-2767013993881421/7631276849"')
+            buildConfigField('String', 'full_splash_id', '"ca-app-pub-2767013993881421/6182463802"')
+            buildConfigField('String', 'native_id', '"ca-app-pub-2767013993881421/3117316763"')
+            resValue "string", "app_id", "ca-app-pub-2767013993881421~1832155255"
+            resValue "bool", "FIREBASE_ANALYTICS_DEACTIVATED", "false"
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "com.google.android.material:material:1.2.1"
+
+    implementation "com.amitshekhar.android:rx2-android-networking:1.0.1"
+
+    implementation "androidx.room:room-rxjava2:2.2.5"
+    annotationProcessor "androidx.room:room-compiler:2.2.5"
+
+    implementation "com.github.bumptech.glide:glide:4.10.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.10.0"
+
+    implementation "com.google.code.gson:gson:2.8.6"
+
+    implementation "io.reactivex.rxjava2:rxjava:2.2.6"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.2.0"
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.20'
+    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
+
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
+
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+
+    // ads
+    implementation 'com.google.android.gms:play-services-ads:19.6.0'
+    implementation 'com.github.AperoVN:AperoModuleAds:1.5.1'
+
+    // Itext pdf library
+    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'com.madgag.spongycastle:core:1.58.0.0'
+
+    // crop image
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+
+    // libraries for reading from doc and docx files
+    implementation group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '2.4.0'
+    implementation group: 'org.apache.poi', name: 'poi', version: '3.9'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '3.9'
+    implementation group: 'org.apache.poi', name: 'poi-scratchpad', version: '3.9'
+
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.github.danielnilsson9:color-picker-view:1.4.0@aar'
+
+    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
+
+    compile (
+            group: 'com.aspose',
+            name: 'aspose-cells',
+            version: '20.6',
+            classifier: 'android.via.java')
+
+    implementation 'io.coil-kt:coil:0.11.0'
+    implementation 'com.nhaarman.supertooltips:library:3.0.+'
+    implementation 'com.github.eGame-Global:AndModuleRate:1.0.9'
+
+    implementation 'com.airbnb.android:lottie:3.5.0'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repository.aspose.com/repo/" }
+
+}

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription"
+    android:background="@drawable/bg_file_option">
+
+    <TextView
+        style="@style/HuyCommonTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="26dp"
+        android:gravity="start"
+        android:text="@string/new_pdf_title"
+        android:textSize="@dimen/title_main_component_text_size"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/data_option_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                style="@style/HuyCommonTextStyleImportProperties"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/import_file_name"
+                android:layout_marginTop="@dimen/common_margin_top_small"/>
+
+            <EditText
+                android:id="@+id/import_file_file_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/title_second_component_text_size"/>
+
+            <TextView
+                style="@style/HuyCommonTextStyleImportProperties"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_pdf_number_page"
+                android:layout_marginTop="@dimen/common_margin_top_small"/>
+
+            <EditText
+                android:id="@+id/import_file_number_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="1-999"
+                android:textSize="@dimen/title_second_component_text_size"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/common_margin_top_small"
+                android:paddingBottom="@dimen/common_margin_top_small"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/HuyCommonTextStyleImportProperties"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/import_page_size"/>
+
+                <TextView
+                    android:id="@+id/import_file_page_size"
+                    style="@style/HuyCommonTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    tools:text="A4"
+                    android:layout_height="wrap_content"
+                    app:drawableEndCompat="@drawable/ic_import_file_drop_down" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="@style/HuyCommonButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel_text"
+            android:textStyle="bold"
+            android:textColor="@color/button_background_secondary"
+            android:background="@drawable/bg_button_common_secondary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_convert"
+            style="@style/HuyCommonButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/new_pdf_create"
+            android:textStyle="bold"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+</LinearLayout>

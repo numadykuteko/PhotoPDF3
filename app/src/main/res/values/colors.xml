@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black_effective">#2a2a2a</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="black_transparent">#00000000</color>
+    <color name="black_totally">#000000</color>
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="black_large_transparent">#57000000</color>
+    <color name="half_black">#808080</color>
+
+    <color name="white_totally">#FFFFFF</color>
+    <color name="white_semi_transparent">#B2FFFFFF</color>
+    <color name="white_pressed">#f1f1f1</color>
+    <color name="white_dark">#F2F2F2</color>#
+    <color name="colorHighlight">#2196F3</color>
+    <color name="colorBlueLight">#3397E3</color>
+    <color name="colorYellow">#F6A709</color>
+    <color name="colorYellowPressed">#AA7314</color>
+    <color name="blackHighlight">#131313</color>
+    <color name="blackSemiTransparent">#B2000000</color>
+    <color name="blackLowTransparent">#E6000000</color>
+    <color name="blackMediumTransparent">#80000000</color>
+    <color name="blackHaft">#4C4B4B</color>
+    <color name="blackNotHighlight">#232323</color>
+    <color name="redTotally">#AF0E26</color>
+    <color name="redLight">#F44336</color>
+    <color name="transparent">#00000000</color>
+    <color name="blue">#3072DF</color>
+    <color name="blue_light">#187C79</color>
+    <color name="violet">#804CE4</color>
+    <color name="pink">#ED84C9</color>
+    <color name="orange">#FAAA60</color>
+    <color name="yellow">#FFC01A</color>
+    <color name="dark_violet">#313C68</color>
+    <color name="dark_violet_with_transparent">#33313C68</color>
+    <color name="light_blue">#00C5E8</color>
+
+    <color name="image_to_pdf_function">#22BAB6</color>
+    <color name="text_to_pdf_function">#F56B41</color>
+    <color name="protect_pdf_function">#9C84FE</color>
+    <color name="unlock_pdf_function">#5A97F2</color>
+    <color name="merge_pdf_function">#22BA22</color>
+    <color name="add_watermark_pdf_function">#22BA22</color>
+    <color name="view_pdf_function">#E9D629</color>
+    <color name="split_pdf_function">#E9D629</color>
+    <color name="excel_to_pdf_function">#22BAB6</color>
+    <color name="pdf_to_image_function">#5A97F2</color>
+    <color name="pdf_to_text_function">#9C84FE</color>
+    <color name="edit_pdf_function">#F56B41</color>
+
+    <color name="whiteTotally">#FFFFFF</color>
+    <color name="whiteSemiTransparent">#8FDCD6D6</color>
+    <color name="whitePressed">#f1f1f1</color>
+    <color name="text_enabled">#FFFFFFFF</color>
+    <color name="text_disabled">#4DFFFFFF</color>
+
+    <color name="icon_enabled">#FFFFFFFF</color>
+    <color name="icon_disabled">#FF63727B</color>
+    <color name="stroke_image_color">#40000000</color>
+
+    <color name="colorDisabled">#838383</color>
+
+    <!--    custom-->
+    <color name="pdf_file_color">#FDE4DF</color>
+    <color name="word_file_color">#DAE6F6</color>
+    <color name="excel_file_color">#DDEBDE</color>
+    <color name="txt_file_color">#DAE6F6</color>
+
+    <color name="navigation_bar_shadow_color">#838383</color>
+    <color name="background_splash_color">#151C25</color>
+
+    <color name="blue_theme_color">#1F6CF1</color>
+    <color name="blue_theme_darker_color">#134BAC</color>
+    <color name="blue_theme_related_color">#2B91FF</color>
+    <color name="blue_theme_text_color">#000000</color>
+    <color name="blue_theme_lighter_text_color">#000000</color>
+    <color name="home_item_background">#B3E2D4</color>
+
+    <color name="orange_theme_color">#F45656</color>
+    <color name="orange_theme_darker_color">#F00000</color>
+    <color name="orange_theme_related_color">#F44033</color>
+    <color name="orange_theme_text_color">#000000</color>
+    <color name="orange_theme_lighter_text_color">#000000</color>
+
+    <color name="violet_theme_color">#673AB7</color>
+    <color name="violet_theme_darker_color">#5C32A6</color>
+    <color name="violet_theme_related_color">#9C27B0</color>
+    <color name="violet_theme_text_color">#000000</color>
+    <color name="violet_theme_lighter_text_color">#000000</color>
+
+    <color name="jade_theme_color">#1FB6C1</color>
+    <color name="jade_theme_darker_color">#1B9EA8</color>
+    <color name="jade_theme_related_color">#489EA3</color>
+    <color name="jade_theme_text_color">#000000</color>
+    <color name="jade_theme_lighter_text_color">#000000</color>
+
+    <!-- image to pdf -->
+    <color name="text_add_image_color">#F0F0F0</color>
+    
+    <color name="button_background_primary">#F45656</color>
+    <color name="button_background_secondary">#7A7A9D</color>
+    <color name="button_background_secondary_50">#807A7A9D</color>
+    <color name="button_background_secondary_25">#407A7A9D</color>
+    <color name="text_primary">#22215B</color>
+    <color name="text_primary_selected">#F45656</color>
+    <color name="text_primary_60">#9922215B</color>
+    <color name="text_primary_50">#8022215B</color>
+    <color name="text_black_50">#80000000</color>
+    <color name="text_black_25">#40000000</color>
+    <color name="all_pdf_bg_ic_locked">#FFD6D6</color>
+    <color name="all_pdf_bg_ic_normal">#FFD6D6</color>
+    <color name="all_pdf_bg_number">#7A7A9D</color>
+    <color name="all_pdf_bg_search_border">#EEF2FE</color>
+    <color name="import_file_add_bg">#EEF2FE</color>
+    <color name="import_file_selected">#567DF4</color>
+    <color name="import_file_word_item_bg">#EEF7FE</color>
+    <color name="import_file_excel_item_bg">#E9F8EC</color>
+    <color name="import_file_pdf_item_bg">#FEEEEE</color>
+    <color name="import_file_text_properties">#7A7A9D</color>
+    <color name="select_icon_bg_60">#99000000</color>
+    <color name="select_bg_add_image">#7A7A9D</color>
+    <color name="split_bg_item">#F45656</color>
+    <color name="split_by_page_bg_item">#F4F4F4</color>
+    <color name="split_by_page_bg_item_number">#4022215B</color>
+    <color name="split_by_page_bg_item_border">#567DF4</color>
+    <color name="border_button_dialog">#E4E4EB</color>
+    <color name="split_item_bg">#FFF5F5</color>
+    <color name="image_selected_border_color">#567DF4</color>
+    <color name="converter_selected">#FEEEEE</color>
+    <color name="converter_text_selected">#F45656</color>
+    <color name="snackbar">#F45656</color>
+
+    <!-- view type   -->
+    <color name="background_type_day_mode">#E1DFE2</color>
+    <color name="background_type_night_mode">#192533</color>
+    <color name="text_type_day_mode">#000</color>
+    <color name="text_type_night_mode">#fff</color>
+    <color name="icon_type_day_mode">#4A4A4A</color>
+    <color name="icon_type_night_mode">#B5B5B5</color>
+    <color name="option_view_type_day_mode">#FFFFFF</color>
+    <color name="option_view_type_night_mode">#233446</color>
+</resources>
