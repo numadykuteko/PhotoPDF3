@@ -73,7 +73,7 @@ public class CommonDoneActivity extends BaseBindingActivity<ActivityCreatePdfDon
         mActivityCreatePdfDoneBinding.createLayout.toolbar.toolbarBtnBack.setOnClickListener(view -> onBackPressed());
         mActivityCreatePdfDoneBinding.createLayout.toolbar.toolbarNameTv.setText(getString(R.string.done_create_pdf_title));
 
-        Admod.getInstance().loadBanner(this, BuildConfig.banner_id);
+        Admod.getInstance().loadSmallNativeFragment(this, BuildConfig.native_id, mActivityCreatePdfDoneBinding.createLayout.nativeAds);
 
         preloadViewPdfAdsIfInit();
 
