@@ -32,7 +32,7 @@ public class RealPathUtil {
     }
 
     public static RealPathUtil getInstance() {
-        return RealPathUtil.SingletonHolder.INSTANCE;
+        return SingletonHolder.INSTANCE;
     }
 
     /**
@@ -92,14 +92,14 @@ public class RealPathUtil {
                     path = getDownloadsDocumentPath(context, uri, true);
                 } else if (isDownloadsDocument(uri)) {
                     path = getDownloadsDocumentPath(context, uri, false);
-                } else {
-                    path = loadToCacheFile(context, uri, targetFile);
                 }
-            } else {
-                path = loadToCacheFile(context, uri, targetFile);
             }
         } catch (Exception e) {
             return null;
+        }
+
+        if (!FileUtils.checkFileExist(path)) {
+            path = loadToCacheFile(context, uri, targetFile);
         }
 
         return path;
@@ -159,6 +159,8 @@ public class RealPathUtil {
             prefix = ".ppt";
         } else if (targetFile == FileUtils.FileType.type_WORD) {
             prefix = ".doc";
+        } else if (targetFile == FileUtils.FileType.type_IMAGE) {
+            prefix = ".jpg";
         }
 
         try {

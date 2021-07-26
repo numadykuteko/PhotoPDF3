@@ -10,8 +10,8 @@ android {
         applicationId "com.pdfconverter.jpg2pdf.pdf.converter"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -23,13 +23,18 @@ android {
 
     buildTypes {
         debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField('String', 'banner_id', '"ca-app-pub-3940256099942544/6300978111"')
             buildConfigField('String', 'full_home_id', '"ca-app-pub-3940256099942544/1033173712"')
             buildConfigField('String', 'full_my_pdf_id', '"ca-app-pub-3940256099942544/1033173712"')
-            buildConfigField('String', 'full_done_id', '"ca-app-pub-3940256099942544/1033173712"')
             buildConfigField('String', 'full_view_pdf_from_other_id', '"ca-app-pub-3940256099942544/1033173712"')
             buildConfigField('String', 'full_splash_id', '"ca-app-pub-3940256099942544/1033173712"')
             buildConfigField('String', 'native_id', '"ca-app-pub-3940256099942544/2247696110"')
+
+            buildConfigField('String', 'monthly_purchase_key', '"android.test.purchased"')
+            buildConfigField('String', 'yearly_purchase_key', '"android.test.purchased"')
+
             resValue "string", "app_id", "ca-app-pub-3940256099942544~3347511713"
             resValue "bool", "FIREBASE_ANALYTICS_DEACTIVATED", "true"
         }
@@ -39,10 +44,13 @@ android {
             buildConfigField('String', 'banner_id', '"ca-app-pub-2767013993881421/8042340381"')
             buildConfigField('String', 'full_home_id', '"ca-app-pub-2767013993881421/1612663402"')
             buildConfigField('String', 'full_my_pdf_id', '"ca-app-pub-2767013993881421/5799320423"')
-            buildConfigField('String', 'full_done_id', '"ca-app-pub-2767013993881421/6920830401"')
             buildConfigField('String', 'full_view_pdf_from_other_id', '"ca-app-pub-2767013993881421/7631276849"')
             buildConfigField('String', 'full_splash_id', '"ca-app-pub-2767013993881421/6182463802"')
             buildConfigField('String', 'native_id', '"ca-app-pub-2767013993881421/3117316763"')
+
+            buildConfigField('String', 'monthly_purchase_key', '"one_month"')
+            buildConfigField('String', 'yearly_purchase_key', '"one_year"')
+
             resValue "string", "app_id", "ca-app-pub-2767013993881421~1832155255"
             resValue "bool", "FIREBASE_ANALYTICS_DEACTIVATED", "false"
         }
@@ -54,6 +62,15 @@ android {
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'mips', 'mips64', 'arm64-v8a'
+            universalApk true
+        }
     }
 }
 
@@ -102,7 +119,7 @@ dependencies {
 
     // ads
     implementation 'com.google.android.gms:play-services-ads:19.6.0'
-    implementation 'com.github.AperoVN:AperoModuleAds:1.5.1'
+    implementation 'com.github.AperoVN:AperoModuleAds:1.6.1'
 
     // Itext pdf library
     implementation 'com.itextpdf:itextg:5.5.10'
@@ -130,10 +147,12 @@ dependencies {
             classifier: 'android.via.java')
 
     implementation 'io.coil-kt:coil:0.11.0'
-    implementation 'com.nhaarman.supertooltips:library:3.0.+'
-    implementation 'com.github.eGame-Global:AndModuleRate:1.0.9'
+    implementation 'com.github.eGame-Global:AndModuleRate:1.1.4'
 
     implementation 'com.airbnb.android:lottie:3.5.0'
+    implementation 'com.romandanylyk:pageindicatorview:1.0.3'
+
+    implementation project(':openCVLibrary')
 }
 
 repositories {

@@ -24,7 +24,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
 import com.ads.control.Admod;
+import com.ads.control.AppPurchase;
 import com.ads.control.funtion.AdCallback;
+import com.ads.control.funtion.PurchaseListioner;
 import com.google.android.gms.ads.InterstitialAd;
 import com.pdfconverter.jpg2pdf.pdf.converter.BuildConfig;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
@@ -32,6 +34,7 @@ import com.pdfconverter.jpg2pdf.pdf.converter.constants.AppConstants;
 import com.pdfconverter.jpg2pdf.pdf.converter.data.DataManager;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.addwatermark.AddWaterMarkActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.component.ConverterSelectDialog;
+import com.pdfconverter.jpg2pdf.pdf.converter.ui.component.PurchaseDialog;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.component.RemovePasswordFileDialog;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.component.SetPasswordFileDialog;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.editpdf.EditPdfActivity;
@@ -81,6 +84,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
     protected static final int ADD_FILE_REQUEST = 2364;
     protected static final int SCAN_REQUEST = 2363;
     protected static final int CREATE_PDF_FROM_SELECT_FILE = 2362;
+    protected static final int SCAN_DOCUMENT_AFTER_TAKEN_REQUEST = 2361;
 
     public static final String EXTRA_FILE_PATH = "EXTRA_FILE_PATH";
     public static final String EXTRA_FILE_EXTENSION = "EXTRA_FILE_EXTENSION";
@@ -100,13 +104,14 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
     private static final String TAG = "BaseBindingActivity";
     private V mViewModel;
     private T mViewDataBinding;
+
     protected String mCurrentPhotoPath;
+    protected String mCurrentPhotoUri;
 
     private SweetAlertDialog mDownloadFromGgDriveDialog;
     protected SweetAlertDialog mLoadFromLocalDialog;
 
     private InterstitialAd mHomeInterstitialAd;
-    private InterstitialAd mDoneInterstitialAd;
     private InterstitialAd mMyPdfInterstitialAd;
 
     protected boolean mIsRequestFullPermission = false;
@@ -159,7 +164,6 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
     }
 
     protected void preloadDoneAdsIfInit() {
-        mDoneInterstitialAd = Admod.getInstance().getInterstitalAds(this, BuildConfig.full_done_id);
     }
 
     public void preloadMyPdfAdsIfInit() {
@@ -186,13 +190,52 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
         });
     }
 
-    public void showDoneAdsBeforeAction(Runnable callback) {
-        Admod.getInstance().forceShowInterstitial(this, mDoneInterstitialAd, new AdCallback() {
+    public boolean isPurchased() {
+        return AppPurchase.getInstance().isPurchased(this, BuildConfig.monthly_purchase_key) || AppPurchase.getInstance().isPurchased(this, BuildConfig.yearly_purchase_key);
+    }
+
+    public void showIAPDialog(Runnable callback){
+        PurchaseDialog purchaseDialog = new PurchaseDialog(BaseBindingActivity.this, new PurchaseDialog.PurchaseListener() {
             @Override
-            public void onAdClosed() {
-                callback.run();
+            public void onSelectPurchase(int type) {
+                String subId = type == 0 ? BuildConfig.yearly_purchase_key : BuildConfig.monthly_purchase_key;
+                AppPurchase.getInstance().setPurchaseListioner(new PurchaseListioner() {
+                    @Override
+                    public void onProductPurchased(String s, String s1) {
+                        ToastUtils.showMessageLong(BaseBindingActivity.this, getString(R.string.purchase_success));
+
+                        if (callback != null) {
+                            callback.run();
+                        }
+                    }
+
+                    @Override
+                    public void displayErrorMessage(String s) {
+                        ToastUtils.showMessageLong(BaseBindingActivity.this, getString(R.string.purchase_error));
+                    }
+                });
+                AppPurchase.getInstance().consumePurchase(subId);
+                AppPurchase.getInstance().subscribe(BaseBindingActivity.this, subId);
+            }
+
+            @Override
+            public void onCancel() {
+                ToastUtils.showMessageLong(BaseBindingActivity.this, getString(R.string.purchase_cancel));
             }
         });
+        try {
+            purchaseDialog.show();
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void checkIAPDoneBeforeAction(Runnable callback) {
+        if (isPurchased()) {
+            callback.run();
+        } else {
+            showIAPDialog(callback);
+        }
     }
 
     public void showMyPdfAdsBeforeAction(Runnable callback) {
@@ -612,7 +655,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
         SetPasswordFileDialog setPasswordFileDialog = new SetPasswordFileDialog(this, new SetPasswordFileDialog.SetPasswordFileListener() {
             @Override
             public void onSubmitPassword(String password) {
-                showMyPdfAdsBeforeAction(() -> {
+                checkIAPDoneBeforeAction(() -> {
                     Intent intent = new Intent(BaseBindingActivity.this, ProtectPdfDoneActivity.class);
                     intent.putExtra(EXTRA_FILE_PATH, filePath);
                     intent.putExtra(EXTRA_PASSWORD, password);
@@ -636,7 +679,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
             RemovePasswordFileDialog removePasswordFileDialog = new RemovePasswordFileDialog(this, filePath, new RemovePasswordFileDialog.RemovePasswordFileListener() {
                 @Override
                 public void onSubmitPassword(String password) {
-                    showMyPdfAdsBeforeAction(() -> {
+                    checkIAPDoneBeforeAction(() -> {
                         Intent intent = new Intent(BaseBindingActivity.this, UnlockPdfDoneActivity.class);
                         intent.putExtra(EXTRA_FILE_PATH, filePath);
                         intent.putExtra(EXTRA_PASSWORD, password);
@@ -651,7 +694,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
             });
             removePasswordFileDialog.show();
         } else {
-            showMyPdfAdsBeforeAction(() -> {
+            checkIAPDoneBeforeAction(() -> {
                 Intent intent = new Intent(BaseBindingActivity.this, UnlockPdfDoneActivity.class);
                 intent.putExtra(EXTRA_FILE_PATH, filePath);
                 intent.putExtra(EXTRA_PASSWORD, password);

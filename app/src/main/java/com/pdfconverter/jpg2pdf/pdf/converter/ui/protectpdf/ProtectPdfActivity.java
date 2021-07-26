@@ -418,7 +418,7 @@ public class ProtectPdfActivity extends BaseBindingActivity<ActivityProtectPdfBi
         if (mPassword.length() == 0) {
             ToastUtils.showMessageShort(this, getString(R.string.protect_pdf_please_enter_password));
         } else {
-            showDoneAdsBeforeAction(() -> {
+            checkIAPDoneBeforeAction(() -> {
                 Intent intent = new Intent(this, ProtectPdfDoneActivity.class);
                 intent.putExtra(EXTRA_FILE_PATH, mFilePath);
                 intent.putExtra(EXTRA_PASSWORD, mPassword);

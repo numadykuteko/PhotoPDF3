@@ -497,7 +497,7 @@ public class SplitPdfActivity extends BaseBindingActivity<ActivitySplitPdfBindin
             ToastUtils.showMessageShort(this, getString(R.string.split_pdf_empty_split_list));
         } else {
 
-            showDoneAdsBeforeAction(() -> {
+            checkIAPDoneBeforeAction(() -> {
                 SplitPDFOptions splitPDFOptions = new SplitPDFOptions(mInputList, mFilePath, mSelectedFile);
                 Gson gson = new Gson();
                 String json = gson.toJson(splitPDFOptions);

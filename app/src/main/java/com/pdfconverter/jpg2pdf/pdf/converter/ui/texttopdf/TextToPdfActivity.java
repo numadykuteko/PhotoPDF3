@@ -678,7 +678,7 @@ public class TextToPdfActivity extends BaseBindingActivity<ActivityTextToPdfBind
 
     @Override
     public void submitForm(TextToPDFOptions textToPDFOptions) {
-        showDoneAdsBeforeAction(() -> {
+        checkIAPDoneBeforeAction(() -> {
             mOptions = textToPDFOptions;
 
             if (mOptions == null) {

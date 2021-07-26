@@ -71,7 +71,7 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
                 sweetAlertDialog.setTitleText(getString(R.string.title_need_permission_fail));
                 sweetAlertDialog.setContentText(getString(R.string.reject_read_file));
                 sweetAlertDialog.setConfirmClickListener(sweetAlertDialog1 -> {
-                    gotoImageToPdfActivity();
+                    gotoImageToPdfActivity(false);
                     sweetAlertDialog1.dismiss();
                 });
                 sweetAlertDialog.showCancelButton(false);
@@ -79,7 +79,7 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
             });
             mRequestPermissionDialog.show();
         } else {
-            gotoImageToPdfActivity();
+            gotoImageToPdfActivity(true);
         }
     }
 
@@ -95,7 +95,7 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
                     mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
                     mRequestPermissionDialog.setConfirmClickListener(sweetAlertDialog -> {
                         sweetAlertDialog.dismiss();
-                        gotoImageToPdfActivity();
+                        gotoImageToPdfActivity(true);
                     });
                 } else {
                     mRequestPermissionDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
@@ -105,7 +105,7 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
                     mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
                     mRequestPermissionDialog.setConfirmClickListener(sweetAlertDialog -> {
                         sweetAlertDialog.dismiss();
-                        gotoImageToPdfActivity();
+                        gotoImageToPdfActivity(false);
                     });
                 }
                 break;
@@ -128,7 +128,7 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
                 mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
                 mRequestPermissionDialog.setConfirmClickListener(sweetAlertDialog -> {
                     sweetAlertDialog.dismiss();
-                    gotoImageToPdfActivity();
+                    gotoImageToPdfActivity(true);
                 });
             } else {
                 mRequestPermissionDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
@@ -138,15 +138,16 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
                 mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
                 mRequestPermissionDialog.setConfirmClickListener(sweetAlertDialog -> {
                     sweetAlertDialog.dismiss();
-                    gotoImageToPdfActivity();
+                    gotoImageToPdfActivity(false);
                 });
             }
         }
     }
 
-    private void gotoImageToPdfActivity() {
+    private void gotoImageToPdfActivity(boolean isOpenCamera) {
         Intent imageToPdfIntent = new Intent(FirstOpenActivity.this, MainActivity.class);
         imageToPdfIntent.putExtra(EXTRA_FROM_FIRST_OPEN, true);
+        imageToPdfIntent.putExtra(EXTRA_NEED_SCAN, isOpenCamera);
         startActivity(imageToPdfIntent);
         finish();
     }

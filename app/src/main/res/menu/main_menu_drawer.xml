@@ -14,7 +14,7 @@
 
         <item
             android:id="@+id/navigation_browser"
-            android:icon="@drawable/ic_menu_drawer_browse"
+            android:icon="@drawable/ic_menu_folder"
             android:title="@string/menu_drawer_browser" />
 
     </group>
@@ -45,11 +45,6 @@
             android:id="@+id/navigation_drawer_more_app"
             android:icon="@drawable/ic_menu_more_app"
             android:title="@string/menu_drawer_more_app" />
-
-        <item
-            android:id="@+id/navigation_drawer_pro_version"
-            android:icon="@drawable/ic_menu_pro"
-            android:title="@string/menu_drawer_pro_version" />
 
     </group>
 </menu>

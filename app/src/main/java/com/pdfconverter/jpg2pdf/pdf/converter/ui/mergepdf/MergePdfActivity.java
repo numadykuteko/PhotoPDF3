@@ -745,7 +745,7 @@ public class MergePdfActivity extends BaseBindingActivity<ActivityMergePdfBindin
 
     @Override
     public void submitForm(MergePDFOptions options) {
-        showDoneAdsBeforeAction(() -> {
+        checkIAPDoneBeforeAction(() -> {
             this.mOptions = options;
 
             if (mOptions == null) {

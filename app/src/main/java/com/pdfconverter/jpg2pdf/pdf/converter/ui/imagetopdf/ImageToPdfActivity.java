@@ -1,17 +1,16 @@
 package com.pdfconverter.jpg2pdf.pdf.converter.ui.imagetopdf;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -24,9 +23,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 
 import com.ads.control.Admod;
 import com.google.gson.Gson;
-import com.nhaarman.supertooltips.ToolTip;
-import com.nhaarman.supertooltips.ToolTipRelativeLayout;
-import com.nhaarman.supertooltips.ToolTipView;
 import com.pdfconverter.jpg2pdf.pdf.converter.BR;
 import com.pdfconverter.jpg2pdf.pdf.converter.BuildConfig;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
@@ -35,8 +31,10 @@ import com.pdfconverter.jpg2pdf.pdf.converter.data.DataManager;
 import com.pdfconverter.jpg2pdf.pdf.converter.data.model.ImageData;
 import com.pdfconverter.jpg2pdf.pdf.converter.data.model.ImageToPDFOptions;
 import com.pdfconverter.jpg2pdf.pdf.converter.databinding.ActivityImageToPdfBinding;
+import com.pdfconverter.jpg2pdf.pdf.converter.lib.ImageScanActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.listener.OnFileItemClickListener;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.base.BaseBindingActivity;
+import com.pdfconverter.jpg2pdf.pdf.converter.ui.component.ChooseMethodDialog;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.component.SettingImageToPdfDialog;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.imagetopdf.done.ImageToPdfDoneActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.DeminUtils;
@@ -63,7 +61,8 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
     private ImageAdapter mImageAdapter;
     private ImageToPDFOptions mImageToPDFOptions = new ImageToPDFOptions();
     public static int CROP_IMAGE_CODE = 26783;
-    
+    public static int SCAN_IMAGE_CODE = 26784;
+
     private final int REQUEST_EXTERNAL_PERMISSION_FOR_CREATE_FILE = 1;
     private final int REQUEST_EXTERNAL_PERMISSION_FOR_FILE_SELECTOR = 2;
 
@@ -78,9 +77,6 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
     private ImageListSelectAdapter mFileListSelectorAdapter;
     
     private boolean mIsNeedScan;
-
-    private ToolTipView myToolTipView;
-    private ToolTipRelativeLayout toolTipRelativeLayout;
 
     @Override
     public int getBindingVariable() {
@@ -116,49 +112,11 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
         setForListLayout();
 
         if (mIsNeedScan) {
-            startCameraActivity(true);
+            startScanActivity();
         }
 
         updateNumberSelected();
         mImageToPdfViewModel.deleteFolder(getExternalFilesDir(Environment.DIRECTORY_PICTURES));
-
-        toolTipRelativeLayout = mActivityBinding.mainImageToPdfDefaultLayout.tooltipView;
-
-        if (!DataManager.getInstance(this).getShowGuideConvert()) {
-            if (!notHaveStoragePermission()) {
-                ToolTip toolTip = new ToolTip()
-                        .withContentView(LayoutInflater.from(this).inflate(R.layout.custom_tooltip, null))
-                        .withColor(Color.WHITE)
-                        .withTextColor(Color.BLACK)
-                        .withShadow()
-                        .withAnimationType(ToolTip.AnimationType.NONE);
-                myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, mActivityBinding.mainImageToPdfDefaultLayout.toolbar.toolbarNameOption);
-                if (myToolTipView != null) {
-                    myToolTipView.setOnToolTipViewClickedListener(toolTipView -> {
-                        toolTipView.remove();
-                        toolTipRelativeLayout.setVisibility(View.GONE);
-                    });
-
-                    toolTipRelativeLayout.setOnClickListener(v -> {
-                        myToolTipView.remove();
-                        toolTipRelativeLayout.setVisibility(View.GONE);
-                    });
-
-                    mActivityBinding.mainImageToPdfDefaultLayout.toolbar.layoutToolbar.setOnClickListener(v -> {
-                        myToolTipView.remove();
-                        toolTipRelativeLayout.setVisibility(View.GONE);
-                    });
-
-                } else {
-                    toolTipRelativeLayout.setVisibility(View.GONE);
-                }
-            } else {
-                toolTipRelativeLayout.setVisibility(View.GONE);
-            }
-            DataManager.getInstance(this).setShowGuideConvertDone();
-        } else {
-            toolTipRelativeLayout.setVisibility(View.GONE);
-        }
     }
 
     private void setForSelectLayout() {
@@ -168,17 +126,9 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
         mFileListSelectorAdapter = new ImageListSelectAdapter(this);
 
         mActivityBinding.mainImageToPdfDefaultLayout.toolbar.toolbarNameOption.setOnClickListener(view -> {
-            if (myToolTipView != null) {
-                myToolTipView.remove();
-            }
-            toolTipRelativeLayout.setVisibility(View.GONE);
             showConverterPopup(0);
         });
         mActivityBinding.mainImageToPdfDefaultLayout.toolbar.toolbarNameTv.setOnClickListener(view -> {
-            if (myToolTipView != null) {
-                myToolTipView.remove();
-            }
-            toolTipRelativeLayout.setVisibility(View.GONE);
             showConverterPopup(0);
         });
 
@@ -288,7 +238,7 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
     @Override
     public void onClickItem(int position) {
         if (position == 0) {
-            startCameraActivity(false);
+            startChooseHowTakingPicture();
         } else {
             mFileListSelectorAdapter.revertData(position);
             updateNumberSelected();
@@ -398,7 +348,22 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
         }
     }
 
-    public void startCameraActivity(boolean isFromScanButton) {
+    public void startChooseHowTakingPicture() {
+        ChooseMethodDialog chooseMethodDialog = new ChooseMethodDialog(new ChooseMethodDialog.ChooseMethodOptionListener() {
+            @Override
+            public void takePicture() {
+                startCameraActivity();
+            }
+
+            @Override
+            public void scanDocument() {
+                startScanActivity();
+            }
+        });
+        chooseMethodDialog.show(getSupportFragmentManager(), chooseMethodDialog.getTag());
+    }
+
+    public void startScanActivity() {
         Intent cameraImgIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         ResolveInfo cameraPackage = getCameraPackage();
         if (cameraPackage != null) {
@@ -410,9 +375,36 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
         try {
             newFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), ".jpg", imageFile);
             Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", newFile);
-            mCurrentPhotoPath = uri.toString();
+            mCurrentPhotoPath = newFile.getAbsolutePath();
+            mCurrentPhotoUri = uri.toString();
             cameraImgIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            startActivityForResult(cameraImgIntent, isFromScanButton ? SCAN_REQUEST : CAMERA_REQUEST);
+            startActivityForResult(cameraImgIntent, SCAN_REQUEST);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void startScanDocumentFromTakenPhoto() {
+        Intent intent = new Intent(ImageToPdfActivity.this, ImageScanActivity.class);
+        intent.putExtra(EXTRA_FILE_PATH, mCurrentPhotoPath);
+        startActivityForResult(intent, SCAN_DOCUMENT_AFTER_TAKEN_REQUEST);
+    }
+
+    public void startCameraActivity() {
+        Intent cameraImgIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        ResolveInfo cameraPackage = getCameraPackage();
+        if (cameraPackage != null) {
+            cameraImgIntent.setPackage(cameraPackage.activityInfo.packageName);
+        }
+
+        File imageFile = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File newFile;
+        try {
+            newFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), ".jpg", imageFile);
+            Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", newFile);
+            mCurrentPhotoUri = uri.toString();
+            cameraImgIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            startActivityForResult(cameraImgIntent, CAMERA_REQUEST);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -467,17 +459,41 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
             }
             return;
         }
-        if (requestCode == CAMERA_REQUEST || requestCode == SCAN_REQUEST) {
+
+        if (requestCode == CAMERA_REQUEST) {
             if (mListFileSelector.size() == 0) {
                 mListFileSelector = new ArrayList<>();
                 mListFileSelector.add(0, new ImageData());
             }
 
-            ImageData imageData = new ImageData(mCurrentPhotoPath, "", 0, System.nanoTime());
+            ImageData imageData = new ImageData(mCurrentPhotoUri, "", 0, System.nanoTime());
             mListFileSelector.add(1, imageData);
             mFileListSelectorAdapter.addToFirstPosition(imageData);
 
+            scrollToTop();
+
             updateNumberSelected();
+        } else if (requestCode == SCAN_REQUEST) {
+            startScanDocumentFromTakenPhoto();
+        } else if (requestCode == SCAN_DOCUMENT_AFTER_TAKEN_REQUEST) {
+            if (data != null) {
+                String path = data.getStringExtra("NEW_IMAGE_PATH");
+
+                if (FileUtils.checkFileExist(path)) {
+                    if (mListFileSelector.size() == 0) {
+                        mListFileSelector = new ArrayList<>();
+                        mListFileSelector.add(0, new ImageData());
+                    }
+
+                    ImageData imageData = new ImageData(path, "", 0, System.nanoTime());
+                    mListFileSelector.add(1, imageData);
+                    mFileListSelectorAdapter.addToFirstPosition(imageData);
+
+                    scrollToTop();
+
+                    updateNumberSelected();
+                }
+            }
         } else if (requestCode == PICK_IMAGE_REQUEST && data != null) {
             if (data.getClipData() != null) {
                 int mNewImageCount = data.getClipData().getItemCount();
@@ -502,6 +518,8 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
                     }
                 }
 
+                scrollToTop();
+
                 updateNumberSelected();
             } else if (data.getData() != null) {
                 Uri imageUri = data.getData();
@@ -510,6 +528,8 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
                     ImageData imageData  = new ImageData(imagePath, "", 0, System.nanoTime());
                     mListFileSelector.add(1, imageData);
                     mFileListSelectorAdapter.addToFirstPosition(imageData);
+
+                    scrollToTop();
                     updateNumberSelected();
                 }
             }
@@ -556,7 +576,26 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
                     }
                 }
             }
+        } else if (requestCode == ImageToPdfActivity.SCAN_IMAGE_CODE) {
+            String path;
+            if (data != null) {
+                path = data.getStringExtra("NEW_IMAGE_PATH");
+                int position = data.getIntExtra("EXTRA_POSITION", -1);
+                if (!TextUtils.isEmpty(path) && position >= 0) {
+                    ArrayList<ImageData> imageDatas = mImageToPdfViewModel.getListImage().getValue();
+                    if (imageDatas != null && imageDatas.size() > position && imageDatas.get(position) != null) {
+                        imageDatas.get(position).setImagePath(path);
+                        mImageToPdfViewModel.getListImage().setValue(imageDatas);
+                        mImageAdapter.setImageData(imageDatas);
+                        mImageAdapter.notifyItemChanged(position);
+                    }
+                }
+            }
         }
+    }
+
+    private void scrollToTop() {
+        mActivityBinding.mainImageToPdfDefaultLayout.fileSelectorLayout.dataListArea.scrollToPosition(0);
     }
 
     @SuppressLint("SetTextI18n")
@@ -686,7 +725,7 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
             return;
         }
 
-        showDoneAdsBeforeAction(() -> {
+        checkIAPDoneBeforeAction(() -> {
             mImageToPDFOptions = options;
 
             ArrayList<String> listPath = new ArrayList<>();

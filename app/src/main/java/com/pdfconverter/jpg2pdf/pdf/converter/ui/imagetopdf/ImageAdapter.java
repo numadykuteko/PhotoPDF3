@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
 import com.pdfconverter.jpg2pdf.pdf.converter.data.model.ImageData;
 import com.pdfconverter.jpg2pdf.pdf.converter.databinding.ItemImageViewBinding;
+import com.pdfconverter.jpg2pdf.pdf.converter.lib.ImageScanActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.cropimage.CropImageActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.DeminUtils;
 
@@ -126,6 +127,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                 intent.putExtra(INTENT_DATA_IMAGE, mListData.get(holder.getAdapterPosition()).getImagePath());
                 mStartActivity.startActivityForResult(intent, ImageToPdfActivity.CROP_IMAGE_CODE);
             });
+
+            holder.mItemImageViewBinding.itemScanView.setOnClickListener((v) -> {
+                Intent intent = new Intent(v.getContext(), ImageScanActivity.class);
+                intent.putExtra("EXTRA_POSITION", holder.getAdapterPosition());
+                intent.putExtra("EXTRA_FILE_PATH", mListData.get(holder.getAdapterPosition()).getImagePath());
+                mStartActivity.startActivityForResult(intent, ImageToPdfActivity.SCAN_IMAGE_CODE);
+            });
+
             if (mIsStretch) {
                 holder.mItemImageViewBinding.thumbnail.setScaleType(ImageView.ScaleType.FIT_XY);
             } else {

@@ -194,50 +194,71 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 updateFabStatus();
 
                 mFragmentDiscoversBinding.createPdfFabLayout.fabViewOption.startAnimation(mFabClockAnimation);
-                mFragmentDiscoversBinding.createPdfFabLayout.fabFromImage.setOnClickListener(v -> mActivity.showHomeAdsBeforeAction(() -> {
-                    Intent imagePdfIntent = new Intent(mActivity, ImageToPdfActivity.class);
-                    startActivity(imagePdfIntent);
 
-                    FirebaseUtils.sendEventFunctionUsed(mActivity, "Image To Pdf", "From home");
-                }));
+                mFragmentDiscoversBinding.createPdfFabLayout.fabFromImage.setOnClickListener(v -> mActivity.showHomeAdsBeforeAction(this::createFromImage));
+                mFragmentDiscoversBinding.createPdfFabLayout.textviewFromImage.setOnClickListener(v -> mActivity.showHomeAdsBeforeAction(this::createFromImage));
 
-                mFragmentDiscoversBinding.createPdfFabLayout.fabNewPdf.setOnClickListener(v -> {
-                    if (mNewPDFOptions == null) {
-                        mNewPDFOptions = new NewPDFOptions(0, FileUtils.getDefaultFileName(DataConstants.NEW_PDF_PREFIX_NAME), ImageToPdfConstants.DEFAULT_PAGE_SIZE, 1);
-                    } else {
-                        mNewPDFOptions.setFileName(FileUtils.getDefaultFileName(DataConstants.NEW_PDF_PREFIX_NAME));
-                    }
+                mFragmentDiscoversBinding.createPdfFabLayout.fabNewPdf.setOnClickListener(v -> createFromFormat());
+                mFragmentDiscoversBinding.createPdfFabLayout.textviewNewPdf.setOnClickListener(v -> createFromFormat());
 
-                    SettingNewPdfDialog settingNewPdfDialog = new SettingNewPdfDialog(mNewPDFOptions, mOptions -> {
-                        if (mOptions == null || mOptions.getFileName() == null || mOptions.getFileName().length() == 0 || mOptions.getNumberPage() < 1 || mOptions.getNumberPage() > 999) {
-                            return;
-                        }
-
-                        mActivity.showHomeAdsBeforeAction(() -> {
-                            mNewPDFOptions = mOptions;
-
-                            Intent imagePdfIntent = new Intent(mActivity, FormatPdfActivity.class);
-
-                            Gson gson = new Gson();
-                            String json = gson.toJson(mNewPDFOptions);
-                            imagePdfIntent.putExtra(FormatPdfActivity.INTENT_PDF_OPTION, json);
-
-                            startActivity(imagePdfIntent);
-
-                            FirebaseUtils.sendEventFunctionUsed(mActivity, "Create new pdf", "From home");
-                        });
-                    });
-                    settingNewPdfDialog.show(getChildFragmentManager(), settingNewPdfDialog.getTag());
-                });
+                mFragmentDiscoversBinding.createPdfFabLayout.fabScan.setOnClickListener(v -> mActivity.showHomeAdsBeforeAction(this::createFromScan));
+                mFragmentDiscoversBinding.createPdfFabLayout.textviewScan.setOnClickListener(v -> mActivity.showHomeAdsBeforeAction(this::createFromScan));
             }
         });
+    }
+
+    private void createFromImage() {
+        Intent imagePdfIntent = new Intent(mActivity, ImageToPdfActivity.class);
+        startActivity(imagePdfIntent);
+
+        FirebaseUtils.sendEventFunctionUsed(mActivity, "Image To Pdf", "From home");
+    }
+
+    private void createFromScan() {
+        Intent imagePdfIntent = new Intent(mActivity, ImageToPdfActivity.class);
+        imagePdfIntent.putExtra("EXTRA_NEED_SCAN", true);
+
+        startActivity(imagePdfIntent);
+
+        FirebaseUtils.sendEventFunctionUsed(mActivity, "Image To Pdf", "From home");
+    }
+
+    private void createFromFormat() {
+        if (mNewPDFOptions == null) {
+            mNewPDFOptions = new NewPDFOptions(0, FileUtils.getDefaultFileName(DataConstants.NEW_PDF_PREFIX_NAME), ImageToPdfConstants.DEFAULT_PAGE_SIZE, 1);
+        } else {
+            mNewPDFOptions.setFileName(FileUtils.getDefaultFileName(DataConstants.NEW_PDF_PREFIX_NAME));
+        }
+
+        SettingNewPdfDialog settingNewPdfDialog = new SettingNewPdfDialog(mNewPDFOptions, mOptions -> {
+            if (mOptions == null || mOptions.getFileName() == null || mOptions.getFileName().length() == 0 || mOptions.getNumberPage() < 1 || mOptions.getNumberPage() > 999) {
+                return;
+            }
+
+            mActivity.checkIAPDoneBeforeAction(() -> {
+                mNewPDFOptions = mOptions;
+
+                Intent imagePdfIntent = new Intent(mActivity, FormatPdfActivity.class);
+
+                Gson gson = new Gson();
+                String json = gson.toJson(mNewPDFOptions);
+                imagePdfIntent.putExtra(FormatPdfActivity.INTENT_PDF_OPTION, json);
+
+                startActivity(imagePdfIntent);
+
+                FirebaseUtils.sendEventFunctionUsed(mActivity, "Create new pdf", "From home");
+            });
+        });
+        settingNewPdfDialog.show(getChildFragmentManager(), settingNewPdfDialog.getTag());
     }
 
     private void updateFabStatus() {
         mFragmentDiscoversBinding.createPdfFabLayout.fabFromImage.setClickable(mIsFabOpen);
         mFragmentDiscoversBinding.createPdfFabLayout.fabNewPdf.setClickable(mIsFabOpen);
+        mFragmentDiscoversBinding.createPdfFabLayout.fabScan.setClickable(mIsFabOpen);
         mFragmentDiscoversBinding.createPdfFabLayout.textviewFromImage.setClickable(mIsFabOpen);
         mFragmentDiscoversBinding.createPdfFabLayout.textviewNewPdf.setClickable(mIsFabOpen);
+        mFragmentDiscoversBinding.createPdfFabLayout.textviewScan.setClickable(mIsFabOpen);
 
         Animation mFabCloseAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.fab_close);
         Animation mFabOpenAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.fab_open);
@@ -268,8 +289,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
         mFragmentDiscoversBinding.createPdfFabLayout.textviewFromImage.startAnimation(textAnimation);
         mFragmentDiscoversBinding.createPdfFabLayout.textviewNewPdf.startAnimation(textAnimation);
+        mFragmentDiscoversBinding.createPdfFabLayout.textviewScan.startAnimation(textAnimation);
         mFragmentDiscoversBinding.createPdfFabLayout.fabFromImage.startAnimation(fabAnimation);
         mFragmentDiscoversBinding.createPdfFabLayout.fabNewPdf.startAnimation(fabAnimation);
+        mFragmentDiscoversBinding.createPdfFabLayout.fabScan.startAnimation(fabAnimation);
     }
 
     private void setForClick() {

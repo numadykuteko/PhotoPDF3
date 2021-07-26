@@ -20,7 +20,26 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.shockwave.**
+-keep class com.shockwave**
 
--keep class cn.pedant.SweetAlert.** { *; }
+-keep class cn.pedant.SweetAlert** { *; }
 -keep class cn.pedant.SweetAlert.Rotate3dAnimation
+-keep class com.itextpdf.** { *; }
+-keep class org.** { *; }
+-keep class org.openxmlformats.** { *; }
+-keep class org.openxmlformats.** { *; }
+-keep class org.apache.** { *; }
+-keep class org.apache.poi.** { *; }
+-keep class org.apache.poi.xwpf.** { *; }
+-keep class org.apache.poi.xwpf.model.** { *; }
+-keep class org.apache.poi.xwpf.extractor.** { *; }
+-keep class org.apache.poi.xwpf.usermodel.** { *; }
+-keep class org.apache.poi.hwpf.** { *; }
+-keep class org.apache.poi.hwpf.usermodel.** { *; }
+-keep class org.apache.poi.hwpf.extractor.** { *; }
+-keep class org.apache.poi.hwpf.model.** { *; }
+-keep class org.apache.poi.hwpf.converter.** { *; }
+-keep class org.apache.poi.hwpf.dev.** { *; }
+-keep class org.apache.poi.hwpf.sprm.** { *; }
+-keep class org.apache.xmlbeans.** { *; }
+-keep class com.aspose.cells.** { *; }

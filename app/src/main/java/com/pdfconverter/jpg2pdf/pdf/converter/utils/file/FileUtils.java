@@ -61,8 +61,9 @@ public class FileUtils {
 
     @SuppressLint("DefaultLocale")
     public static String getFormattedSize(int size) {
-        int kb = size / 1024;
-        if (kb < 100) {
+        if (size < 100) {
+            return String.format("%.2f B", (double) size);
+        } if (size / 1024 < 100) {
             return String.format("%.2f KB", (double) size / (1024));
         } else {
             return String.format("%.2f MB", (double) size / (1024 * 1024));
@@ -319,7 +320,7 @@ public class FileUtils {
         for (String filePath: fileList) {
             File file = new File(filePath);
             Uri uri = Uri.fromFile(file);
-            int size = Integer.parseInt(String.valueOf(file.length()/1024));
+            int size = Integer.parseInt(String.valueOf(file.length()));
 
             FileData fileData = new FileData(getFileName(filePath), filePath, uri, (int) (file.lastModified() / 1000), size, fileType);
             resultList.add(fileData);
@@ -340,7 +341,7 @@ public class FileUtils {
         for (String filePath: fileList) {
             File file = new File(filePath);
             Uri uri = Uri.fromFile(file);
-            int size = Integer.parseInt(String.valueOf(file.length()/1024));
+            int size = Integer.parseInt(String.valueOf(file.length()));
 
             FileData fileData = new FileData(getFileName(filePath), filePath, uri, (int) (file.lastModified() / 1000), size, DataConstants.FILE_TYPE_PDF);
             resultList.add(fileData);
@@ -361,7 +362,7 @@ public class FileUtils {
         for (String filePath: fileList) {
             File file = new File(filePath);
             Uri uri = Uri.fromFile(file);
-            int size = Integer.parseInt(String.valueOf(file.length()/1024));
+            int size = Integer.parseInt(String.valueOf(file.length()));
 
             FileData fileData = new FileData(getFileName(filePath), filePath, uri, (int) (file.lastModified() / 1000), size, DataConstants.FILE_TYPE_PDF);
             resultList.add(fileData);
@@ -399,7 +400,7 @@ public class FileUtils {
                         continue;
                     }
 
-                    fileData.setSize(Integer.parseInt(String.valueOf(file.length() / 1024)));
+                    fileData.setSize(Integer.parseInt(String.valueOf(file.length())));
                     fileData.setFileUri(Uri.fromFile(file));
                     fileData.setFileType(DataConstants.FILE_TYPE_PDF);
                 }

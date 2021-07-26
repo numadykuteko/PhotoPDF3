@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PDF Converter</string>
+    <string name="app_name">PDF Converter &amp; Scanner</string>
 
     <string name="header_error_text">Oops…</string>
     <string name="error_text">Sorry…</string>
@@ -75,8 +75,8 @@
     <string name="couldnt_get_file_now">Application could not get local file now. Please retry later.\n</string>
     <string name="reject_read_file">\nYou can accept this permission later.\n</string>
     <string name="couldnt_create_file_now">Application could not create file now. Please retry later.\n</string>
-    <string name="need_permission_to_get_file">\nPDF Converter needs Manage External Storage permission to view and create files.\n</string>
-    <string name="need_permission_to_create_file">Pdf Converter needs Manage External Storage permission to create files.\n</string>
+    <string name="need_permission_to_get_file">\nPDF Converter &amp; Scanner needs Manage External Storage permission to view and create files.\n</string>
+    <string name="need_permission_to_create_file">PDF Converter &amp; Scanner needs Manage External Storage permission to create files.\n</string>
     <string name="get_file_now">Application will get local file right now.</string>
     <string name="thank_you_for_support">Thank you for your support.\n</string>
     <string name="create_file_now">Application will create file right now.</string>
@@ -120,7 +120,7 @@
     <string name="prefix_for_google_drive">File_from_cloud_server_</string>
     <string name="confirm_delete_file_title">Delete file</string>
     <string name="confirm_delete_file_message">Are you sure to delete this file permanently? You can NOT restore it later.\n</string>
-    <string name="default_notification_channel_id">Pdf Converter</string>
+    <string name="default_notification_channel_id">PDF Converter &amp; Scanner</string>
     <string name="accept_permission_file_selector">Accept storage permission</string>
     <string name="data_not_valid">Sorry. Data is not valid. We can\'t create pdf now.</string>
     <string name="done_create_pdf_title">Result</string>
@@ -139,8 +139,9 @@
     <string name="full_detail_file" translatable="false">%s • %s</string>
     <string name="no_file_in_folder_found">Empty folder!</string>
 
-    <string name="create_pdf_by_format">New PDF</string>
-    <string name="create_pdf_by_image">Create PDF by image</string>
+    <string name="create_pdf_by_format">New formatted PDF</string>
+    <string name="create_pdf_scan">Scan document</string>
+    <string name="create_pdf_by_image">Create PDF by images</string>
 
     <!--  file option  -->
     <string name="file_option_share">Share</string>
@@ -558,7 +559,7 @@
     <string name="select_converter_img_to_pdf">Image to PDF</string>
     <string name="select_converter_text_to_pdf">Text to PDF</string>
     <string name="select_converter_excel_to_pdf">Excel to PDF</string>
-    <string name="first_open_pdf_converter">PDF Converter</string>
+    <string name="first_open_pdf_converter">PDF Converter &amp; Scanner</string>
     <string name="first_open_pdf_converter_hint">Import images, texts or excel files \n to generate PDFs</string>
     <string name="first_open_pdf_converter_image">Image</string>
     <string name="first_open_pdf_converter_note">Note</string>
@@ -566,7 +567,7 @@
     <string name="first_open_pdf_converter_sheet">Sheet</string>
     <string name="first_open_pdf_converter_id_card">ID Card</string>
     <string name="first_open_pdf_converter_certificated">Certificated</string>
-    <string name="first_open_pdf_converter_select_photos">Select photos</string>
+    <string name="first_open_pdf_converter_select_photos">Scan now</string>
     <string name="first_open_pdf_converter_skip">Skip</string>
     <string name="all_pdf_search_hint">Search for file</string>
     <string name="import_file">Import</string>
@@ -730,4 +731,25 @@
     <string name="change_to_unbookmarked">Cleared bookmark file</string>
     <string name="change_to_bookmarked">Save bookmark file</string>
     <string name="change_to_full_screen_mode">Press back to exit full screen mode</string>
+
+    <string name="purchase_content">Payment will be charged to Google Play account at confirmation of purchases. The subscription will be auto renewed unless it is turned off within 24 hours before the end of the period. Your account will be charged according to your plan for renew withing 24 hours to the end of the current period. You can manage or turn off auto-renew or subcription at subcription page of Google Play after purchase. Any unused portion of a free trial period, if offered, will be forfeited when user purchase a subcription where applicable.</string>
+    <string name="purchase_introduce_1">PDF Editor for Scenes</string>
+    <string name="purchase_introduce_2">Quickly scan document to PDF</string>
+    <string name="purchase_introduce_3">Convert PDF to Text</string>
+    <string name="purchase_continue">Continue</string>
+    <string name="purchase_title_1">1 Year: %s</string>
+    <string name="purchase_title_2">1 Month: %s</string>
+    <string name="purchase_description_1">3 Days free trial, Yearly subscription after trial ends</string>
+    <string name="purchase_description_2">3 Days free trial, Monthly subscription after trial ends</string>
+    <string name="purchase_success">Thank you for your purchase. Now, you can use all functions.</string>
+    <string name="purchase_error">Sorry. We can not complete purchase now. Please try again later.</string>
+    <string name="purchase_cancel">Sorry. You have cancelled purchase. You can not complete this action now.</string>
+    <string name="purchase_start">Starting purchase…</string>
+
+    <string name="choose_method_title">Choose option</string>
+    <string name="choose_method_take_picture">Take picture</string>
+    <string name="choose_method_scan_document">Scan document</string>
+
+    <string name="scan">Select area</string>
+
 </resources>

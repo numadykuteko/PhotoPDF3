@@ -23,7 +23,7 @@
     <color name="blackHaft">#4C4B4B</color>
     <color name="blackNotHighlight">#232323</color>
     <color name="redTotally">#AF0E26</color>
-    <color name="redLight">#F44336</color>
+    <color name="redLight">#F45655</color>
     <color name="transparent">#00000000</color>
     <color name="blue">#3072DF</color>
     <color name="blue_light">#187C79</color>
@@ -139,4 +139,10 @@
     <color name="icon_type_night_mode">#B5B5B5</color>
     <color name="option_view_type_day_mode">#FFFFFF</color>
     <color name="option_view_type_night_mode">#233446</color>
+
+    <color name="bottom_background_color">#ffc4c2bc</color>
+    <color name="polygonViewCircleStrokeColor">#ff59a9ff</color>
+    <color name="polygonViewCircleBackground">#90e5f8ff</color>
+    <color name="halfTransparentBackground">#aacccccc</color>
+
 </resources>
