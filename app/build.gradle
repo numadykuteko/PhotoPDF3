@@ -35,8 +35,8 @@ android {
             buildConfigField('String', 'full_splash_id', '"ca-app-pub-3940256099942544/1033173712"')
             buildConfigField('String', 'native_id', '"ca-app-pub-3940256099942544/2247696110"')
 
-            buildConfigField('String', 'monthly_purchase_key', '"android.test.purchased"')
-            buildConfigField('String', 'yearly_purchase_key', '"android.test.purchased"')
+            buildConfigField('String', 'monthly_purchase_key', '"one_month"')
+            buildConfigField('String', 'yearly_purchase_key', '"one_year"')
 
             resValue "string", "app_id", "ca-app-pub-3940256099942544~3347511713"
             resValue "bool", "FIREBASE_ANALYTICS_DEACTIVATED", "true"

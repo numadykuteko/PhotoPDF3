@@ -8,13 +8,14 @@
 
     <ImageView
         android:id="@+id/close_btn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/common_padding_big"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/common_padding_big"
-        android:src="@drawable/ic_close"/>
+        android:src="@drawable/ic_close_black"
+        app:tint="#D7D7D7" />
 
     <RelativeLayout
         android:id="@+id/layout_theme_category"
@@ -203,25 +204,41 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin">
             
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/title_main_component_text_size"
-                    android:text="@string/purchase_continue"
-                    android:textColor="@color/white_totally"
-                    android:layout_centerInParent="true"/>
-                
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_purchase_continue"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/common_margin_top"/>
-            </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/continue_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/title_main_component_text_size"
+                        android:text="@string/purchase_continue"
+                        android:textColor="@color/white_totally"
+                        android:layout_centerInParent="true"/>
+
+                    <ImageView
+                        android:id="@+id/continue_button"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_purchase_continue"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/common_margin_top"/>
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/shine"
+                    android:layout_width="40dp"
+                    android:layout_height="88dp"
+                    android:layout_marginTop="-15dp"
+                    android:layout_marginStart="-40dp"
+                    android:background="@drawable/bg_shine"
+                    android:rotation="20" />
+
+            </FrameLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -242,6 +259,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
+            android:textSize="@dimen/title_fourth_component_text_size"
+            android:textStyle="normal"
+            android:fontFamily="@font/opensans"
             android:text="@string/purchase_content"/>
     </ScrollView>
 

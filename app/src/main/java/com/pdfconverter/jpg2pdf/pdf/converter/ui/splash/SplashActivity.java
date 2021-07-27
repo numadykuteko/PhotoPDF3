@@ -146,7 +146,7 @@ public class SplashActivity extends BaseBindingActivity<ActivitySplashBinding, S
 
         Admod.getInstance().loadSplashInterstitalAds(this,
                 mIsFromOpenPdf ? BuildConfig.full_view_pdf_from_other_id : BuildConfig.full_splash_id,
-                10000,
+                18000,
                 new AdCallback() {
                     @Override
                     public void onAdClosed() {

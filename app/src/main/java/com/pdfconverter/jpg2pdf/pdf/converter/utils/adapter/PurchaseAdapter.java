@@ -60,7 +60,7 @@ public class PurchaseAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mDescriptionList.size();
+        return 3;
     }
 
     @Override
