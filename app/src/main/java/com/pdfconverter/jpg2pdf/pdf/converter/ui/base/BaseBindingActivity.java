@@ -226,7 +226,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
         try {
             purchaseDialog.show();
         } catch (Exception e) {
-
+            ToastUtils.showMessageLong(BaseBindingActivity.this, getString(R.string.purchase_error));
         }
     }
 

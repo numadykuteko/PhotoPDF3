@@ -29,6 +29,7 @@ public class TextToPdfManager extends AsyncTask<Object, Object, Object>  {
     private final TextToPdfListener mListener;
     private final TextToPDFOptions mOptions;
     private final TextFileReader mTextFileReader;
+    private int mNumberSuccess = 0;
 
     public TextToPdfManager(Context context, TextToPdfListener listener, TextToPDFOptions options) {
         mContext = context;
@@ -42,6 +43,8 @@ public class TextToPdfManager extends AsyncTask<Object, Object, Object>  {
         super.onPreExecute();
         if (mListener != null)
             mListener.onCreateStart();
+
+        mNumberSuccess = 0;
     }
 
     @Override
@@ -93,34 +96,56 @@ public class TextToPdfManager extends AsyncTask<Object, Object, Object>  {
 
             for (DocumentData fileData : listFileData) {
                 if (isCancelled()) break;
-
-                String fileExtension = DataConstants.TEXT_EXTENSION;
-                String fileName = fileData.getDisplayName();
-
-                if (fileName != null) {
-                    fileName = fileName.toLowerCase();
-                    if (fileName.toLowerCase().endsWith(DataConstants.TEXT_EXTENSION))
-                        fileExtension = DataConstants.TEXT_EXTENSION;
-                    else if (fileName.toLowerCase().endsWith(DataConstants.DOCX_EXTENSION))
-                        fileExtension = DataConstants.DOCX_EXTENSION;
-                    else if (fileName.toLowerCase().endsWith(DataConstants.DOC_EXTENSION))
-                        fileExtension = DataConstants.DOC_EXTENSION;
-                    else {
-                        // TODO show error
-                    }
-                }
-
-                mTextFileReader.read(fileData.getFileUri(), document, fileExtension, customFont);
                 int currentIndex = listFileData.indexOf(fileData);
 
-                if (currentIndex < listFileData.size() - 1) {
-                    document.newPage();
+                try {
+
+                    String fileExtension = DataConstants.TEXT_EXTENSION;
+                    String fileName = fileData.getDisplayName();
+
+                    if (fileName != null) {
+                        fileName = fileName.toLowerCase();
+                        if (fileName.toLowerCase().endsWith(DataConstants.TEXT_EXTENSION))
+                            fileExtension = DataConstants.TEXT_EXTENSION;
+                        else if (fileName.toLowerCase().endsWith(DataConstants.DOCX_EXTENSION))
+                            fileExtension = DataConstants.DOCX_EXTENSION;
+                        else if (fileName.toLowerCase().endsWith(DataConstants.DOC_EXTENSION))
+                            fileExtension = DataConstants.DOC_EXTENSION;
+                        else {
+                            int percentage = 20 + ((currentIndex + 1) / listFileData.size() * 80);
+
+                            if (mListener != null)
+                                mListener.onUpdateProcess(percentage);
+
+                            continue;
+                        }
+                    } else {
+                        int percentage = 20 + ((currentIndex + 1) / listFileData.size() * 80);
+
+                        if (mListener != null)
+                            mListener.onUpdateProcess(percentage);
+
+                        continue;
+                    }
+
+                    mTextFileReader.read(fileData.getFileUri(), document, fileExtension, customFont);
+
+                    if (currentIndex < listFileData.size() - 1) {
+                        document.newPage();
+                    }
+                    mNumberSuccess++;
+
+                    int percentage = 20 + ((currentIndex + 1) / listFileData.size() * 80);
+
+                    if (mListener != null)
+                        mListener.onUpdateProcess(percentage);
+
+                } catch (Exception e) {
+                    int percentage = 20 + ((currentIndex + 1) / listFileData.size() * 80);
+
+                    if (mListener != null)
+                        mListener.onUpdateProcess(percentage);
                 }
-
-                int percentage = 20 + ((currentIndex + 1) / listFileData.size() * 80);
-
-                if (mListener != null)
-                    mListener.onUpdateProcess(percentage);
             }
 
             document.close();
@@ -131,8 +156,14 @@ public class TextToPdfManager extends AsyncTask<Object, Object, Object>  {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        if (mListener != null)
-                            mListener.onCreateSuccess(finalOutput);
+                        if (mListener != null) {
+                            if (mNumberSuccess > 0) {
+                                mListener.onCreateSuccess(finalOutput);
+                            } else {
+                                mListener.onCreateError();
+                                FileUtils.deleteFileOnExist(finalOutput);
+                            }
+                        }
                     }
                 }, 800);
             }
