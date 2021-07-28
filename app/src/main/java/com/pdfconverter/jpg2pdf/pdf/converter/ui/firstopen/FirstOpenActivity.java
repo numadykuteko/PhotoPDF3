@@ -1,6 +1,7 @@
 package com.pdfconverter.jpg2pdf.pdf.converter.ui.firstopen;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -12,12 +13,17 @@ import android.view.animation.TranslateAnimation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.ads.control.AppPurchase;
+import com.ads.control.funtion.PurchaseListioner;
+import com.pdfconverter.jpg2pdf.pdf.converter.BuildConfig;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
 import com.pdfconverter.jpg2pdf.pdf.converter.databinding.ActivityFirstOpenBinding;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.base.BaseBindingActivity;
+import com.pdfconverter.jpg2pdf.pdf.converter.ui.component.PurchaseDialog;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.main.MainActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.AnimationUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.DialogFactory;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.ToastUtils;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -98,9 +104,47 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
             if (index < 2) {
                 showFirstView(index + 1);
             } else {
-                showSecondView();
+                showIAPSuggest();
             }
         });
+    }
+
+    private void showIAPSuggest() {
+        if (!AppPurchase.getInstance().isPurchased(this, BuildConfig.monthly_purchase_key) && !AppPurchase.getInstance().isPurchased(this, BuildConfig.yearly_purchase_key)) {
+            PurchaseDialog purchaseDialog = new PurchaseDialog(FirstOpenActivity.this, new PurchaseDialog.PurchaseListener() {
+                @Override
+                public void onSelectPurchase(int type) {
+                    String subId = type == 0 ? BuildConfig.yearly_purchase_key : BuildConfig.monthly_purchase_key;
+                    AppPurchase.getInstance().setPurchaseListioner(new PurchaseListioner() {
+                        @Override
+                        public void onProductPurchased(String s, String s1) {
+                            ToastUtils.showMessageLong(FirstOpenActivity.this, getString(R.string.purchase_success));
+                        }
+
+                        @Override
+                        public void displayErrorMessage(String s) {
+
+                        }
+                    });
+                    AppPurchase.getInstance().consumePurchase(subId);
+                    AppPurchase.getInstance().subscribe(FirstOpenActivity.this, subId);
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+            });
+            try {
+                purchaseDialog.show();
+            } catch (Exception ignored) {
+                showSecondView();
+            }
+
+            purchaseDialog.setOnDismissListener(dialog -> showSecondView());
+        } else {
+            showSecondView();
+        }
     }
 
     private void showSecondView() {
