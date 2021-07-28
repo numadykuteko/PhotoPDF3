@@ -44,17 +44,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField('String', 'banner_id', '"ca-app-pub-2767013993881421/8042340381"')
-            buildConfigField('String', 'full_home_id', '"ca-app-pub-2767013993881421/1612663402"')
-            buildConfigField('String', 'full_my_pdf_id', '"ca-app-pub-2767013993881421/5799320423"')
-            buildConfigField('String', 'full_view_pdf_from_other_id', '"ca-app-pub-2767013993881421/7631276849"')
-            buildConfigField('String', 'full_splash_id', '"ca-app-pub-2767013993881421/6182463802"')
-            buildConfigField('String', 'native_id', '"ca-app-pub-2767013993881421/3117316763"')
+            buildConfigField('String', 'banner_id', '"ca-app-pub-5816699985342884/3112937558"')
+            buildConfigField('String', 'full_home_id', '"ca-app-pub-5816699985342884/3851304151"')
+            buildConfigField('String', 'full_my_pdf_id', '"ca-app-pub-5816699985342884/8543204119"')
+            buildConfigField('String', 'full_view_pdf_from_other_id', '"ca-app-pub-5816699985342884/2182999262"')
+            buildConfigField('String', 'full_splash_id', '"ca-app-pub-5816699985342884/5000734292"')
+            buildConfigField('String', 'native_id', '"ca-app-pub-5816699985342884/4042875848"')
 
             buildConfigField('String', 'monthly_purchase_key', '"one_month"')
             buildConfigField('String', 'yearly_purchase_key', '"one_year"')
 
-            resValue "string", "app_id", "ca-app-pub-2767013993881421~1832155255"
+            resValue "string", "app_id", "ca-app-pub-5816699985342884~2757714330"
             resValue "bool", "FIREBASE_ANALYTICS_DEACTIVATED", "false"
         }
     }

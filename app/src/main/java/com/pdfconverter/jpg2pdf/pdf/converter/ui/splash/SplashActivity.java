@@ -31,6 +31,7 @@ public class SplashActivity extends BaseBindingActivity<ActivitySplashBinding, S
 
     private boolean mIsFromOpenPdf = false;
     private String mFilePdfPath = null;
+    private boolean mIsGoAway = false;
 
     @Override
     public int getBindingVariable() {
@@ -75,6 +76,10 @@ public class SplashActivity extends BaseBindingActivity<ActivitySplashBinding, S
     }
 
     private void gotoTargetActivity() {
+        if (mIsGoAway) return;
+
+        mIsGoAway = true;
+
         Intent intent;
         if (!mIsFromOpenPdf) {
             if (DataManager.getInstance(this).isOpenBefore()) {

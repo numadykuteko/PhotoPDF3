@@ -173,9 +173,9 @@ public class PurchaseDialog extends BaseCenterDialog {
     private void changeThemeAutomatic() {
         if (mTimer != null) {
             mTimer.cancel();
-        } else {
-            mTimer = new Timer();
         }
+
+        mTimer = new Timer();
 
         mTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -194,7 +194,7 @@ public class PurchaseDialog extends BaseCenterDialog {
 
                 });
             }
-        }, 2500, 2500);
+        }, 2000, 2000);
 
     }
 

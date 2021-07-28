@@ -1,8 +1,13 @@
 package com.pdfconverter.jpg2pdf.pdf.converter.ui.firstopen;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +16,7 @@ import com.pdfconverter.jpg2pdf.pdf.converter.R;
 import com.pdfconverter.jpg2pdf.pdf.converter.databinding.ActivityFirstOpenBinding;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.base.BaseBindingActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.main.MainActivity;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.AnimationUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.DialogFactory;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -46,6 +52,61 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
 
     @Override
     protected void initView() {
+        TranslateAnimation mAnimation = new TranslateAnimation(
+                TranslateAnimation.RELATIVE_TO_PARENT, -0.03f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0.03f,
+                TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.ABSOLUTE, 0f);
+        mAnimation.setDuration(1000);
+        mAnimation.setRepeatCount(-1);
+        mAnimation.setRepeatMode(Animation.REVERSE);
+        mAnimation.setInterpolator(new LinearInterpolator());
+
+        mActivityFirstOpenBinding.continueButton.startAnimation(mAnimation);
+
+        View shine = findViewById(R.id.shine);
+        Animation shineAnimation = AnimationUtils.getAnimation(this, R.anim.left_right);
+        shine.startAnimation(shineAnimation);
+
+        showFirstView(0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent imageToPdfIntent = new Intent(FirstOpenActivity.this, MainActivity.class);
+        startActivity(imageToPdfIntent);
+        finish();
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void showFirstView(int index) {
+        mActivityFirstOpenBinding.firstView.setVisibility(View.VISIBLE);
+        mActivityFirstOpenBinding.secondView.setVisibility(View.GONE);
+
+        if (index == 0) {
+            mActivityFirstOpenBinding.firstViewImage.setImageDrawable(getDrawable(R.drawable.ic_purchase_1));
+            mActivityFirstOpenBinding.firstViewTxt.setText(getText(R.string.purchase_introduce_1));
+        } else if (index == 1) {
+            mActivityFirstOpenBinding.firstViewImage.setImageDrawable(getDrawable(R.drawable.ic_purchase_2));
+            mActivityFirstOpenBinding.firstViewTxt.setText(getText(R.string.purchase_introduce_2));
+        } else if (index == 2) {
+            mActivityFirstOpenBinding.firstViewImage.setImageDrawable(getDrawable(R.drawable.ic_purchase_3));
+            mActivityFirstOpenBinding.firstViewTxt.setText(getText(R.string.purchase_introduce_3));
+        }
+
+        mActivityFirstOpenBinding.firstViewContinue.setOnClickListener(v -> {
+            if (index < 2) {
+                showFirstView(index + 1);
+            } else {
+                showSecondView();
+            }
+        });
+    }
+
+    private void showSecondView() {
+        mActivityFirstOpenBinding.firstView.setVisibility(View.GONE);
+        mActivityFirstOpenBinding.secondView.setVisibility(View.VISIBLE);
+
         mActivityFirstOpenBinding.buttonFirstOpenConverterSelectPhotos.setOnClickListener(view -> {
             checkPermissionOnFirstOpen();
         });
