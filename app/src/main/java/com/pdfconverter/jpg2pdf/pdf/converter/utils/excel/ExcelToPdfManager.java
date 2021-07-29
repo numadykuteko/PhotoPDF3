@@ -31,6 +31,7 @@ public class ExcelToPdfManager extends AsyncTask<Object, Object, Object> {
     private final ExcelToPdfListener mListener;
     private final ExcelToPDFOptions mOptions;
     private String mTempPath;
+    private int mNumberSuccess = 0;
 
     public ExcelToPdfManager(Context context, ExcelToPdfListener listener, ExcelToPDFOptions options) {
         mContext = context;
@@ -44,6 +45,7 @@ public class ExcelToPdfManager extends AsyncTask<Object, Object, Object> {
         if (mListener != null) {
             mListener.onCreateStart();
         }
+        mNumberSuccess = 0;
     }
 
     @Override
@@ -82,50 +84,59 @@ public class ExcelToPdfManager extends AsyncTask<Object, Object, Object> {
             document.open();
 
             for (int i = 0; i < mOptions.getPathList().size(); i++) {
-                DocumentData documentData = mOptions.getPathList().get(i);
+                try {
+                    DocumentData documentData = mOptions.getPathList().get(i);
 
-                if (isCancelled()) break;
+                    if (isCancelled()) break;
 
-                String path = documentData.getFilePath();
-                LoadOptions loadOptions = new LoadOptions();
-                loadOptions.setPaperSize(mOptions.getPageSize());
+                    String path = documentData.getFilePath();
+                    LoadOptions loadOptions = new LoadOptions();
+                    loadOptions.setPaperSize(mOptions.getPageSize());
 
-                final Workbook workbook = new Workbook(path, loadOptions);
+                    final Workbook workbook = new Workbook(path, loadOptions);
 
-                for (int j = 0; j < workbook.getWorksheets().getCount(); j++) {
-                    Worksheet worksheet = workbook.getWorksheets().get(j);
-                    worksheet.getPageSetup().setPaperSize(mOptions.getPageSize());
-                    worksheet.getPageSetup().setOrientation(mOptions.getPageOrientation().toLowerCase().equals("portrait") ? PageOrientationType.PORTRAIT : PageOrientationType.LANDSCAPE);
+                    for (int j = 0; j < workbook.getWorksheets().getCount(); j++) {
+                        Worksheet worksheet = workbook.getWorksheets().get(j);
+                        worksheet.getPageSetup().setPaperSize(mOptions.getPageSize());
+                        worksheet.getPageSetup().setOrientation(mOptions.getPageOrientation().toLowerCase().equals("portrait") ? PageOrientationType.PORTRAIT : PageOrientationType.LANDSCAPE);
 
-                    worksheet.getPageSetup().setFitToPagesWide(1);
-                    worksheet.getPageSetup().setFitToPagesTall(1);
-                    worksheet.autoFitColumns();
-                    worksheet.autoFitRows();
-                }
+                        worksheet.getPageSetup().setFitToPagesWide(1);
+                        worksheet.getPageSetup().setFitToPagesTall(1);
+                        worksheet.autoFitColumns();
+                        worksheet.autoFitRows();
+                    }
 
-                mTempPath = FileUtils.getUniquePdfFileName(mContext, FileUtils.getLastReplacePath(finalOutput,
-                        DataConstants.PDF_EXTENSION, "_temp_" + System.currentTimeMillis() + ".pdf"));
+                    mTempPath = FileUtils.getUniquePdfFileName(mContext, FileUtils.getLastReplacePath(finalOutput,
+                            DataConstants.PDF_EXTENSION, "_temp_" + System.currentTimeMillis() + ".pdf"));
 
-                PdfSaveOptions options = new PdfSaveOptions(SaveFormat.PDF);
-                options.setAllColumnsInOnePagePerSheet(true);
-                options.setOptimizationType(1);
-                options.setOnePagePerSheet(mOptions.isOneSheetOnePage());
-                options.setDefaultFont("arial");
-                options.setCheckWorkbookDefaultFont(false);
+                    PdfSaveOptions options = new PdfSaveOptions(SaveFormat.PDF);
+                    options.setAllColumnsInOnePagePerSheet(true);
+                    options.setOptimizationType(1);
+                    options.setOnePagePerSheet(mOptions.isOneSheetOnePage());
+                    options.setDefaultFont("arial");
+                    options.setCheckWorkbookDefaultFont(false);
 
-                workbook.save(mTempPath, options);
+                    workbook.save(mTempPath, options);
 
-                PdfReader pdfreader;
-                pdfreader = new PdfReader(mTempPath);
-                // Get the number of pages of the pdf file
-                int numOfPages = pdfreader.getNumberOfPages();
-                for (int page = 1; page <= numOfPages; page++)
-                    copy.addPage(copy.getImportedPage(pdfreader, page));
+                    PdfReader pdfreader;
+                    pdfreader = new PdfReader(mTempPath);
+                    // Get the number of pages of the pdf file
+                    int numOfPages = pdfreader.getNumberOfPages();
+                    for (int page = 1; page <= numOfPages; page++)
+                        copy.addPage(copy.getImportedPage(pdfreader, page));
 
-                FileUtils.deleteFileOnExist(mTempPath);
+                    FileUtils.deleteFileOnExist(mTempPath);
 
-                if (mListener != null) {
-                    mListener.onUpdateProcess(Math.round((i + 1) / (float) mOptions.getPathList().size() * 100));
+                    if (mListener != null) {
+                        mListener.onUpdateProcess(Math.round((i + 1) / (float) mOptions.getPathList().size() * 100));
+                    }
+                    mNumberSuccess++;
+                } catch (Exception e) {
+                    FileUtils.deleteFileOnExist(mTempPath);
+
+                    if (mListener != null) {
+                        mListener.onUpdateProcess(Math.round((i + 1) / (float) mOptions.getPathList().size() * 100));
+                    }
                 }
             }
 
@@ -137,7 +148,13 @@ public class ExcelToPdfManager extends AsyncTask<Object, Object, Object> {
                     @Override
                     public void run() {
                         if (mListener != null) {
-                            mListener.onCreateSuccess(finalOutput);
+                            if (mNumberSuccess > 0) {
+                                mListener.onCreateSuccess(finalOutput);
+                            } else {
+                                mListener.onCreateError();
+                                FileUtils.deleteFileOnExist(mTempPath);
+                                FileUtils.deleteFileOnExist(finalOutput);
+                            }
                         }
                     }
                 }, 800);

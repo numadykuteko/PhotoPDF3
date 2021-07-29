@@ -24,6 +24,7 @@ public class MergePdfManager extends AsyncTask<Object, Object, Object> {
     private final Context mContext;
     private final MergePdfListener mListener;
     private final MergePDFOptions mOptions;
+    private int mNumberSuccess = 0;
 
     public MergePdfManager(Context context, MergePdfListener listener, MergePDFOptions options) {
         mContext = context;
@@ -37,6 +38,7 @@ public class MergePdfManager extends AsyncTask<Object, Object, Object> {
         if (mListener != null) {
             mListener.onCreateStart();
         }
+        mNumberSuccess = 0;
     }
 
     @Override
@@ -78,17 +80,25 @@ public class MergePdfManager extends AsyncTask<Object, Object, Object> {
             PdfReader pdfreader;
 
             for (int i = 0; i < mOptions.getPathList().size(); i++) {
-                DocumentData pdfPath = mOptions.getPathList().get(i);
-                if (isCancelled()) break;
+                try {
+                    DocumentData pdfPath = mOptions.getPathList().get(i);
+                    if (isCancelled()) break;
 
-                pdfreader = new PdfReader(pdfPath.getFilePath());
-                numOfPages = pdfreader.getNumberOfPages();
-                for (int page = 1; page <= numOfPages; page++)
-                    copy.addPage(copy.getImportedPage(pdfreader, page));
+                    pdfreader = new PdfReader(pdfPath.getFilePath());
+                    numOfPages = pdfreader.getNumberOfPages();
+                    for (int page = 1; page <= numOfPages; page++)
+                        copy.addPage(copy.getImportedPage(pdfreader, page));
 
-                if (mListener != null) {
-                    mListener.onUpdateProcess(Math.round((i + 1) / (float) mOptions.getPathList().size() * 100));
+                    if (mListener != null) {
+                        mListener.onUpdateProcess(Math.round((i + 1) / (float) mOptions.getPathList().size() * 100));
+                    }
+                    mNumberSuccess ++;
+                } catch (Exception e) {
+                    if (mListener != null) {
+                        mListener.onUpdateProcess(Math.round((i + 1) / (float) mOptions.getPathList().size() * 100));
+                    }
                 }
+
             }
             document.close();
 
@@ -98,7 +108,12 @@ public class MergePdfManager extends AsyncTask<Object, Object, Object> {
                     @Override
                     public void run() {
                         if (mListener != null) {
-                            mListener.onCreateSuccess(finalOutput);
+                            if (mNumberSuccess > 0) {
+                                mListener.onCreateSuccess(finalOutput);
+                            } else {
+                                mListener.onCreateError();
+                                FileUtils.deleteFileOnExist(finalOutput);
+                            }
                         }
                     }
                 }, 800);

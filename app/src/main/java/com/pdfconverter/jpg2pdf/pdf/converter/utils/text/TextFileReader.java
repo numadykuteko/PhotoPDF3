@@ -26,17 +26,13 @@ public class TextFileReader {
         mContext = context;
     }
 
-    void read(Uri uri, Document outputDocument, String extension, Font customFont) {
-        try {
-            InputStream inputStream;
-            inputStream = mContext.getContentResolver().openInputStream(uri);
-            if (inputStream == null)
-                return;
-            createDocumentFromStream(uri, outputDocument, extension, customFont, inputStream);
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void read(Uri uri, Document outputDocument, String extension, Font customFont) throws Exception {
+        InputStream inputStream;
+        inputStream = mContext.getContentResolver().openInputStream(uri);
+        if (inputStream == null)
+            return;
+        createDocumentFromStream(uri, outputDocument, extension, customFont, inputStream);
+        inputStream.close();
     }
 
     public void createDocumentFromStream(Uri uri, Document document, String extension, Font customFont, InputStream inputStream) throws Exception {

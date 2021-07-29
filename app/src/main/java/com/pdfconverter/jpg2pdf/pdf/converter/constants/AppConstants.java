@@ -23,6 +23,6 @@ public class AppConstants {
     public static final int FLAG_FUNCTION_DISABLE = 0;
 
     public static final String APP_PASSWORD = "pdf_tool_18012021";
-    public static final String APP_NAME = "PDF converter";
+    public static final String APP_NAME = "PDF Converter & Scanner";
 
  }

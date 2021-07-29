@@ -424,7 +424,7 @@ public class UnlockPdfActivity extends BaseBindingActivity<ActivityUnlockPdfBind
         } else if (!PdfUtils.isPasswordValid(mFilePath, mPassword.getBytes())) {
             ToastUtils.showMessageShort(this, getString(R.string.unlock_pdf_enter_wrong_password));
         } else {
-            showDoneAdsBeforeAction(() -> {
+            checkIAPDoneBeforeAction(() -> {
                 Intent intent = new Intent(this, UnlockPdfDoneActivity.class);
                 intent.putExtra(EXTRA_FILE_PATH, mFilePath);
                 intent.putExtra(EXTRA_PASSWORD, mPassword);

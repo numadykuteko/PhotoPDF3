@@ -678,7 +678,7 @@ public class ExcelToPdfActivity extends BaseBindingActivity<ActivityExcelToPdfBi
 
     @Override
     public void submitForm(final ExcelToPDFOptions options) {
-        showDoneAdsBeforeAction(() -> {
+        checkIAPDoneBeforeAction(() -> {
             this.mOptions = options;
 
             if (mOptions == null) {

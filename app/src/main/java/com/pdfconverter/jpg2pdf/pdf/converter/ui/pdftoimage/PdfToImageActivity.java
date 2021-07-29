@@ -493,7 +493,7 @@ public class PdfToImageActivity extends BaseBindingActivity<ActivityPdfToImageBi
         CommonUtils.hideKeyboard(this);
 
         PDFToImageOptions pdfToImageOptions = new PDFToImageOptions(mFilePath, mSelectedFile, startPage, endPage, mNumberPage, type);
-        showDoneAdsBeforeAction(() -> {
+        checkIAPDoneBeforeAction(() -> {
             Gson gson = new Gson();
             String json = gson.toJson(pdfToImageOptions);
             Intent intent = new Intent(this, PdfToImageDoneActivity.class);

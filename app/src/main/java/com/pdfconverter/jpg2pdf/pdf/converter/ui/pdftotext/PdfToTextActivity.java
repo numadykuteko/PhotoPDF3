@@ -504,7 +504,7 @@ public class PdfToTextActivity extends BaseBindingActivity<ActivityPdfToTextBind
         CommonUtils.hideKeyboard(this);
         PDFToTextOptions pdfToTextOptions = new PDFToTextOptions(mFilePath, startPage, endPage);
 
-        showDoneAdsBeforeAction(() -> {
+        checkIAPDoneBeforeAction(() -> {
             Gson gson = new Gson();
             String json = gson.toJson(pdfToTextOptions);
             Intent intent = new Intent(this, PdfToTextDoneActivity.class);

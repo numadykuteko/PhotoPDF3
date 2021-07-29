@@ -7,8 +7,10 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.ads.control.Admod;
-import com.ads.control.funtion.AdCallback;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.LoadAdError;
 import com.pdfconverter.jpg2pdf.pdf.converter.BuildConfig;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
 import com.pdfconverter.jpg2pdf.pdf.converter.data.DataManager;
@@ -31,6 +33,10 @@ public class SplashActivity extends BaseBindingActivity<ActivitySplashBinding, S
 
     private boolean mIsFromOpenPdf = false;
     private String mFilePdfPath = null;
+    private boolean mIsGoAway = false;
+
+    private InterstitialAd mInterstitialAd;
+    private Timer mTimer;
 
     @Override
     public int getBindingVariable() {
@@ -74,7 +80,19 @@ public class SplashActivity extends BaseBindingActivity<ActivitySplashBinding, S
 
     }
 
+    @Override
+    protected void onDestroy() {
+        if (mTimer != null) {
+            mTimer.cancel();
+        }
+        super.onDestroy();
+    }
+
     private void gotoTargetActivity() {
+        if (mIsGoAway) return;
+
+        mIsGoAway = true;
+
         Intent intent;
         if (!mIsFromOpenPdf) {
             if (DataManager.getInstance(this).isOpenBefore()) {
@@ -144,19 +162,52 @@ public class SplashActivity extends BaseBindingActivity<ActivitySplashBinding, S
             return;
         }
 
-        Admod.getInstance().loadSplashInterstitalAds(this,
-                mIsFromOpenPdf ? BuildConfig.full_view_pdf_from_other_id : BuildConfig.full_splash_id,
-                30000,
-                new AdCallback() {
-                    @Override
-                    public void onAdClosed() {
-                        gotoTargetActivity();
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(int i) {
-                        gotoTargetActivity();
-                    }
+        mTimer = new Timer();
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    mInterstitialAd.setAdListener(new AdListener());
+                    gotoTargetActivity();
                 });
+            }
+        }, 18000);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(mIsFromOpenPdf ? BuildConfig.full_view_pdf_from_other_id : BuildConfig.full_splash_id);
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                mInterstitialAd.show();
+            }
+
+            @Override
+            public void onAdFailedToLoad(LoadAdError adError) {
+                mInterstitialAd.setAdListener(new AdListener());
+                gotoTargetActivity();
+            }
+
+            @Override
+            public void onAdOpened() {
+                if (mTimer != null) {
+                    mTimer.cancel();
+                }
+                // Code to be executed when the ad is displayed.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdClosed() {
+                mInterstitialAd.setAdListener(new AdListener());
+                gotoTargetActivity();
+            }
+
+        });
+        mInterstitialAd.loadAd(adRequest);
     }
 }

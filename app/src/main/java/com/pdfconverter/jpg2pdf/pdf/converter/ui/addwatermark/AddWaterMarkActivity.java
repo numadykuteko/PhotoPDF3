@@ -562,7 +562,7 @@ public class AddWaterMarkActivity extends BaseBindingActivity<ActivityAddWaterma
             return;
         }
 
-        showDoneAdsBeforeAction(() -> {
+        checkIAPDoneBeforeAction(() -> {
             Gson gson = new Gson();
             String json = gson.toJson(mWatermark);
             Intent intent = new Intent(this, AddWaterMarkDoneActivity.class);

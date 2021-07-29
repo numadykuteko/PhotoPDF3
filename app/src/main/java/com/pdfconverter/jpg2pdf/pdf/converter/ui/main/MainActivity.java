@@ -25,6 +25,7 @@ import com.pdfconverter.jpg2pdf.pdf.converter.databinding.ActivityMainBinding;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.base.BaseBindingActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.browser.BrowserFragment;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.home.HomeFragment;
+import com.pdfconverter.jpg2pdf.pdf.converter.ui.imagetopdf.ImageToPdfActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.more.MoreFragment;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.theme.ThemeActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.DialogFactory;
@@ -81,12 +82,18 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding, MainV
         mActivityMainBinding = getViewDataBinding();
 
         mIsFromFirstOpen = getIntent().getBooleanExtra(EXTRA_FROM_FIRST_OPEN, false);
+        boolean isNeedToScan = getIntent().getBooleanExtra(EXTRA_NEED_SCAN, false);
 
         if (mIsFromFirstOpen) {
-            gotoActivityWithFlag(AppConstants.FLAG_IMAGE_TO_PDF_FROM_HOME);
+            Intent imagePdfIntent = new Intent(MainActivity.this, ImageToPdfActivity.class);
+            imagePdfIntent.putExtra(EXTRA_NEED_SCAN, isNeedToScan);
+            startActivity(imagePdfIntent);
+
+            FirebaseUtils.sendEventFunctionUsed(this, "Image To Pdf", "From home");
         }
 
         initView();
+
     }
 
     @Override
@@ -267,7 +274,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding, MainV
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-            String shareMessage = "\nLet me recommend you this PDF converter application\n\n";
+            String shareMessage = "\nLet me recommend you this PDF Converter & Scanner application\n\n";
             shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
             startActivity(Intent.createChooser(shareIntent, "Choose one"));
@@ -359,9 +366,6 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding, MainV
                 });
             } else if (id == R.id.navigation_drawer_more_app) {
                 gotoMoreApp();
-            } else if (id == R.id.navigation_drawer_pro_version) {
-                FirebaseUtils.sendEventFunctionUsed(this, "Upgrade pro version", "From home");
-                ToastUtils.showFunctionNotSupportToast(this);
             } else if (id == R.id.navigation_drawer_share) {
                 shareApplicationLink();
             }

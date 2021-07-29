@@ -1,2 +1,3 @@
-rootProject.name='PDF Converter'
+include ':openCVLibrary'
+rootProject.name='PDF Converter & Scanner'
 include ':app'
