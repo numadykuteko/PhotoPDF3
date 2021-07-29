@@ -21,6 +21,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+//    signingConfigs {
+//        release {
+//            keyAlias 'key-release'
+//            keyPassword 'pdfprox@123'
+//            storeFile file('keystore.jks')
+//            storePassword 'pdfprox@123'
+//        }
+//    }
+
     buildTypes {
         debug {
             buildConfigField('String', 'banner_id', '"ca-app-pub-3940256099942544/6300978111"')
