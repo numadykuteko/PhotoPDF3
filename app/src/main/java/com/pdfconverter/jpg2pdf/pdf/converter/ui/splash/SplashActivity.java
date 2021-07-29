@@ -184,6 +184,7 @@ public class SplashActivity extends BaseBindingActivity<ActivitySplashBinding, S
 
             @Override
             public void onAdFailedToLoad(LoadAdError adError) {
+                mInterstitialAd.setAdListener(new AdListener());
                 gotoTargetActivity();
             }
 
@@ -202,6 +203,7 @@ public class SplashActivity extends BaseBindingActivity<ActivitySplashBinding, S
 
             @Override
             public void onAdClosed() {
+                mInterstitialAd.setAdListener(new AdListener());
                 gotoTargetActivity();
             }
 

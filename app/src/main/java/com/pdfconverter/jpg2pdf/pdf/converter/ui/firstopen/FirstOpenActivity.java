@@ -90,14 +90,17 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
         mActivityFirstOpenBinding.secondView.setVisibility(View.GONE);
 
         if (index == 0) {
-            mActivityFirstOpenBinding.firstViewImage.setImageDrawable(getDrawable(R.drawable.ic_purchase_1));
+            mActivityFirstOpenBinding.firstViewImage.setImageDrawable(getDrawable(R.drawable.intro_1));
             mActivityFirstOpenBinding.firstViewTxt.setText(getText(R.string.purchase_introduce_1));
+            mActivityFirstOpenBinding.firstViewTxt2.setVisibility(View.VISIBLE);
         } else if (index == 1) {
-            mActivityFirstOpenBinding.firstViewImage.setImageDrawable(getDrawable(R.drawable.ic_purchase_2));
+            mActivityFirstOpenBinding.firstViewImage.setImageDrawable(getDrawable(R.drawable.intro_2));
             mActivityFirstOpenBinding.firstViewTxt.setText(getText(R.string.purchase_introduce_2));
+            mActivityFirstOpenBinding.firstViewTxt2.setVisibility(View.GONE);
         } else if (index == 2) {
-            mActivityFirstOpenBinding.firstViewImage.setImageDrawable(getDrawable(R.drawable.ic_purchase_3));
+            mActivityFirstOpenBinding.firstViewImage.setImageDrawable(getDrawable(R.drawable.intro_3));
             mActivityFirstOpenBinding.firstViewTxt.setText(getText(R.string.purchase_introduce_3));
+            mActivityFirstOpenBinding.firstViewTxt2.setVisibility(View.GONE);
         }
 
         mActivityFirstOpenBinding.firstViewContinue.setOnClickListener(v -> {

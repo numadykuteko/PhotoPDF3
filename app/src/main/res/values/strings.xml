@@ -734,6 +734,7 @@
 
     <string name="purchase_content">Payment will be charged to Google Play account at confirmation of purchases. The subscription will be auto renewed unless it is turned off within 24 hours before the end of the period. Your account will be charged according to your plan for renew within 24 hours to the end of the current period. You can manage or turn off auto-renew or subscription at subscription page of Google Play after purchase. Any unused portion of a free trial period, if offered, will be forfeited when user purchase a subscription where applicable.</string>
     <string name="purchase_introduce_1">PDF Editor for Scenes</string>
+    <string name="purchase_introduce_1_2">(Docs, IDS, PASSPORTS, etc.)</string>
     <string name="purchase_introduce_2">Quickly scan document to PDF</string>
     <string name="purchase_introduce_3">Convert PDF to Text</string>
     <string name="purchase_continue">Continue</string>
