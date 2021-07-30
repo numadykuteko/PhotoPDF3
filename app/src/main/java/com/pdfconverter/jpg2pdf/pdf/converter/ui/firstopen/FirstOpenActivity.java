@@ -113,7 +113,7 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
     }
 
     private void showIAPSuggest() {
-        if (!AppPurchase.getInstance().isPurchased(this, BuildConfig.monthly_purchase_key) && !AppPurchase.getInstance().isPurchased(this, BuildConfig.yearly_purchase_key)) {
+        if (!AppPurchase.getInstance().isPurchased(this)) {
             PurchaseDialog purchaseDialog = new PurchaseDialog(FirstOpenActivity.this, new PurchaseDialog.PurchaseListener() {
                 @Override
                 public void onSelectPurchase(int type) {
@@ -129,7 +129,6 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
 
                         }
                     });
-                    AppPurchase.getInstance().consumePurchase(subId);
                     AppPurchase.getInstance().subscribe(FirstOpenActivity.this, subId);
                 }
 

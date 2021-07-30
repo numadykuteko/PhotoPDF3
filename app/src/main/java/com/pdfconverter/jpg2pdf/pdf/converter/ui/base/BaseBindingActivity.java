@@ -191,7 +191,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
     }
 
     public boolean isPurchased() {
-        return AppPurchase.getInstance().isPurchased(this, BuildConfig.monthly_purchase_key) || AppPurchase.getInstance().isPurchased(this, BuildConfig.yearly_purchase_key);
+        return AppPurchase.getInstance().isPurchased(this);
     }
 
     public void showIAPDialog(Runnable callback){
@@ -214,7 +214,6 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
                         ToastUtils.showMessageLong(BaseBindingActivity.this, getString(R.string.purchase_error));
                     }
                 });
-                AppPurchase.getInstance().consumePurchase(subId);
                 AppPurchase.getInstance().subscribe(BaseBindingActivity.this, subId);
             }
 
