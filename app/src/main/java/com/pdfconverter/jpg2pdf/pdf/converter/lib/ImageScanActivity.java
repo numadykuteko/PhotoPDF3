@@ -17,9 +17,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -45,6 +49,7 @@ import org.opencv.core.Mat;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -245,12 +250,92 @@ public class ImageScanActivity extends DocumentScanActivity {
     }
 
     private void resetBitmap() {
-        File image = new File(oldImagePath);
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        cropImage = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
+        try {
 
-        isAuto = false;
-        isInverted = false;
+            Bitmap bitmap = null;
+
+            try {
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bitmap = BitmapFactory.decodeFile(oldImagePath, bmOptions);
+
+            } catch (Exception e) {
+                // do nothing
+            }
+
+            if (bitmap == null) {
+                bitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(),
+                        Uri.parse(oldImagePath)
+                );
+            }
+
+            if (bitmap != null) {
+                ExifInterface exif = null;
+                try {
+                    exif = new ExifInterface(oldImagePath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (exif != null) {
+                    int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+                    if (orientation != ExifInterface.ORIENTATION_UNDEFINED) {
+                        cropImage = rotateBitmapByExif(bitmap, orientation);
+                    } else {
+                        cropImage = bitmap;
+                    }
+                } else {
+                    cropImage = bitmap;
+                }
+            }
+
+            isAuto = false;
+            isInverted = false;
+        } catch (Exception | OutOfMemoryError e) {
+            // do nothing
+        }
+
+    }
+
+    public static Bitmap rotateBitmapByExif(Bitmap bitmap, int orientation) {
+
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void setViewInteract(View view, boolean canDo) {
@@ -291,16 +376,20 @@ public class ImageScanActivity extends DocumentScanActivity {
 
     private void invertColor() {
         if (!isInverted) {
-            Bitmap bmpMonochrome = Bitmap.createBitmap(cropImage.getWidth(), cropImage.getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bmpMonochrome);
-            ColorMatrix ma = new ColorMatrix();
-            ma.setSaturation(0);
-            Paint paint = new Paint();
-            paint.setColorFilter(new ColorMatrixColorFilter(ma));
-            canvas.drawBitmap(cropImage, 0, 0, paint);
-            cropImage = bmpMonochrome.copy(bmpMonochrome.getConfig(), true);
-            isInverted = true;
-            isAuto = false;
+            try {
+                Bitmap bmpMonochrome = Bitmap.createBitmap(cropImage.getWidth(), cropImage.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bmpMonochrome);
+                ColorMatrix ma = new ColorMatrix();
+                ma.setSaturation(0);
+                Paint paint = new Paint();
+                paint.setColorFilter(new ColorMatrixColorFilter(ma));
+                canvas.drawBitmap(cropImage, 0, 0, paint);
+                cropImage = bmpMonochrome.copy(bmpMonochrome.getConfig(), true);
+
+                isInverted = true;
+                isAuto = false;
+            } catch (Exception | OutOfMemoryError ignored) {
+            }
         } else {
             resetBitmap();
         }
@@ -342,7 +431,7 @@ public class ImageScanActivity extends DocumentScanActivity {
 
             cropImage = matToBitmap(dst);
             isAuto = true;
-        } catch (Exception ignored) {
+        } catch (Exception | OutOfMemoryError ignored) {
         }
     }
 
@@ -354,12 +443,12 @@ public class ImageScanActivity extends DocumentScanActivity {
 
         try {
             File directory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-            String imageFileName = "cropped_" + timeStamp + ".png";
+            String timeStamp = System.currentTimeMillis() + "";
+            String imageFileName = "cropped_" + timeStamp + ".jpg";
             myPath = new File(directory, imageFileName);
 
             fos = new FileOutputStream(myPath);
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 90, fos);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

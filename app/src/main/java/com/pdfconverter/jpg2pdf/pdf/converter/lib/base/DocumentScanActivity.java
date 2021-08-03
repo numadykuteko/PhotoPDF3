@@ -14,6 +14,7 @@ import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -24,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
 import com.pdfconverter.jpg2pdf.pdf.converter.lib.libraries.NativeClass;
 import com.pdfconverter.jpg2pdf.pdf.converter.lib.libraries.PolygonView;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.ToastUtils;
 
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
@@ -62,13 +64,8 @@ public abstract class DocumentScanActivity extends AppCompatActivity {
 
     private void setImageRotation() {
         Bitmap tempBitmap = selectedImage.copy(selectedImage.getConfig(), true);
-        MatOfPoint2f point2f = nativeClass.getPoint(tempBitmap);
-        if (point2f != null) {
-            return;
-        }
-
         for (int i = 1; i <= 3; i++) {
-            point2f = nativeClass.getPoint(tempBitmap);
+            MatOfPoint2f point2f = nativeClass.getPoint(tempBitmap);
             if (point2f == null) {
                 tempBitmap = rotateBitmap(tempBitmap, 90 * i);
             } else {
@@ -79,9 +76,13 @@ public abstract class DocumentScanActivity extends AppCompatActivity {
     }
 
     protected Bitmap rotateBitmap(Bitmap source, float angle) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+        try {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(angle);
+            return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+        } catch (Exception | OutOfMemoryError e) {
+            return source;
+        }
     }
 
     private void setProgressBar(boolean isShow) {
@@ -95,7 +96,7 @@ public abstract class DocumentScanActivity extends AppCompatActivity {
         selectedImage = getBitmapImage();
         setProgressBar(true);
         disposable.add(Observable.fromCallable(() -> {
-                    setImageRotation();
+//                    setImageRotation();
                     return false;
                 })
                         .subscribeOn(Schedulers.io())
@@ -109,7 +110,7 @@ public abstract class DocumentScanActivity extends AppCompatActivity {
 
 
     private void initializeCropping() {
-        Bitmap scaledBitmap = scaledBitmap(selectedImage, getHolderImageCrop().getWidth(), getHolderImageCrop().getHeight());
+        Bitmap scaledBitmap = scaledBitmap(selectedImage, (int) (getHolderImageCrop().getWidth() * 0.8f), (int) (getHolderImageCrop().getHeight() * 0.8f));
         getImageView().setImageBitmap(scaledBitmap);
 
         Bitmap tempBitmap = ((BitmapDrawable) getImageView().getDrawable()).getBitmap();
@@ -127,8 +128,9 @@ public abstract class DocumentScanActivity extends AppCompatActivity {
             getPolygonView().setLayoutParams(layoutParams);
             getPolygonView().setPointColor(getResources().getColor(R.color.blue));
 
-        } catch (Exception e) {
+        } catch (Exception | OutOfMemoryError e) {
             e.printStackTrace();
+            ToastUtils.showMessageShort(this, "Sorry we can not load scan feature for this image.");
         }
     }
 
@@ -150,15 +152,19 @@ public abstract class DocumentScanActivity extends AppCompatActivity {
 
             Bitmap finalBitmap = getBitmapImage();
             return nativeClass.getScannedBitmap(finalBitmap, x1, y1, x2, y2, x3, y3, x4, y4);
-        } catch (Exception e) {
+        } catch (Exception | OutOfMemoryError e) {
             return null;
         }
     }
 
     protected Bitmap scaledBitmap(Bitmap bitmap, int width, int height) {
-        Matrix m = new Matrix();
-        m.setRectToRect(new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight()), new RectF(0, 0, width, height), Matrix.ScaleToFit.CENTER);
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true);
+        try {
+            Matrix m = new Matrix();
+            m.setRectToRect(new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight()), new RectF(0, 0, width, height), Matrix.ScaleToFit.CENTER);
+            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true);
+        } catch (Exception | OutOfMemoryError e) {
+            return bitmap;
+        }
     }
 
     private Map<Integer, PointF> getEdgePoints(Bitmap tempBitmap) throws Exception {

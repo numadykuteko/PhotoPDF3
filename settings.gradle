@@ -1,3 +1,4 @@
+include ':camera-view'
 include ':openCVLibrary'
 rootProject.name='PDF Converter & Scanner'
 include ':app'

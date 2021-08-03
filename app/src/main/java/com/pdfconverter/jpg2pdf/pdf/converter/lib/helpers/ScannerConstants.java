@@ -12,7 +12,7 @@ package com.pdfconverter.jpg2pdf.pdf.converter.lib.helpers;
 import android.graphics.Bitmap;
 
 public class ScannerConstants {
-    public static String imageError="Can not load this image",
+    public static String imageError="Sorry. Your image is NOT valid",
             cropError="Can not crop this image. Please try again";
     public static String progressColor="#331199";
 }

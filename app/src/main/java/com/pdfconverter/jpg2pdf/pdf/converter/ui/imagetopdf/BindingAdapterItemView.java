@@ -20,7 +20,7 @@ public class BindingAdapterItemView {
     @BindingAdapter("bind:imageUrl")
     public static void loadImage(ImageView view, String imagePath) {
         if (TextUtils.isEmpty(imagePath)) {
-            Drawable drawable = view.getContext().getDrawable(R.drawable.ic_add);
+            @SuppressLint("UseCompatLoadingForDrawables") Drawable drawable = view.getContext().getDrawable(R.drawable.ic_add);
             view.setImageDrawable(drawable);
         } else {
             RequestOptions options = new RequestOptions();

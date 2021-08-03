@@ -106,7 +106,6 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
     private T mViewDataBinding;
 
     protected String mCurrentPhotoPath;
-    protected String mCurrentPhotoUri;
 
     private SweetAlertDialog mDownloadFromGgDriveDialog;
     protected SweetAlertDialog mLoadFromLocalDialog;
@@ -198,10 +197,15 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
         PurchaseDialog purchaseDialog = new PurchaseDialog(BaseBindingActivity.this, new PurchaseDialog.PurchaseListener() {
             @Override
             public void onSelectPurchase(int type) {
+
                 String subId = type == 0 ? BuildConfig.yearly_purchase_key : BuildConfig.monthly_purchase_key;
+                FirebaseUtils.sendEventFunctionUsed(BaseBindingActivity.this, "User start purchase", subId);
+
                 AppPurchase.getInstance().setPurchaseListioner(new PurchaseListioner() {
                     @Override
                     public void onProductPurchased(String s, String s1) {
+                        FirebaseUtils.sendEventFunctionUsed(BaseBindingActivity.this, "User purchase success", subId);
+
                         ToastUtils.showMessageLong(BaseBindingActivity.this, getString(R.string.purchase_success));
 
                         if (callback != null) {
@@ -211,6 +215,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
 
                     @Override
                     public void displayErrorMessage(String s) {
+                        FirebaseUtils.sendEventFunctionUsed(BaseBindingActivity.this, "User purchase fail", subId);
                         ToastUtils.showMessageLong(BaseBindingActivity.this, getString(R.string.purchase_error));
                     }
                 });
@@ -219,11 +224,13 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
 
             @Override
             public void onCancel() {
+                FirebaseUtils.sendEventFunctionUsed(BaseBindingActivity.this, "User cancel purchase", "Cancel");
                 ToastUtils.showMessageLong(BaseBindingActivity.this, getString(R.string.purchase_cancel));
             }
         });
         try {
             purchaseDialog.show();
+            FirebaseUtils.sendEventFunctionUsed(BaseBindingActivity.this, "Show purchase box", "Show");
         } catch (Exception e) {
             ToastUtils.showMessageLong(BaseBindingActivity.this, getString(R.string.purchase_error));
         }

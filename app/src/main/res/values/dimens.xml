@@ -23,7 +23,7 @@
     <dimen name="title_first_component_text_size">17.8sp</dimen>
     <dimen name="title_second_component_text_size">16.5sp</dimen>
     <dimen name="title_third_component_text_size">14sp</dimen>
-    <dimen name="title_fourth_component_text_size">12sp</dimen>
+    <dimen name="title_fourth_component_text_size">11.5sp</dimen>
     <dimen name="title_view_more_text_size">13sp</dimen>
     <dimen name="border_item_image_radius">5dp</dimen>
     <dimen name="border_item_image_background_radius">5dp</dimen>

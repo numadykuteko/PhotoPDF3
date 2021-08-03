@@ -53,17 +53,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField('String', 'banner_id', '"ca-app-pub-5816699985342884/3112937558"')
-            buildConfigField('String', 'full_home_id', '"ca-app-pub-5816699985342884/3851304151"')
-            buildConfigField('String', 'full_my_pdf_id', '"ca-app-pub-5816699985342884/8543204119"')
-            buildConfigField('String', 'full_view_pdf_from_other_id', '"ca-app-pub-5816699985342884/2182999262"')
-            buildConfigField('String', 'full_splash_id', '"ca-app-pub-5816699985342884/5000734292"')
-            buildConfigField('String', 'native_id', '"ca-app-pub-5816699985342884/4042875848"')
+            buildConfigField('String', 'banner_id', '"ca-app-pub-3548016532531500/9197486839"')
+            buildConfigField('String', 'full_home_id', '"ca-app-pub-3548016532531500/5991711322"')
+            buildConfigField('String', 'full_my_pdf_id', '"ca-app-pub-3548016532531500/6782048814"')
+            buildConfigField('String', 'full_view_pdf_from_other_id', '"ca-app-pub-3548016532531500/6826829587"')
+            buildConfigField('String', 'full_splash_id', '"ca-app-pub-3548016532531500/5660538833"')
+            buildConfigField('String', 'native_id', '"ca-app-pub-3548016532531500/2842803805"')
 
             buildConfigField('String', 'monthly_purchase_key', '"one_month"')
             buildConfigField('String', 'yearly_purchase_key', '"one_year"')
 
-            resValue "string", "app_id", "ca-app-pub-5816699985342884~2757714330"
+            resValue "string", "app_id", "ca-app-pub-3548016532531500~7356763881"
             resValue "bool", "FIREBASE_ANALYTICS_DEACTIVATED", "false"
         }
     }
@@ -165,6 +165,7 @@ dependencies {
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
 
     implementation project(':openCVLibrary')
+    implementation project(':camera-view')
 }
 
 repositories {

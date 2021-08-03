@@ -151,7 +151,6 @@ public class ViewPdfActivity extends BaseBindingActivity<ActivityViewPdfBinding,
         }
 
         Admod.getInstance().loadBanner(this, BuildConfig.banner_id);
-        preloadMyPdfAdsIfInit();
 
         mIsViewFull = false;
         setForViewFullScreen();

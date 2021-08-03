@@ -1,7 +1,6 @@
 package com.pdfconverter.jpg2pdf.pdf.converter.ui.imagetopdf;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -44,6 +44,7 @@ import com.pdfconverter.jpg2pdf.pdf.converter.utils.adapter.ImageListSelectAdapt
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.FileUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.RealPathUtil;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.pdf.ImageToPdfConstants;
+import com.xlythe.view.camera.CameraActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -364,67 +365,27 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
     }
 
     public void startScanActivity() {
-        Intent cameraImgIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        ResolveInfo cameraPackage = getCameraPackage();
-        if (cameraPackage != null) {
-            cameraImgIntent.setPackage(cameraPackage.activityInfo.packageName);
-        }
-
-        File imageFile = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File newFile;
-        try {
-            newFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), ".jpg", imageFile);
-            Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", newFile);
-            mCurrentPhotoPath = newFile.getAbsolutePath();
-            mCurrentPhotoUri = uri.toString();
-            cameraImgIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            startActivityForResult(cameraImgIntent, SCAN_REQUEST);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Intent intent = new Intent(ImageToPdfActivity.this, CameraActivity.class);
+        startActivityForResult(intent, SCAN_REQUEST);
     }
 
     public void startScanDocumentFromTakenPhoto() {
-        Intent intent = new Intent(ImageToPdfActivity.this, ImageScanActivity.class);
-        intent.putExtra(EXTRA_FILE_PATH, mCurrentPhotoPath);
-        startActivityForResult(intent, SCAN_DOCUMENT_AFTER_TAKEN_REQUEST);
+        if (FileUtils.checkFileExist(mCurrentPhotoPath)) {
+            File file = new File(mCurrentPhotoPath);
+            if (file.length() > 0) {
+                Intent intent = new Intent(ImageToPdfActivity.this, ImageScanActivity.class);
+                intent.putExtra(EXTRA_FILE_PATH, mCurrentPhotoPath);
+                startActivityForResult(intent, SCAN_DOCUMENT_AFTER_TAKEN_REQUEST);
+                return;
+            }
+        }
+
+        ToastUtils.showMessageLong(this, "Sorry. Your image is NOT valid");
     }
 
     public void startCameraActivity() {
-        Intent cameraImgIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        ResolveInfo cameraPackage = getCameraPackage();
-        if (cameraPackage != null) {
-            cameraImgIntent.setPackage(cameraPackage.activityInfo.packageName);
-        }
-
-        File imageFile = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File newFile;
-        try {
-            newFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), ".jpg", imageFile);
-            Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", newFile);
-            mCurrentPhotoUri = uri.toString();
-            cameraImgIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            startActivityForResult(cameraImgIntent, CAMERA_REQUEST);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public ResolveInfo getCameraPackage() {
-        try {
-            Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            ResolveInfo cameraInfo  = null;
-            PackageManager pm = getPackageManager();
-
-            List<ResolveInfo> pkgList = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-
-            if(pkgList.size() > 0) {
-                cameraInfo = pkgList.get(0);
-            }
-            return cameraInfo;
-        } catch (Exception e) {
-            return null;
-        }
+        Intent intent = new Intent(ImageToPdfActivity.this, CameraActivity.class);
+        startActivityForResult(intent, CAMERA_REQUEST);
     }
 
     @Override
@@ -460,21 +421,38 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
             return;
         }
 
+        mIsNeedScan = false;
+
         if (requestCode == CAMERA_REQUEST) {
-            if (mListFileSelector.size() == 0) {
-                mListFileSelector = new ArrayList<>();
-                mListFileSelector.add(0, new ImageData());
+            if (data != null) {
+                mCurrentPhotoPath = data.getStringExtra(CameraActivity.NEW_IMAGE_PATH);
+                if (mCurrentPhotoPath != null && mCurrentPhotoPath.length() > 0 && FileUtils.checkFileExist(mCurrentPhotoPath)) {
+                    if (mListFileSelector.size() == 0) {
+                        mListFileSelector = new ArrayList<>();
+                        mListFileSelector.add(0, new ImageData());
+                    }
+
+                    try {
+                        ImageData imageData = new ImageData(mCurrentPhotoPath, "", 0, System.nanoTime());
+                        mListFileSelector.add(1, imageData);
+                        mFileListSelectorAdapter.addToFirstPosition(imageData);
+                    } catch (Exception ignored) {
+
+                    }
+
+                    scrollToTop();
+                    updateNumberSelected();
+                }
             }
 
-            ImageData imageData = new ImageData(mCurrentPhotoUri, "", 0, System.nanoTime());
-            mListFileSelector.add(1, imageData);
-            mFileListSelectorAdapter.addToFirstPosition(imageData);
-
-            scrollToTop();
-
-            updateNumberSelected();
         } else if (requestCode == SCAN_REQUEST) {
-            startScanDocumentFromTakenPhoto();
+            if (data != null) {
+                mCurrentPhotoPath = data.getStringExtra(CameraActivity.NEW_IMAGE_PATH);
+                if (mCurrentPhotoPath != null && mCurrentPhotoPath.length() > 0) {
+                    startScanDocumentFromTakenPhoto();
+                }
+            }
+
         } else if (requestCode == SCAN_DOCUMENT_AFTER_TAKEN_REQUEST) {
             if (data != null) {
                 String path = data.getStringExtra("NEW_IMAGE_PATH");
@@ -513,8 +491,13 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
                 }
                 if (arrayList.size() > 0) {
                     for (int i = arrayList.size() - 1; i>=0; i--) {
-                        mListFileSelector.add(1, arrayList.get(i));
-                        mFileListSelectorAdapter.addToFirstPosition(arrayList.get(i));
+                        try {
+                            mListFileSelector.add(1, arrayList.get(i));
+                            mFileListSelectorAdapter.addToFirstPosition(arrayList.get(i));
+                        } catch (Exception ignored) {
+
+                        }
+
                     }
                 }
 
@@ -526,8 +509,13 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
                 String imagePath = RealPathUtil.getInstance().getRealPath(this, imageUri, FileUtils.FileType.type_IMAGE);
                 if (FileUtils.checkFileExist(imagePath)) {
                     ImageData imageData  = new ImageData(imagePath, "", 0, System.nanoTime());
-                    mListFileSelector.add(1, imageData);
-                    mFileListSelectorAdapter.addToFirstPosition(imageData);
+
+                    try {
+                        mListFileSelector.add(1, imageData);
+                        mFileListSelectorAdapter.addToFirstPosition(imageData);
+                    } catch (Exception ignored) {
+
+                    }
 
                     scrollToTop();
                     updateNumberSelected();
