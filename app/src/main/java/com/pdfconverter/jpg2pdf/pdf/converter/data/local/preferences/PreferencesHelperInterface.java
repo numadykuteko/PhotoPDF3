@@ -24,6 +24,9 @@ public interface PreferencesHelperInterface {
     int getBackTime();
     void setBackTime(int time);
 
+    String getLastKnownCountryCode();
+    void setLastKnownCountryCode(String countryCode);
+
     ExcelToPDFOptions getExcelToPDFOptions();
     void saveExcelToPDFOptions(ExcelToPDFOptions excelToPDFOptions);
 

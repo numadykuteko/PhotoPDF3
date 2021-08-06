@@ -42,6 +42,8 @@ android {
             buildConfigField('String', 'full_my_pdf_id', '"ca-app-pub-3940256099942544/1033173712"')
             buildConfigField('String', 'full_view_pdf_from_other_id', '"ca-app-pub-3940256099942544/1033173712"')
             buildConfigField('String', 'full_splash_id', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'full_done_id', '"ca-app-pub-3940256099942544/1033173712"')
+
             buildConfigField('String', 'native_id', '"ca-app-pub-3940256099942544/2247696110"')
 
             buildConfigField('String', 'monthly_purchase_key', '"one_month"')
@@ -59,6 +61,7 @@ android {
             buildConfigField('String', 'full_view_pdf_from_other_id', '"ca-app-pub-3548016532531500/6826829587"')
             buildConfigField('String', 'full_splash_id', '"ca-app-pub-3548016532531500/5660538833"')
             buildConfigField('String', 'native_id', '"ca-app-pub-3548016532531500/2842803805"')
+            buildConfigField('String', 'full_done_id', '"ca-app-pub-3548016532531500/2069041518"')
 
             buildConfigField('String', 'monthly_purchase_key', '"one_month"')
             buildConfigField('String', 'yearly_purchase_key', '"one_year"')
@@ -128,10 +131,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-config'
+    implementation 'com.google.firebase:firebase-dynamic-links'
 
     // ads
-    implementation 'com.google.android.gms:play-services-ads:19.6.0'
-    implementation 'com.github.AperoVN:AperoModuleAds:1.6.1'
+    implementation 'com.google.android.gms:play-services-ads:19.8.0'
 
     // Itext pdf library
     implementation 'com.itextpdf:itextg:5.5.10'
@@ -165,7 +169,8 @@ dependencies {
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
 
     implementation project(':openCVLibrary')
-    implementation project(':camera-view')
+    implementation project(':ads')
+    implementation project(':library')
 }
 
 repositories {

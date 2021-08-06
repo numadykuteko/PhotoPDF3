@@ -110,7 +110,7 @@ public abstract class DocumentScanActivity extends AppCompatActivity {
 
 
     private void initializeCropping() {
-        Bitmap scaledBitmap = scaledBitmap(selectedImage, (int) (getHolderImageCrop().getWidth() * 0.8f), (int) (getHolderImageCrop().getHeight() * 0.8f));
+        Bitmap scaledBitmap = scaledBitmap(selectedImage, (int) (getHolderImageCrop().getWidth()), (int) (getHolderImageCrop().getHeight()));
         getImageView().setImageBitmap(scaledBitmap);
 
         Bitmap tempBitmap = ((BitmapDrawable) getImageView().getDrawable()).getBitmap();

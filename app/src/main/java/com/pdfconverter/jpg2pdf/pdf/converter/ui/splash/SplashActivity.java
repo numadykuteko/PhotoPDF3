@@ -19,6 +19,7 @@ import com.pdfconverter.jpg2pdf.pdf.converter.ui.base.BaseBindingActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.firstopen.FirstOpenActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.main.MainActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.viewpdf.ViewPdfActivity;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.FirebaseRemoteUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.FirebaseUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.NetworkUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.FileUtils;
@@ -61,6 +62,9 @@ public class SplashActivity extends BaseBindingActivity<ActivitySplashBinding, S
 
         mActivitySplashBinding = getViewDataBinding();
         mSplashViewModel.setNavigator(this);
+
+        FirebaseRemoteUtils firebaseRemoteUtils = new FirebaseRemoteUtils();
+        firebaseRemoteUtils.fetchRemoteConfig(this, () -> {});
 
         precheckIntentFilter();
     }

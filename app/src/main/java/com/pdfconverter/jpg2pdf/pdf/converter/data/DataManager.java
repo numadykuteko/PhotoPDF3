@@ -98,6 +98,16 @@ public class DataManager implements DataManagerInterface {
     }
 
     @Override
+    public String getLastKnownCountryCode() {
+        return mPreferencesHelper.getLastKnownCountryCode();
+    }
+
+    @Override
+    public void setLastKnownCountryCode(String countryCode) {
+        mPreferencesHelper.setLastKnownCountryCode(countryCode);
+    }
+
+    @Override
     public ExcelToPDFOptions getExcelToPDFOptions() {
         return mPreferencesHelper.getExcelToPDFOptions();
     }

@@ -11,8 +11,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ads" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/camera-view" />
+            <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/openCVLibrary" />
           </set>
         </option>

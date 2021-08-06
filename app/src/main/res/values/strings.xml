@@ -746,6 +746,8 @@
     <string name="purchase_error">Sorry. We can not complete purchase now. Please try again later.</string>
     <string name="purchase_cancel">Sorry. You have cancelled purchase. You can not complete this action now.</string>
     <string name="purchase_start">Starting purchase…</string>
+    <string name="purchase_already">You have purchased before.</string>
+    <string name="purchase_free">You can use this app free now.</string>
 
     <string name="choose_method_title">Choose option</string>
     <string name="choose_method_take_picture">Take picture</string>

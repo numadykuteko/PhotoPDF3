@@ -54,11 +54,14 @@ import com.pdfconverter.jpg2pdf.pdf.converter.ui.theme.ThemeAdapter;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.unlockpdf.UnlockPdfActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.unlockpdf.done.UnlockPdfDoneActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.viewpdf.ViewPdfActivity;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.CountryCodeHelper;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.DateTimeUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.DialogFactory;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.FirebaseRemoteUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.FirebaseUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.NetworkUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.ToastUtils;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.ads.AdsDoneManager;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.DirectoryUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.FileUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.pdf.PdfUtils;
@@ -163,6 +166,9 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
     }
 
     protected void preloadDoneAdsIfInit() {
+        if (!checkNeedPurchase() && !isPurchased()) {
+            AdsDoneManager.getInstance(this);
+        }
     }
 
     public void preloadMyPdfAdsIfInit() {
@@ -187,6 +193,21 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
                 callback.run();
             }
         });
+    }
+
+    public boolean checkNeedPurchase() {
+        FirebaseRemoteUtils firebaseRemoteUtils = new FirebaseRemoteUtils();
+        firebaseRemoteUtils.fetchRemoteConfig(this, () -> {});
+
+        ArrayList<String> freeCountry = firebaseRemoteUtils.getFreeCountryList(this);
+        String countryCode = CountryCodeHelper.getDeviceCountryCode(this);
+
+        if (countryCode != null && countryCode.length() > 0) {
+            DataManager.getInstance(this).setLastKnownCountryCode(countryCode);
+            return !freeCountry.contains(countryCode);
+        }
+
+        return true;
     }
 
     public boolean isPurchased() {
@@ -240,7 +261,16 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
         if (isPurchased()) {
             callback.run();
         } else {
-            showIAPDialog(callback);
+            if (!checkNeedPurchase()) {
+                Admod.getInstance().forceShowInterstitial(this, AdsDoneManager.getInstance(this).getDoneInterstitialAd(), new AdCallback() {
+                    @Override
+                    public void onAdClosed() {
+                        callback.run();
+                    }
+                });
+            } else {
+                showIAPDialog(callback);
+            }
         }
     }
 

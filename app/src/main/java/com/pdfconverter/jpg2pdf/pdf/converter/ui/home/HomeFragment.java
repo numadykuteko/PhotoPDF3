@@ -76,11 +76,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         super.onViewCreated(view, savedInstanceState);
         mFragmentDiscoversBinding = getViewDataBinding();
 
-        if (mActivity != null) {
-            mActivity.preloadMyPdfAdsIfInit();
-            mActivity.preloadHomeAdsIfInit();
-        }
-
         initCommonView();
         initView();
         setForClick();

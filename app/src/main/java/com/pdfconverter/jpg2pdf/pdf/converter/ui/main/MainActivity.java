@@ -17,6 +17,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
 import com.pdfconverter.jpg2pdf.pdf.converter.constants.AppConstants;
 import com.pdfconverter.jpg2pdf.pdf.converter.constants.DataConstants;
@@ -92,8 +96,49 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding, MainV
             FirebaseUtils.sendEventFunctionUsed(this, "Image To Pdf", "From home");
         }
 
+        initDeepLinkNavigation();
+
         initView();
 
+    }
+
+    private void initDeepLinkNavigation() {
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+                    @Override
+                    public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                        // Get deep link from result (may be null if no link is found)
+                        Uri deepLink = null;
+                        if (pendingDynamicLinkData != null) {
+                            deepLink = pendingDynamicLinkData.getLink();
+                        }
+
+                        if (deepLink != null) {
+                            String type = deepLink.getQueryParameter("navigatePage");
+                            if ("IAP".equals(type)) {
+                                if (!checkNeedPurchase()) {
+                                    ToastUtils.showMessageLong(MainActivity.this, getString(R.string.purchase_free));
+                                } else if (isPurchased()) {
+                                    ToastUtils.showMessageLong(MainActivity.this, getString(R.string.purchase_already));
+                                } else {
+                                    showIAPDialog(() -> {
+                                    });
+                                }
+
+                            } else if ("scandocument".equals(type)) {
+                                Intent imagePdfIntent = new Intent(MainActivity.this, ImageToPdfActivity.class);
+                                imagePdfIntent.putExtra(EXTRA_NEED_SCAN, true);
+                                startActivity(imagePdfIntent);
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
     }
 
     @Override
@@ -159,6 +204,10 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding, MainV
         if (!mIsFromFirstOpen) {
             checkPermissionOnMain();
         }
+
+        preloadDoneAdsIfInit();
+        preloadMyPdfAdsIfInit();
+        preloadHomeAdsIfInit();
 
         mActivityMainBinding.searchToolbar.setOnClickListener(view -> gotoActivityWithFlag(AppConstants.FLAG_SEARCH_PDF));
     }

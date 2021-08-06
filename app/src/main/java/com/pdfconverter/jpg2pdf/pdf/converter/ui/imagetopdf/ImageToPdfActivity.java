@@ -44,14 +44,13 @@ import com.pdfconverter.jpg2pdf.pdf.converter.utils.adapter.ImageListSelectAdapt
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.FileUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.RealPathUtil;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.pdf.ImageToPdfConstants;
-import com.xlythe.view.camera.CameraActivity;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import xyz.pinaki.android.camera.CameraActivity;
 
 public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBinding, ImageToPdfViewModel> implements SettingImageToPdfDialog.OnDialogSubmit, OnFileItemClickListener {
 

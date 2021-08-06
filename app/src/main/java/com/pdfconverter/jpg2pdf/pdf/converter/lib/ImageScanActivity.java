@@ -348,8 +348,6 @@ public class ImageScanActivity extends DocumentScanActivity {
     }
 
     private void initView() {
-        Admod.getInstance().loadBanner(this, BuildConfig.banner_id);
-
         Button btnImageCrop = findViewById(R.id.btnImageCrop);
         ImageView btnClose = findViewById(R.id.btnClose);
         holderImageCrop = findViewById(R.id.holderImageCrop);

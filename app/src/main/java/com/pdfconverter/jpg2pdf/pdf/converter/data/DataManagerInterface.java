@@ -31,6 +31,9 @@ public interface DataManagerInterface {
     int getBackTime();
     void increaseBackTime();
 
+    String getLastKnownCountryCode();
+    void setLastKnownCountryCode(String countryCode);
+
     ExcelToPDFOptions getExcelToPDFOptions();
     void saveExcelToPDFOptions(ExcelToPDFOptions excelToPDFOptions);
 

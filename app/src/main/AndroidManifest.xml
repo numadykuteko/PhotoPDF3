@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:name="com.pdfconverter.jpg2pdf.pdf.converter.PdfApplication"
@@ -93,7 +93,20 @@
             android:hardwareAccelerated="true"
             android:screenOrientation="locked"
             android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/OrangeAppTheme" />
+            android:theme="@style/OrangeAppTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="pdfconvertprox.page.link/scandocument"
+                    android:scheme="https"/>
+                <data
+                    android:host="pdfconvertprox.page.link/IAP"
+                    android:scheme="https"
+                    tools:ignore="AppLinkUrlError" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.pdfconverter.jpg2pdf.pdf.converter.ui.imagetopdf.ImageToPdfActivity"
             android:theme="@style/OrangeAppTheme"

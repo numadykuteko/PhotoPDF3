@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="10dp">
+                android:layout_margin="20dp">
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -106,7 +106,7 @@
             android:layout_marginBottom="@dimen/common_padding_big"
             android:paddingStart="30dp"
             android:paddingEnd="30dp"
-            app:layout_constraintBottom_toTopOf="@id/banner_ads"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -165,21 +165,10 @@
             android:layout_height="0dp"
             android:background="@color/halfTransparentBackground"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/banner_ads"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:padding="150dp" />
-
-        <include
-            android:id="@+id/banner_ads"
-            layout="@layout/layout_banner_control"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-
-            android:layout_marginTop="@dimen/activity_horizontal_margin" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

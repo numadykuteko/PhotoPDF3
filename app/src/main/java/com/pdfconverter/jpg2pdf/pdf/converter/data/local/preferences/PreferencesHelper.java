@@ -87,6 +87,16 @@ public class PreferencesHelper implements PreferencesHelperInterface {
     }
 
     @Override
+    public String getLastKnownCountryCode() {
+        return mPrefs.getString(DataConstants.PREF_NAME_COUNTRY_CODE, "");
+    }
+
+    @Override
+    public void setLastKnownCountryCode(String countryCode) {
+        mPrefs.edit().putString(DataConstants.PREF_NAME_COUNTRY_CODE, countryCode).apply();
+    }
+
+    @Override
     public ExcelToPDFOptions getExcelToPDFOptions() {
         try {
             Gson gson = new Gson();

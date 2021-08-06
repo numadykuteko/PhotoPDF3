@@ -106,8 +106,10 @@ public class FirstOpenActivity extends BaseBindingActivity<ActivityFirstOpenBind
         mActivityFirstOpenBinding.firstViewContinue.setOnClickListener(v -> {
             if (index < 2) {
                 showFirstView(index + 1);
-            } else {
+            } else if (checkNeedPurchase()) {
                 showIAPSuggest();
+            } else {
+                showSecondView();
             }
         });
     }

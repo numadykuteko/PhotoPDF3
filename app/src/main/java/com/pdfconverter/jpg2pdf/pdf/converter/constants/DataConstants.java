@@ -22,6 +22,7 @@ public class DataConstants {
     public static final String PREF_NAME_OPTION_IMAGE = "PREF_NAME_OPTION_IMAGE";
     public static final String PREF_NAME_OPTION_TEXT = "PREF_NAME_OPTION_TEXT";
     public static final String PREF_NAME_OPTION_VIEW_PDF = "PREF_NAME_OPTION_VIEW_PDF";
+    public static final String PREF_NAME_COUNTRY_CODE = "PREF_NAME_COUNTRY_CODE";
 
     public static final String IMAGE_DESCRIPTION = "Image provided by " + DATABASE_NAME;
     public static final String PDF_DESCRIPTION = "PDF provided by " + DATABASE_NAME;
