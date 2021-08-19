@@ -678,8 +678,8 @@ public class Admod {
             adView.loadAd(getAdRequest());
             adView.setAdListener(new AdListener() {
                 @Override
-                public void onAdFailedToLoad(int i) {
-                    super.onAdFailedToLoad(i);
+                public void onAdFailedToLoad(LoadAdError loadAdError) {
+                    super.onAdFailedToLoad(loadAdError);
                     containerShimmer.stopShimmer();
                     adContainer.setVisibility(View.GONE);
                     containerShimmer.setVisibility(View.GONE);
