@@ -85,6 +85,16 @@ public abstract class DocumentScanActivity extends AppCompatActivity {
         }
     }
 
+    protected Bitmap flipBitmap(Bitmap source) {
+        try {
+            Matrix matrix = new Matrix();
+            matrix.postScale(-1, 1, source.getWidth() / 2f, source.getHeight() / 2f);
+            return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+        } catch (Exception | OutOfMemoryError e) {
+            return source;
+        }
+    }
+
     private void setProgressBar(boolean isShow) {
         if (isShow)
             showProgressBar();

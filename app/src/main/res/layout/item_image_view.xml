@@ -45,40 +45,21 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/item_crop_view"
+            android:id="@+id/item_option_view"
             android:layout_width="30dp"
             android:layout_height="30dp"
             app:cardCornerRadius="18dp"
             app:cardBackgroundColor="@color/black_semi_transparent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/common_padding_big"
-            android:layout_marginStart="@dimen/common_padding_big"
+            android:layout_marginEnd="@dimen/common_padding_big"
             android:visibility="@{TextUtils.isEmpty(imageData.imagePath) ? View.GONE:View.VISIBLE}">
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_crop_white" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/item_scan_view"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:cardCornerRadius="18dp"
-            app:cardBackgroundColor="@color/black_semi_transparent"
-            app:layout_constraintStart_toEndOf="@id/item_crop_view"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginStart="@dimen/common_margin_top_small"
-            android:layout_marginTop="@dimen/common_padding_big"
-            android:layout_marginStart="@dimen/common_padding_big"
-            android:visibility="@{TextUtils.isEmpty(imageData.imagePath) ? View.GONE:View.VISIBLE}">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_scan" />
+                android:src="@drawable/ic_open_pdf_more_vertical" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -87,10 +68,10 @@
             android:layout_height="30dp"
             app:cardCornerRadius="15dp"
             app:cardBackgroundColor="@color/black_semi_transparent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/common_padding_big"
-            android:layout_marginEnd="@dimen/common_padding_big"
+            android:layout_marginStart="@dimen/common_padding_big"
             android:visibility="@{TextUtils.isEmpty(imageData.imagePath) ? View.GONE:View.VISIBLE}">
             <ImageView
                 android:layout_width="20dp"

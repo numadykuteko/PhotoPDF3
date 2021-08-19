@@ -171,6 +171,7 @@ dependencies {
     implementation project(':openCVLibrary')
     implementation project(':ads')
     implementation project(':library')
+    implementation project(':photoeditor')
 }
 
 repositories {

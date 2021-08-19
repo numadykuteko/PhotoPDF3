@@ -36,6 +36,7 @@
                 android:textSize="@dimen/title_third_component_text_size"
                 android:text="@string/crop_reset"
                 android:padding="8dp"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

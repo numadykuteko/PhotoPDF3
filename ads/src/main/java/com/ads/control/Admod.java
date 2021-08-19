@@ -369,7 +369,7 @@ public class Admod {
         if (Arrays.asList(context.getResources().getStringArray(R.array.list_id_test)).contains(id)) {
             showTestIdAlert(context, INTERS_ADS, id);
         }
-        if (IS_HIDE_AFTER_PURCHASED && (AppPurchase.getInstance().isPurchased(context) || AdmodHelper.getNumClickAdsPerDay(context, id) >= maxClickAds)) {
+        if ((IS_HIDE_AFTER_PURCHASED && (AppPurchase.getInstance().isPurchased(context))) || AdmodHelper.getNumClickAdsPerDay(context, id) >= maxClickAds) {
             return null;
         }
         final InterstitialAd mInterstitialAd = new InterstitialAd(context);
@@ -395,7 +395,7 @@ public class Admod {
         if (Arrays.asList(context.getResources().getStringArray(R.array.list_id_test)).contains(id)) {
             showTestIdAlert(context, INTERS_ADS, id);
         }
-        if (IS_HIDE_AFTER_PURCHASED && (AppPurchase.getInstance().isPurchased(context) || AdmodHelper.getNumClickAdsPerDay(context, id) >= maxClickAds)) {
+        if ((IS_HIDE_AFTER_PURCHASED && (AppPurchase.getInstance().isPurchased(context))) || AdmodHelper.getNumClickAdsPerDay(context, id) >= maxClickAds) {
             return null;
         }
         final InterstitialAd mInterstitialAd = new InterstitialAd(context);

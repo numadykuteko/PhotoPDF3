@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/edit_image"
+        android:icon="@drawable/ic_edit_image"
+        android:title="@string/edit_image_title"/>
+
+    <item
+        android:id="@+id/crop_image"
+        android:icon="@drawable/ic_crop"
+        android:title="@string/crop_image_title"/>
+
+    <item
+        android:id="@+id/scan_image"
+        android:icon="@drawable/ic_scan_black"
+        android:title="@string/scan_image_title"/>
+</menu>

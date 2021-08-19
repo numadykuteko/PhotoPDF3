@@ -117,12 +117,12 @@
     <dimen name="fab_textview_margin_end">84dp</dimen>
     <dimen name="fab_textview_padding_bottom">6dp</dimen>
     <dimen name="fab_textview_padding_start">10dp</dimen>
-    <dimen name="fab_textview_margin_bottom_2">104dp</dimen>
-    <dimen name="fab_textview_margin_bottom_3">169dp</dimen>
-    <dimen name="fab_textview_margin_bottom_4">234dp</dimen>
-    <dimen name="fab_textview_margin_bottom_5">308dp</dimen>
-    <dimen name="fab_textview_margin_bottom_6">374dp</dimen>
-    <dimen name="fab_textview_margin_bottom_7">438dp</dimen>
+    <dimen name="fab_textview_margin_bottom_2">108dp</dimen>
+    <dimen name="fab_textview_margin_bottom_3">173dp</dimen>
+    <dimen name="fab_textview_margin_bottom_4">238dp</dimen>
+    <dimen name="fab_textview_margin_bottom_5">312dp</dimen>
+    <dimen name="fab_textview_margin_bottom_6">378dp</dimen>
+    <dimen name="fab_textview_margin_bottom_7">442dp</dimen>
 
     <dimen name="fab_button_margin_bottom_1">32dp</dimen>
     <dimen name="fab_button_margin_bottom_2">100dp</dimen>
@@ -133,7 +133,7 @@
     <dimen name="fab_button_margin_bottom_7">425dp</dimen>
 
     <dimen name="fab_icon_size">50dp</dimen>
-    <dimen name="fab_icon_size_small">18dp</dimen>
+    <dimen name="fab_icon_size_small">27dp</dimen>
     <dimen name="fab_icon_chosen_size">60dp</dimen>
     <dimen name="fab_text_size">14sp</dimen>
     <dimen name="fab_text_choosen_size">20sp</dimen>

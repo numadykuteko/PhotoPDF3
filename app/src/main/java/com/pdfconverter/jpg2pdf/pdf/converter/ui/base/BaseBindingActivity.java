@@ -88,6 +88,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
     protected static final int SCAN_REQUEST = 2363;
     protected static final int CREATE_PDF_FROM_SELECT_FILE = 2362;
     protected static final int SCAN_DOCUMENT_AFTER_TAKEN_REQUEST = 2361;
+    protected static final int EDIT_IMAGE_AFTER_TAKEN_REQUEST = 2360;
 
     public static final String EXTRA_FILE_PATH = "EXTRA_FILE_PATH";
     public static final String EXTRA_FILE_EXTENSION = "EXTRA_FILE_EXTENSION";

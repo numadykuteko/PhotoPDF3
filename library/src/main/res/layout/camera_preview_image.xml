@@ -12,37 +12,57 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_marginBottom="2dp"
         android:contentDescription="@string/preview_image"
         android:scaleType="fitCenter" />
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#fff"
+        android:layout_height="90dp"
+        android:background="#000"
         android:layout_gravity="center">
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/cancel"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="4dp"
-            android:layout_marginStart="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_cancel_button"
+            android:paddingStart="20dp"
+            android:paddingEnd="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_camera_cancel" />
+            android:foreground="?attr/selectableItemBackground">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ᐸᐸ  Back"
+                android:textColor="#fff"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/confirm"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="4dp"
-            android:layout_marginEnd="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_complete_button"
+            android:paddingStart="25dp"
+            android:paddingEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_camera_done" />
+            android:foreground="?attr/selectableItemBackground">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next  ᐳᐳ"
+                android:textColor="#fff"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

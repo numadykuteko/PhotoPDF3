@@ -13,7 +13,7 @@
             android:background="@color/transparent"/>
 
         <TextView
-            android:id="@+id/textview_from_image"
+            android:id="@+id/textview_scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -25,29 +25,29 @@
             android:paddingTop="@dimen/fab_textview_padding_bottom"
             android:paddingStart="@dimen/fab_textview_padding_start"
             android:paddingEnd="@dimen/fab_textview_padding_start"
-            android:text="@string/create_pdf_by_image"
+            android:text="@string/create_pdf_scan"
             android:textColor="@color/white_totally"
             android:textSize="@dimen/fab_text_size"
             android:visibility="invisible" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_from_image"
+            android:id="@+id/fab_scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="@dimen/fab_button_margin_bottom_4"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="232dp"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:elevation="16dp"
             android:focusable="true"
             android:visibility="invisible"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_create_from_image"
             app:backgroundTint="?attr/base_color"
+            app:fabCustomSize="48dp"
+            app:maxImageSize="@dimen/fab_icon_size_small"
             app:pressedTranslationZ="12dp"
-            app:maxImageSize="@dimen/fab_icon_size_small" />
+            app:srcCompat="@drawable/ic_scan" />
 
         <TextView
             android:id="@+id/textview_new_pdf"
@@ -73,21 +73,21 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="24dp"
             android:layout_marginBottom="@dimen/fab_button_margin_bottom_3"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:elevation="16dp"
             android:focusable="true"
             android:visibility="invisible"
-            app:fabSize="mini"
+            app:fabCustomSize="48dp"
             app:srcCompat="@drawable/ic_create_new_pdf"
             app:backgroundTint="?attr/base_color"
             app:pressedTranslationZ="12dp"
             app:maxImageSize="@dimen/fab_icon_size_small" />
 
         <TextView
-            android:id="@+id/textview_scan"
+            android:id="@+id/textview_from_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -99,26 +99,26 @@
             android:paddingTop="@dimen/fab_textview_padding_bottom"
             android:paddingStart="@dimen/fab_textview_padding_start"
             android:paddingEnd="@dimen/fab_textview_padding_start"
-            android:text="@string/create_pdf_scan"
+            android:text="@string/create_pdf_by_image"
             android:textColor="@color/white_totally"
             android:textSize="@dimen/fab_text_size"
             android:visibility="invisible" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_scan"
+            android:id="@+id/fab_from_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="24dp"
             android:layout_marginBottom="@dimen/fab_button_margin_bottom_2"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:elevation="16dp"
             android:focusable="true"
-            android:src="@drawable/ic_scan"
+            android:src="@drawable/ic_create_from_image"
             android:visibility="invisible"
-            app:fabSize="mini"
+            app:fabCustomSize="48dp"
             app:backgroundTint="?attr/base_color"
             app:pressedTranslationZ="12dp"
             app:maxImageSize="@dimen/fab_icon_size_small" />

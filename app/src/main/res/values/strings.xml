@@ -755,4 +755,7 @@
 
     <string name="scan">Select area</string>
 
+    <string name="edit_image_title">Edit image</string>
+    <string name="scan_image_title">Scan image</string>
+
 </resources>

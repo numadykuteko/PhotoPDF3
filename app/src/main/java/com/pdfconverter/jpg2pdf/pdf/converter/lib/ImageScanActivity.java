@@ -36,23 +36,15 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.ads.control.Admod;
-import com.pdfconverter.jpg2pdf.pdf.converter.BuildConfig;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
 import com.pdfconverter.jpg2pdf.pdf.converter.lib.base.CropperErrorType;
 import com.pdfconverter.jpg2pdf.pdf.converter.lib.base.DocumentScanActivity;
 import com.pdfconverter.jpg2pdf.pdf.converter.lib.helpers.ScannerConstants;
 import com.pdfconverter.jpg2pdf.pdf.converter.lib.libraries.PolygonView;
 
-import org.opencv.core.CvException;
-import org.opencv.core.Mat;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -63,9 +55,6 @@ public class ImageScanActivity extends DocumentScanActivity {
     private FrameLayout holderImageCrop;
     private ImageView imageView;
     private PolygonView polygonView;
-
-    private boolean isInverted;
-    private boolean isAuto;
 
     private ProgressBar progressBar;
     private Bitmap cropImage;
@@ -120,48 +109,6 @@ public class ImageScanActivity extends DocumentScanActivity {
         finish();
     };
 
-    private OnClickListener btnInvertColor = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            showProgressBar();
-            disposable.add(
-                    Observable.fromCallable(() -> {
-                        invertColor();
-                        return false;
-                    })
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe((result) -> {
-                                hideProgressBar();
-                                Bitmap scaledBitmap = scaledBitmap(cropImage, holderImageCrop.getWidth(), holderImageCrop.getHeight());
-                                imageView.setImageBitmap(scaledBitmap);
-                            })
-            );
-        }
-    };
-
-    private OnClickListener btnAutoColor = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (isAuto) return;
-
-            showProgressBar();
-            disposable.add(
-                    Observable.fromCallable(() -> {
-                        autoColor();
-                        return false;
-                    })
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe((result) -> {
-                                hideProgressBar();
-                                Bitmap scaledBitmap = scaledBitmap(cropImage, holderImageCrop.getWidth(), holderImageCrop.getHeight());
-                                imageView.setImageBitmap(scaledBitmap);
-                            })
-            );
-        }
-    };
-
     private OnClickListener onRotateClick = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -169,6 +116,25 @@ public class ImageScanActivity extends DocumentScanActivity {
             disposable.add(
                     Observable.fromCallable(() -> {
                         cropImage = rotateBitmap(cropImage, 90);
+                        return false;
+                    })
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe((result) -> {
+                                hideProgressBar();
+                                startCropping();
+                            })
+            );
+        }
+    };
+
+    private OnClickListener onFlipClick = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showProgressBar();
+            disposable.add(
+                    Observable.fromCallable(() -> {
+                        cropImage = flipBitmap(cropImage);
                         return false;
                     })
                             .subscribeOn(Schedulers.io())
@@ -193,9 +159,6 @@ public class ImageScanActivity extends DocumentScanActivity {
         if (oldImagePath != null) {
             resetBitmap();
         }
-
-        isInverted = false;
-        isAuto = false;
 
         if (cropImage != null)
             initView();
@@ -288,8 +251,6 @@ public class ImageScanActivity extends DocumentScanActivity {
                 }
             }
 
-            isAuto = false;
-            isInverted = false;
         } catch (Exception | OutOfMemoryError e) {
             // do nothing
         }
@@ -353,8 +314,7 @@ public class ImageScanActivity extends DocumentScanActivity {
         holderImageCrop = findViewById(R.id.holderImageCrop);
         imageView = findViewById(R.id.imageView);
         ImageView ivRotate = findViewById(R.id.ivRotate);
-        ImageView ivInvert = findViewById(R.id.ivInvert);
-        ImageView ivAuto = findViewById(R.id.ivAuto);
+        ImageView ivFlip = findViewById(R.id.ivFlip);
         TextView resetBtn = findViewById(R.id.toolbar_action_text);
         btnImageCrop.setText(getString(R.string.crop_done));
         polygonView = findViewById(R.id.polygonView);
@@ -366,71 +326,9 @@ public class ImageScanActivity extends DocumentScanActivity {
         btnImageCrop.setOnClickListener(btnImageEnhanceClick);
         btnClose.setOnClickListener(btnCloseClick);
         ivRotate.setOnClickListener(onRotateClick);
-        ivInvert.setOnClickListener(btnInvertColor);
-        ivAuto.setOnClickListener(btnAutoColor);
+        ivFlip.setOnClickListener(onFlipClick);
         resetBtn.setOnClickListener(btnReset);
         startCropping();
-    }
-
-    private void invertColor() {
-        if (!isInverted) {
-            try {
-                Bitmap bmpMonochrome = Bitmap.createBitmap(cropImage.getWidth(), cropImage.getHeight(), Bitmap.Config.ARGB_8888);
-                Canvas canvas = new Canvas(bmpMonochrome);
-                ColorMatrix ma = new ColorMatrix();
-                ma.setSaturation(0);
-                Paint paint = new Paint();
-                paint.setColorFilter(new ColorMatrixColorFilter(ma));
-                canvas.drawBitmap(cropImage, 0, 0, paint);
-                cropImage = bmpMonochrome.copy(bmpMonochrome.getConfig(), true);
-
-                isInverted = true;
-                isAuto = false;
-            } catch (Exception | OutOfMemoryError ignored) {
-            }
-        } else {
-            resetBitmap();
-        }
-    }
-
-    private Mat bitmapToMat(Bitmap bitmap) {
-        System.gc();
-        Mat image = new Mat();
-        Bitmap bmp32 = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        org.opencv.android.Utils.bitmapToMat(bmp32, image);
-        return image;
-    }
-
-    private Bitmap matToBitmap(Mat mat) {
-        try {
-            Bitmap bmp = Bitmap.createBitmap(mat.width(), mat.height(), Bitmap.Config.ARGB_8888);
-            org.opencv.android.Utils.matToBitmap(mat, bmp);
-            return bmp;
-        } catch (CvException e) {
-            throw new RuntimeException("Not able to convert mat to bitmap", e);
-        }
-    }
-
-    private void autoColor() {
-        if (isAuto)
-            return;
-
-        if (isInverted) {
-            resetBitmap();
-        }
-
-        try {
-            Mat mbgra = bitmapToMat(cropImage);
-            Mat dst = mbgra.clone();
-            // init our output image
-            float alpha = 1.9f;
-            float beta = -80;
-            dst.convertTo(dst, -1, alpha, beta);
-
-            cropImage = matToBitmap(dst);
-            isAuto = true;
-        } catch (Exception | OutOfMemoryError ignored) {
-        }
     }
 
     private String saveToInternalStorage(Bitmap bitmapImage) {

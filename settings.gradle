@@ -1,3 +1,4 @@
+include ':photoeditor'
 include ':library'
 include ':ads'
 include ':openCVLibrary'

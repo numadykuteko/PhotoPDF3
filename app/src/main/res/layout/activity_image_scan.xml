@@ -52,6 +52,7 @@
                 android:textSize="@dimen/title_third_component_text_size"
                 android:text="@string/crop_reset"
                 android:padding="8dp"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -142,18 +143,11 @@
                     app:srcCompat="@drawable/ic_rotate" />
 
                 <ImageView
-                    android:id="@+id/ivInvert"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/ivFlip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/ic_invert_colors" />
-
-                <ImageView
-                    android:id="@+id/ivAuto"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:padding="10dp"
-                    app:srcCompat="@drawable/ic_edit_image" />
+                    app:srcCompat="@drawable/ic_crop_flip" />
 
             </LinearLayout>
 

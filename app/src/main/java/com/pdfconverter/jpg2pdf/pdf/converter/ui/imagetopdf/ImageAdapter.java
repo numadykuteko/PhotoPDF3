@@ -1,5 +1,6 @@
 package com.pdfconverter.jpg2pdf.pdf.converter.ui.imagetopdf;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -21,6 +23,8 @@ import com.pdfconverter.jpg2pdf.pdf.converter.utils.DeminUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import ja.burhanrashid52.photoeditor.main.EditImageActivity;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
@@ -106,6 +110,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return imageViewHolder;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Context context = holder.mItemImageViewBinding.getRoot().getContext();
@@ -121,18 +126,40 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             ImageData imageData = mListData.get(position);
             holder.mItemImageViewBinding.setImageData(imageData);
             holder.itemView.setClickable(false);
-            holder.mItemImageViewBinding.itemCropView.setOnClickListener((v) -> {
-                Intent intent = new Intent(v.getContext(), CropImageActivity.class);
-                intent.putExtra(ADAPTER_POSITION, holder.getAdapterPosition());
-                intent.putExtra(INTENT_DATA_IMAGE, mListData.get(holder.getAdapterPosition()).getImagePath());
-                mStartActivity.startActivityForResult(intent, ImageToPdfActivity.CROP_IMAGE_CODE);
-            });
+            holder.mItemImageViewBinding.itemOptionView.setOnClickListener((v) -> {
 
-            holder.mItemImageViewBinding.itemScanView.setOnClickListener((v) -> {
-                Intent intent = new Intent(v.getContext(), ImageScanActivity.class);
-                intent.putExtra("EXTRA_POSITION", holder.getAdapterPosition());
-                intent.putExtra("EXTRA_FILE_PATH", mListData.get(holder.getAdapterPosition()).getImagePath());
-                mStartActivity.startActivityForResult(intent, ImageToPdfActivity.SCAN_IMAGE_CODE);
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                popup.inflate(R.menu.image_option_menu);
+                Intent intent;
+
+                popup.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.edit_image:
+                            Intent editIntent = new Intent(v.getContext(), EditImageActivity.class);
+                            editIntent.putExtra("EXTRA_POSITION", holder.getAdapterPosition());
+                            editIntent.putExtra("EXTRA_FILE_PATH", mListData.get(holder.getAdapterPosition()).getImagePath());
+                            mStartActivity.startActivityForResult(editIntent, ImageToPdfActivity.EDIT_IMAGE_CODE);
+                            return true;
+                        case R.id.crop_image:
+                            Intent cropIntent = new Intent(v.getContext(), CropImageActivity.class);
+                            cropIntent.putExtra(ADAPTER_POSITION, holder.getAdapterPosition());
+                            cropIntent.putExtra(INTENT_DATA_IMAGE, mListData.get(holder.getAdapterPosition()).getImagePath());
+                            mStartActivity.startActivityForResult(cropIntent, ImageToPdfActivity.CROP_IMAGE_CODE);
+                            return true;
+                        case R.id.scan_image:
+                            Intent scanIntent = new Intent(v.getContext(), ImageScanActivity.class);
+                            scanIntent.putExtra("EXTRA_POSITION", holder.getAdapterPosition());
+                            scanIntent.putExtra("EXTRA_FILE_PATH", mListData.get(holder.getAdapterPosition()).getImagePath());
+                            mStartActivity.startActivityForResult(scanIntent, ImageToPdfActivity.SCAN_IMAGE_CODE);
+                            return true;
+
+                        default:
+                            return false;
+                    }
+                });
+                //displaying the popup
+
+                popup.show();
             });
 
             if (mIsStretch) {

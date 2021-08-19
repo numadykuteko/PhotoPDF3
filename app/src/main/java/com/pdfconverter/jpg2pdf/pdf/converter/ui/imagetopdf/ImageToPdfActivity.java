@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import ja.burhanrashid52.photoeditor.main.EditImageActivity;
 import xyz.pinaki.android.camera.CameraActivity;
 
 public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBinding, ImageToPdfViewModel> implements SettingImageToPdfDialog.OnDialogSubmit, OnFileItemClickListener {
@@ -62,6 +63,7 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
     private ImageToPDFOptions mImageToPDFOptions = new ImageToPDFOptions();
     public static int CROP_IMAGE_CODE = 26783;
     public static int SCAN_IMAGE_CODE = 26784;
+    public static int EDIT_IMAGE_CODE = 26785;
 
     private final int REQUEST_EXTERNAL_PERMISSION_FOR_CREATE_FILE = 1;
     private final int REQUEST_EXTERNAL_PERMISSION_FOR_FILE_SELECTOR = 2;
@@ -426,21 +428,9 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
             if (data != null) {
                 mCurrentPhotoPath = data.getStringExtra(CameraActivity.NEW_IMAGE_PATH);
                 if (mCurrentPhotoPath != null && mCurrentPhotoPath.length() > 0 && FileUtils.checkFileExist(mCurrentPhotoPath)) {
-                    if (mListFileSelector.size() == 0) {
-                        mListFileSelector = new ArrayList<>();
-                        mListFileSelector.add(0, new ImageData());
-                    }
-
-                    try {
-                        ImageData imageData = new ImageData(mCurrentPhotoPath, "", 0, System.nanoTime());
-                        mListFileSelector.add(1, imageData);
-                        mFileListSelectorAdapter.addToFirstPosition(imageData);
-                    } catch (Exception ignored) {
-
-                    }
-
-                    scrollToTop();
-                    updateNumberSelected();
+                    Intent editIntent = new Intent(ImageToPdfActivity.this, EditImageActivity.class);
+                    editIntent.putExtra("EXTRA_FILE_PATH", mCurrentPhotoPath);
+                    startActivityForResult(editIntent, EDIT_IMAGE_AFTER_TAKEN_REQUEST);
                 }
             }
 
@@ -457,6 +447,16 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
                 String path = data.getStringExtra("NEW_IMAGE_PATH");
 
                 if (FileUtils.checkFileExist(path)) {
+                    Intent editIntent = new Intent(ImageToPdfActivity.this, EditImageActivity.class);
+                    editIntent.putExtra("EXTRA_FILE_PATH", path);
+                    startActivityForResult(editIntent, EDIT_IMAGE_AFTER_TAKEN_REQUEST);
+                }
+            }
+        } else if (requestCode == EDIT_IMAGE_AFTER_TAKEN_REQUEST) {
+            if (data != null) {
+                String path = data.getStringExtra("NEW_IMAGE_PATH");
+
+                if (FileUtils.checkFileExist(path)) {
                     if (mListFileSelector.size() == 0) {
                         mListFileSelector = new ArrayList<>();
                         mListFileSelector.add(0, new ImageData());
@@ -467,7 +467,6 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
                     mFileListSelectorAdapter.addToFirstPosition(imageData);
 
                     scrollToTop();
-
                     updateNumberSelected();
                 }
             }
@@ -501,7 +500,6 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
                 }
 
                 scrollToTop();
-
                 updateNumberSelected();
             } else if (data.getData() != null) {
                 Uri imageUri = data.getData();
@@ -564,6 +562,21 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
                 }
             }
         } else if (requestCode == ImageToPdfActivity.SCAN_IMAGE_CODE) {
+            String path;
+            if (data != null) {
+                path = data.getStringExtra("NEW_IMAGE_PATH");
+                int position = data.getIntExtra("EXTRA_POSITION", -1);
+                if (!TextUtils.isEmpty(path) && position >= 0) {
+                    ArrayList<ImageData> imageDatas = mImageToPdfViewModel.getListImage().getValue();
+                    if (imageDatas != null && imageDatas.size() > position && imageDatas.get(position) != null) {
+                        imageDatas.get(position).setImagePath(path);
+                        mImageToPdfViewModel.getListImage().setValue(imageDatas);
+                        mImageAdapter.setImageData(imageDatas);
+                        mImageAdapter.notifyItemChanged(position);
+                    }
+                }
+            }
+        } else if (requestCode == ImageToPdfActivity.EDIT_IMAGE_CODE) {
             String path;
             if (data != null) {
                 path = data.getStringExtra("NEW_IMAGE_PATH");

@@ -4,20 +4,26 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import java.io.File;
 import java.util.List;
 
 import xyz.pinaki.android.camera.dimension.AspectRatio;
@@ -35,6 +41,8 @@ import xyz.pinaki.androidcamera.R;
 public class CameraFragment extends Fragment implements CameraView {
     private static final String TAG = CameraFragment.class.getName();
     private static final int REQUEST_CAMERA_PERMISSION = 0;
+    protected static final int PICK_IMAGE_REQUEST = 2367;
+
     private CameraPresenter cameraPresenter;
     private ViewFinderPreview viewFinderPreview;
     private CameraAPI.PreviewType previewType;
@@ -79,17 +87,7 @@ public class CameraFragment extends Fragment implements CameraView {
 
         @Override
         public void onBitmapProcessed(Bitmap bitmap, int cameraRotation) {
-            previewContainer.setVisibility(View.VISIBLE);
-            previewImage.setImageBitmap(bitmap);
-
-            if (apiCallback != null) {
-                apiCallback.onBitmapProcessed(bitmap);
-            }
-
-            final ImageView previewConfirmButton = (ImageView) parentView.findViewById(R.id.confirm);
-            previewConfirmButton.setOnClickListener(view -> apiCallback.onSubmitBitmap(bitmap, cameraRotation));
-
-            isReviewing = true;
+            bitmapProcessed(bitmap, cameraRotation);
         }
 
         @Override
@@ -155,7 +153,7 @@ public class CameraFragment extends Fragment implements CameraView {
 
         previewContainer = (ViewGroup) parentView.findViewById(R.id.preview_container);
         previewImage = (ImageView) parentView.findViewById(R.id.preview_image);
-        final ImageView previewCloseButton = (ImageView) parentView.findViewById(R.id.cancel);
+        final LinearLayout previewCloseButton = parentView.findViewById(R.id.cancel);
         previewCloseButton.setOnClickListener(view -> {
             previewContainer.setVisibility(View.INVISIBLE);
             isReviewing = false;
@@ -199,6 +197,46 @@ public class CameraFragment extends Fragment implements CameraView {
         if (context != null && context instanceof Activity) {
             displayOrientationDetector.enable(((Activity) context).getWindowManager().getDefaultDisplay());
         }
+
+        ImageView getPicture = parentView.findViewById(R.id.get_image);
+        getPicture.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == PICK_IMAGE_REQUEST && data != null) {
+            if (data.getData() != null) {
+                Uri imageUri = data.getData();
+                String imagePath = RealPathUtil.getInstance().getRealPath(getContext(), imageUri);
+                File file = new File(imagePath);
+                if (file.exists()) {
+                    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath, bmOptions);
+
+                    bitmapProcessed(bitmap, 0);
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void bitmapProcessed(Bitmap bitmap, int cameraRotation) {
+        previewContainer.setVisibility(View.VISIBLE);
+        previewImage.setImageBitmap(bitmap);
+
+        if (apiCallback != null) {
+            apiCallback.onBitmapProcessed(bitmap);
+        }
+
+        final LinearLayout previewConfirmButton = parentView.findViewById(R.id.confirm);
+        previewConfirmButton.setOnClickListener(view -> apiCallback.onSubmitBitmap(bitmap, cameraRotation));
+
+        isReviewing = true;
     }
 
     public boolean isReviewing() {
@@ -272,12 +310,11 @@ public class CameraFragment extends Fragment implements CameraView {
     @Override
     public void onStop() {
         super.onStop();
-        if (cameraPresenter != null) {
-            cameraPresenter.onStop();
-        }
-        if (context != null && context instanceof Activity) {
-            ((Activity) context).finish();
-        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
