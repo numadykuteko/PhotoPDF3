@@ -264,6 +264,9 @@ public class CameraFragment extends Fragment implements CameraView {
         if (displayOrientationDetector != null) {
             displayOrientationDetector.disable();
         }
+        if (cameraPresenter != null) {
+            cameraPresenter.onStop();
+        }
         super.onDestroyView();
     }
 
