@@ -43,7 +43,7 @@ public class SplitPdfViewHolder extends RecyclerView.ViewHolder {
         if (splitFileData.isCreated()) {
             String folderPath = FileUtils.getFileDirectoryPath(splitFileData.getFilePath());
 
-            mDescriptionView.setText(FileUtils.getMinimalDirectoryPath(folderPath, DataConstants.PDF_DIRECTORY));
+            mDescriptionView.setText(folderPath);
             mOptionView.setImageDrawable(itemView.getContext().getDrawable(R.drawable.ic_split_checked));
         } else {
             StringBuilder stringBuilder = new StringBuilder();

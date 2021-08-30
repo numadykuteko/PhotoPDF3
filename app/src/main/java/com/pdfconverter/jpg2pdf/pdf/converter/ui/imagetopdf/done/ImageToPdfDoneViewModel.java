@@ -12,6 +12,7 @@ import com.pdfconverter.jpg2pdf.pdf.converter.R;
 import com.pdfconverter.jpg2pdf.pdf.converter.constants.DataConstants;
 import com.pdfconverter.jpg2pdf.pdf.converter.data.model.ImageToPDFOptions;
 import com.pdfconverter.jpg2pdf.pdf.converter.ui.base.BaseViewModel;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.DirectoryUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.FileUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.pdf.ImageToPdfConstants;
 
@@ -68,13 +69,8 @@ public class ImageToPdfDoneViewModel extends BaseViewModel {
     }
 
     private void setupFile() {
-        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), DataConstants.PDF_DIRECTORY);
-        if (!dir.exists()) {
-            boolean isDirectoryCreated = dir.mkdir();
-            if (!isDirectoryCreated) {
-                Log.e("Error", "Directory could not be created");
-            }
-        }
+        File dir = DirectoryUtils.getDefaultStorageFile();
+
         String name = TextUtils.isEmpty(mImageToPDFOptions.getOutFileName()) ? FileUtils.getDefaultOutputName(DataConstants.FILE_TYPE_PDF)
                 : mImageToPDFOptions.getOutFileName();
         mFilePdf = new File(dir, name + ImageToPdfConstants.pdfExtension);

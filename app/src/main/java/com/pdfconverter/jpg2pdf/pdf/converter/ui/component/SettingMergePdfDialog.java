@@ -15,10 +15,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
-import com.pdfconverter.jpg2pdf.pdf.converter.constants.DataConstants;
 import com.pdfconverter.jpg2pdf.pdf.converter.data.model.MergePDFOptions;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.CommonUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.ToastUtils;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.DirectoryUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.FileUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.pdf.ImageToPdfConstants;
 
@@ -90,7 +90,7 @@ public class SettingMergePdfDialog extends BottomSheetDialogFragment {
                     mOptions.setPasswordProtected(false);
 
                     String fileName = mOptions.getOutFileName() + ImageToPdfConstants.pdfExtension;
-                    File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), DataConstants.PDF_DIRECTORY);
+                    File dir = DirectoryUtils.getDefaultStorageFile();
 
                     File file = new File(dir, fileName);
                     if (FileUtils.checkFileExist(file.getAbsolutePath())) {

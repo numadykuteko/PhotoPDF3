@@ -257,26 +257,6 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding, MainV
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (mIsRequestFullPermission) {
-            mIsRequestFullPermission = false;
-
-            if (!notHaveStoragePermission()) {
-                mRequestPermissionDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                mRequestPermissionDialog.setTitleText(getString(R.string.thankyou_text));
-                mRequestPermissionDialog.setContentText(getString(R.string.thank_you_for_support));
-                mRequestPermissionDialog.showCancelButton(false);
-                mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
-                mRequestPermissionDialog.setConfirmClickListener(Dialog::dismiss);
-            } else {
-                mRequestPermissionDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                mRequestPermissionDialog.setTitleText(getString(R.string.title_need_permission_fail));
-                mRequestPermissionDialog.setContentText(getString(R.string.reject_read_file));
-                mRequestPermissionDialog.showCancelButton(false);
-                mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
-                mRequestPermissionDialog.setConfirmClickListener(Dialog::dismiss);
-            }
-        }
     }
 
     @Override

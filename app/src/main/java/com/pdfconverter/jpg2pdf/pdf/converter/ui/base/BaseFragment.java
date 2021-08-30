@@ -138,16 +138,8 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     public void requestReadStoragePermissionsSafely(int requestCode) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-            Uri uri = Uri.fromParts("package", mActivity.getPackageName(), null);
-            intent.setData(uri);
-            mIsRequestFullPermission = true;
-            mRequestFullPermissionCode = requestCode;
-
-            mActivity.startActivity(intent);
         }
     }
 

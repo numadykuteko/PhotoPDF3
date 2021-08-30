@@ -642,35 +642,6 @@ public class ImageToPdfActivity extends BaseBindingActivity<ActivityImageToPdfBi
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (mIsRequestFullPermission) {
-            mIsRequestFullPermission = false;
-
-            if (mRequestFullPermissionCode == REQUEST_EXTERNAL_PERMISSION_FOR_CREATE_FILE) {
-                if (!notHaveStoragePermission()) {
-                    mRequestPermissionDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                    mRequestPermissionDialog.setTitleText(getString(R.string.thankyou_text));
-                    mRequestPermissionDialog.setContentText(getString(R.string.create_file_now));
-                    mRequestPermissionDialog.showCancelButton(false);
-                    mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
-                    mRequestPermissionDialog.setConfirmClickListener(sweetAlertDialog -> {
-                        startCreatePdfActivity();
-                        sweetAlertDialog.dismiss();
-                    });
-                } else {
-                    mRequestPermissionDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                    mRequestPermissionDialog.setTitleText(getString(R.string.title_need_permission_fail));
-                    mRequestPermissionDialog.setContentText(getString(R.string.couldnt_create_file_now));
-                    mRequestPermissionDialog.showCancelButton(false);
-                    mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
-                    mRequestPermissionDialog.setConfirmClickListener(Dialog::dismiss);
-                }
-            } else {
-                if (!notHaveStoragePermission()) {
-                    requestForFileSelector();
-                }
-            }
-        }
     }
 
     private void checkPermissionBeforeCreateFile() {

@@ -123,46 +123,40 @@ public class DirectoryUtils {
         }
     }
 
-    public static String getDefaultStorageLocation() {
-        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), DataConstants.PDF_DIRECTORY);
+    public static File getDefaultStorageFile() {
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         if (!dir.exists()) {
-            boolean isDirectoryCreated = dir.mkdir();
-            if (!isDirectoryCreated) {
-                Log.e("Error", "Directory could not be created");
+            try {
+                boolean isDirectoryCreated = dir.mkdir();
+                if (!isDirectoryCreated) {
+                    return Environment.getExternalStorageDirectory();
+                }
+            } catch (Exception e) {
+                return Environment.getExternalStorageDirectory();
             }
         }
-        return dir.getAbsolutePath() + "/";
+        return dir;
+    }
+
+    public static String getDefaultStorageLocation() {
+        return getDefaultStorageFile().getAbsolutePath() + "/";
     }
 
     public static String getSplitStorageLocation(String rootFileName) {
-        String splitFolder = "";
-        if (rootFileName.contains(".pdf")) {
-            rootFileName.replace(".pdf", "");
-        }
-        if (rootFileName.length() > 8) {
-            splitFolder = rootFileName.substring(0, 7) + "_split";
-        } else if (rootFileName.length() > 1) {
-            splitFolder = rootFileName + "_split";
-        } else {
-            splitFolder = "file_split";
-        }
-
-        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), DataConstants.PDF_DIRECTORY + "/" + splitFolder);
-        if (!dir.exists()) {
-            boolean isDirectoryCreated = dir.mkdir();
-            if (!isDirectoryCreated) {
-                Log.e("Error", "Directory could not be created");
-            }
-        }
+        File dir = getDefaultStorageFile();
         return dir.getAbsolutePath() + "/";
     }
 
     public static String getImageStorageLocation(Context context, String folderName) {
         File dir = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), DataConstants.IMAGE_DIRECTORY);
         if (!dir.exists()) {
-            boolean isDirectoryCreated = dir.mkdir();
-            if (!isDirectoryCreated) {
-                Log.e("Error", "Directory could not be created");
+            try {
+                boolean isDirectoryCreated = dir.mkdir();
+                if (!isDirectoryCreated) {
+                    Log.e("Error", "Directory could not be created");
+                }
+            } catch (Exception e) {
+
             }
         }
         return dir.getAbsolutePath() + "/";

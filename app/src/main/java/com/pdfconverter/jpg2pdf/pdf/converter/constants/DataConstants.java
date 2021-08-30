@@ -49,7 +49,6 @@ public class DataConstants {
     public static final String DOC_EXTENSION = ".doc";
     public static final String DOCX_EXTENSION = ".docx";
 
-    public static final String PDF_DIRECTORY = "/PDFfiles/";
     public static final String IMAGE_DIRECTORY = "/ImageFiles/";
 
     public static final String TITLE_TYPE_PDF = "PDF";

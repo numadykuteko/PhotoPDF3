@@ -77,7 +77,7 @@ public class FileUtils {
     public static boolean copyImageToDownload(Context context, String filePath) {
         try {
             String newFileName = FileUtils.getFileName(filePath);
-            File outputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File outputDirectory = DirectoryUtils.getDefaultStorageFile();
             File outputFile = new File(outputDirectory, newFileName);
 
             InputStream in = new FileInputStream(filePath);

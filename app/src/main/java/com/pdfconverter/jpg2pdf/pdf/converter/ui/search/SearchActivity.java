@@ -123,29 +123,6 @@ public class SearchActivity extends BaseBindingActivity<ActivitySearchBinding, S
     protected void onResume() {
         mIsResume = true;
         super.onResume();
-
-        if (mIsRequestFullPermission) {
-            mIsRequestFullPermission = false;
-
-            if (!notHaveStoragePermission()) {
-                mRequestPermissionDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                mRequestPermissionDialog.setTitleText(getString(R.string.thankyou_text));
-                mRequestPermissionDialog.setContentText(getString(R.string.get_file_now));
-                mRequestPermissionDialog.showCancelButton(false);
-                mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
-                mRequestPermissionDialog.setConfirmClickListener(sweetAlertDialog -> {
-                    sweetAlertDialog.dismiss();
-                    updateKeywordSearch();
-                });
-            } else {
-                mRequestPermissionDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                mRequestPermissionDialog.setTitleText(getString(R.string.title_need_permission_fail));
-                mRequestPermissionDialog.setContentText(getString(R.string.couldnt_get_file_now));
-                mRequestPermissionDialog.showCancelButton(false);
-                mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
-                mRequestPermissionDialog.setConfirmClickListener(Dialog::dismiss);
-            }
-        }
     }
     @Override
     protected void initView() {

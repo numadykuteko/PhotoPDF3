@@ -267,35 +267,6 @@ public class MergePdfActivity extends BaseBindingActivity<ActivityMergePdfBindin
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (mIsRequestFullPermission) {
-            mIsRequestFullPermission = false;
-
-            if (mRequestFullPermissionCode == REQUEST_EXTERNAL_PERMISSION_FOR_GET_LOCAL_FILE) {
-                if (!notHaveStoragePermission()) {
-                    mRequestPermissionDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                    mRequestPermissionDialog.setTitleText(getString(R.string.thankyou_text));
-                    mRequestPermissionDialog.setContentText(getString(R.string.get_file_now));
-                    mRequestPermissionDialog.showCancelButton(false);
-                    mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
-                    mRequestPermissionDialog.setConfirmClickListener(sweetAlertDialog -> {
-                        startChooseFileActivity();
-                        sweetAlertDialog.dismiss();
-                    });
-                } else {
-                    mRequestPermissionDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                    mRequestPermissionDialog.setTitleText(getString(R.string.title_need_permission_fail));
-                    mRequestPermissionDialog.setContentText(getString(R.string.couldnt_get_file_now));
-                    mRequestPermissionDialog.showCancelButton(false);
-                    mRequestPermissionDialog.setConfirmText(getString(R.string.confirm_text));
-                    mRequestPermissionDialog.setConfirmClickListener(Dialog::dismiss);
-                }
-            } else {
-                if (!notHaveStoragePermission()) {
-                    requestForFileSelector();
-                }
-            }
-        }
     }
 
     @Override

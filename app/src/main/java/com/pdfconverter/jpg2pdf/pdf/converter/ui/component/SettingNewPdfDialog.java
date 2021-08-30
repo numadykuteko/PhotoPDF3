@@ -19,11 +19,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
-import com.pdfconverter.jpg2pdf.pdf.converter.constants.DataConstants;
 import com.pdfconverter.jpg2pdf.pdf.converter.data.model.NewPDFOptions;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.CommonUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.ToastUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.adapter.TypePdfOptionAdapter;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.DirectoryUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.FileUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.pdf.ImageToPdfConstants;
 
@@ -150,7 +150,7 @@ public class SettingNewPdfDialog extends BottomSheetDialogFragment {
                     mOptions.setSelectedType(mTypeAdapter.getSelectedPosition());
 
                     String fileName = mOptions.getFileName() + ImageToPdfConstants.pdfExtension;
-                    File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), DataConstants.PDF_DIRECTORY);
+                    File dir = DirectoryUtils.getDefaultStorageFile();
 
                     File file = new File(dir, fileName);
                     if (FileUtils.checkFileExist(file.getAbsolutePath())) {

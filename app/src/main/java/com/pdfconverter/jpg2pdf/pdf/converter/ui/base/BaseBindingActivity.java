@@ -117,8 +117,6 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
     private InterstitialAd mHomeInterstitialAd;
     private InterstitialAd mMyPdfInterstitialAd;
 
-    protected boolean mIsRequestFullPermission = false;
-    protected int mRequestFullPermissionCode = -1000;
     /**
      * Override for set binding variable
      *
@@ -328,16 +326,8 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
     }
 
     public void requestReadStoragePermissionsSafely(int requestCode) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-            Uri uri = Uri.fromParts("package", getPackageName(), null);
-            intent.setData(uri);
-            mIsRequestFullPermission = true;
-            mRequestFullPermissionCode = requestCode;
-
-            startActivity(intent);
         }
     }
 
@@ -346,11 +336,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, V extends B
     }
 
     public boolean notHaveStoragePermission() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
-            return (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) && !hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE));
-        } else {
-            return (!Environment.isExternalStorageManager());
-        }
+        return (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) && !hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE));
     }
 
     @SuppressLint("RestrictedApi")

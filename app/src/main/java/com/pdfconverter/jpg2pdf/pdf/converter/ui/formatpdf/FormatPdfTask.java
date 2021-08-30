@@ -20,6 +20,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.pdfconverter.jpg2pdf.pdf.converter.R;
 import com.pdfconverter.jpg2pdf.pdf.converter.constants.DataConstants;
 import com.pdfconverter.jpg2pdf.pdf.converter.data.model.NewPDFOptions;
+import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.DirectoryUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.file.FileUtils;
 import com.pdfconverter.jpg2pdf.pdf.converter.utils.pdf.ImageToPdfConstants;
 
@@ -59,13 +60,7 @@ public class FormatPdfTask extends AsyncTask<String, Integer, String> {
     }
 
     private void setupFile() {
-        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), DataConstants.PDF_DIRECTORY);
-        if (!dir.exists()) {
-            boolean isDirectoryCreated = dir.mkdir();
-            if (!isDirectoryCreated) {
-                Log.e("Error", "Directory could not be created");
-            }
-        }
+        File dir = DirectoryUtils.getDefaultStorageFile();
         String name = TextUtils.isEmpty(mNewPDFOptions.getFileName()) ? FileUtils.getDefaultOutputName(DataConstants.NEW_PDF_PREFIX_NAME)
                 : mNewPDFOptions.getFileName();
         mFilePdf = new File(dir, name + ImageToPdfConstants.pdfExtension);
