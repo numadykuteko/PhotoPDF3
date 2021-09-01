@@ -536,7 +536,11 @@ public class Admod {
                         requestInterstitialAds(mInterstitialAd);
                     }
                     if (dialog != null) {
-                        dialog.dismiss();
+                        try {
+                            dialog.dismiss();
+                        } catch (Exception ignored) {
+
+                        }
                     }
                 }
 
@@ -596,8 +600,14 @@ public class Admod {
         if (currentClicked >= numShowAds && mInterstitialAd.isLoaded()) {
             if (ProcessLifecycleOwner.get().getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
                 try {
-                    if (dialog != null && dialog.isShowing())
-                        dialog.dismiss();
+                    if (dialog != null && dialog.isShowing()) {
+                        try {
+                            dialog.dismiss();
+                        } catch (Exception ignored) {
+
+                        }
+                    }
+
                     dialog = new PrepareLoadingAdsDialog(context);
                     try {
                         dialog.show();
@@ -624,7 +634,11 @@ public class Admod {
             currentClicked = 0;
         } else if (callback != null) {
             if (dialog != null) {
-                dialog.dismiss();
+                try {
+                    dialog.dismiss();
+                } catch (Exception ignored) {
+
+                }
             }
             callback.onAdClosed();
         }

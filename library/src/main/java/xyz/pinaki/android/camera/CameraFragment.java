@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -105,7 +106,17 @@ public class CameraFragment extends Fragment implements CameraView {
         }
     };
 
-    public CameraFragment(CameraPresenter cameraPresenter) {
+    public CameraFragment() {
+        // doesn't do anything special
+    }
+
+    public static CameraFragment newInstance(CameraPresenter cameraPresenter) {
+        CameraFragment f = new CameraFragment();
+        f.setCameraPresenter(cameraPresenter);
+        return f;
+    }
+
+    public void setCameraPresenter(CameraPresenter cameraPresenter) {
         this.cameraPresenter = cameraPresenter;
     }
 
@@ -209,34 +220,46 @@ public class CameraFragment extends Fragment implements CameraView {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == PICK_IMAGE_REQUEST && data != null) {
-            if (data.getData() != null) {
-                Uri imageUri = data.getData();
-                String imagePath = RealPathUtil.getInstance().getRealPath(getContext(), imageUri);
-                File file = new File(imagePath);
-                if (file.exists()) {
-                    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath, bmOptions);
+        try {
+            if (requestCode == PICK_IMAGE_REQUEST && data != null) {
+                if (data.getData() != null) {
+                    Uri imageUri = data.getData();
+                    String imagePath = RealPathUtil.getInstance().getRealPath(getContext(), imageUri);
+                    if (imagePath != null) {
+                        File file = new File(imagePath);
+                        if (file.exists()) {
+                            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, bmOptions);
 
-                    bitmapProcessed(bitmap, 0);
+                            bitmapProcessed(bitmap, 0);
+                        }
+                    }
+
                 }
             }
+            super.onActivityResult(requestCode, resultCode, data);
+        } catch (Exception e) {
+            // donothing
         }
-        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     private void bitmapProcessed(Bitmap bitmap, int cameraRotation) {
-        previewContainer.setVisibility(View.VISIBLE);
-        previewImage.setImageBitmap(bitmap);
+        if (bitmap != null) {
+            previewContainer.setVisibility(View.VISIBLE);
+            previewImage.setImageBitmap(bitmap);
 
-        if (apiCallback != null) {
-            apiCallback.onBitmapProcessed(bitmap);
+            if (apiCallback != null) {
+                apiCallback.onBitmapProcessed(bitmap);
+            }
+
+            final LinearLayout previewConfirmButton = parentView.findViewById(R.id.confirm);
+            previewConfirmButton.setOnClickListener(view -> apiCallback.onSubmitBitmap(bitmap, cameraRotation));
+
+            isReviewing = true;
+        } else {
+            Toast.makeText(context, "Sorry. Can not take photo now.", Toast.LENGTH_SHORT).show();
         }
-
-        final LinearLayout previewConfirmButton = parentView.findViewById(R.id.confirm);
-        previewConfirmButton.setOnClickListener(view -> apiCallback.onSubmitBitmap(bitmap, cameraRotation));
-
-        isReviewing = true;
     }
 
     public boolean isReviewing() {

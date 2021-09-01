@@ -190,12 +190,12 @@ public class CameraActivity extends AppCompatActivity {
                     finish();
 
                     return;
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
                     try {
                         fos.close();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

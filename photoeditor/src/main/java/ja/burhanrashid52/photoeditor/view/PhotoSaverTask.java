@@ -86,7 +86,13 @@ class PhotoSaverTask extends AsyncTask<String, String, PhotoSaverTask.SaveResult
             FileOutputStream out = new FileOutputStream(file, false);
             if (mPhotoEditorView != null) {
                 Bitmap capturedBitmap = buildBitmap();
-                capturedBitmap.compress(mSaveSettings.getCompressFormat(), mSaveSettings.getCompressQuality(), out);
+                if (capturedBitmap != null) {
+                    capturedBitmap.compress(mSaveSettings.getCompressFormat(), mSaveSettings.getCompressQuality(), out);
+                } else {
+                    out.flush();
+                    out.close();
+                    return new SaveResult(new IOException(), mImagePath, null);
+                }
             }
             out.flush();
             out.close();
@@ -158,7 +164,11 @@ class PhotoSaverTask extends AsyncTask<String, String, PhotoSaverTask.SaveResult
                 Bitmap.Config.ARGB_8888
         );
         Canvas canvas = new Canvas(bitmap);
-        view.draw(canvas);
+        try {
+            view.draw(canvas);
+        } catch (Exception e) {
+            return null;
+        }
         return bitmap;
     }
 

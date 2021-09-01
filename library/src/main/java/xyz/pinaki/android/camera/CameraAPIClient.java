@@ -70,7 +70,7 @@ public final class CameraAPIClient {
             cameraPresenter.setMaxWidthSizePixels(maxSizeSmallerDim);
         }
 
-        cameraView = new CameraFragment(cameraPresenter);
+        cameraView = CameraFragment.newInstance(cameraPresenter);
 
         cameraView.setPreviewType(previewType);
         cameraView.setCallback(callback);

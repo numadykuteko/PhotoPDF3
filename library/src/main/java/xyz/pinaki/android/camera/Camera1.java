@@ -61,8 +61,10 @@ class Camera1 extends BaseCamera {
     }
 
     void configureParameters() {
-        adjustCameraParameters(camera.getParameters());
-        camera.setDisplayOrientation(calcCameraRotation());
+        if (camera != null) {
+            adjustCameraParameters(camera.getParameters());
+            camera.setDisplayOrientation(calcCameraRotation());
+        }
     }
 
     /**
@@ -121,7 +123,10 @@ class Camera1 extends BaseCamera {
 //        parameters.setRotation(calcCameraRotation());
         // TODO: set flash
 //        setFlashInternal(mFlash);
-        camera.setParameters(parameters);
+
+        if (camera != null) {
+            camera.setParameters(parameters);
+        }
     }
     private static List<Size> convertSizes(List<Camera.Size> cameraSizes) {
         List<Size> sizes = new ArrayList<>();
@@ -147,9 +152,13 @@ class Camera1 extends BaseCamera {
         try {
             if (viewFinderPreview.gePreviewType() == SurfaceHolder.class) {
                 Log.i(TAG, "setPreviewDisplay");
-                camera.setPreviewDisplay(viewFinderPreview.getSurfaceHolder());
+                if (camera != null) {
+                    camera.setPreviewDisplay(viewFinderPreview.getSurfaceHolder());
+                }
             } else if (viewFinderPreview.gePreviewType() == SurfaceTexture.class) {
-                camera.setPreviewTexture(viewFinderPreview.getSurfaceTexture());
+                if (camera != null) {
+                    camera.setPreviewTexture(viewFinderPreview.getSurfaceTexture());
+                }
             } else {
                 throw new RuntimeException("Unknown Preview Surface Type");
             }
@@ -159,7 +168,9 @@ class Camera1 extends BaseCamera {
     }
 
     void startPreview() {
-        camera.startPreview();
+        if (camera != null) {
+            camera.startPreview();
+        }
     }
 
     @Override
@@ -197,17 +208,22 @@ class Camera1 extends BaseCamera {
                 throw new RuntimeException("Camera Cannot Take Picture in Main UI Thread");
             }
         }
-        if (camera.getParameters() != null && camera.getParameters().getFocusMode() != null) {
-            camera.autoFocus(new Camera.AutoFocusCallback() {
-                @Override
-                public void onAutoFocus(boolean success, Camera cam) {
-                    takePictureInternal(cam, photoTakenCallback);
+        if (camera != null) {
+            if (camera.getParameters() != null && camera.getParameters().getFocusMode() != null) {
+                try {
+                    camera.autoFocus(new Camera.AutoFocusCallback() {
+                        @Override
+                        public void onAutoFocus(boolean success, Camera cam) {
+                            takePictureInternal(cam, photoTakenCallback);
+                        }
+                    });
+                } catch (Exception e) {
+                    takePictureInternal(camera, photoTakenCallback);
                 }
-            });
-        } else {
-            takePictureInternal(camera, photoTakenCallback);
+            } else {
+                takePictureInternal(camera, photoTakenCallback);
+            }
         }
-
     }
     private void takePictureInternal(Camera camera, final PhotoTakenCallback photoTakenCallback) {
         if (!isPictureCaptureInProgress.getAndSet(true)) {

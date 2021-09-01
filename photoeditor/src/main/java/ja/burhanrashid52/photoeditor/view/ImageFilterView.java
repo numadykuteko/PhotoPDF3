@@ -260,7 +260,11 @@ class ImageFilterView extends GLSurfaceView implements GLSurfaceView.Renderer {
     }
 
     private void applyEffect() {
-        mEffect.apply(mTextures[0], mImageWidth, mImageHeight, mTextures[1]);
+        try {
+            mEffect.apply(mTextures[0], mImageWidth, mImageHeight, mTextures[1]);
+        } catch (Exception e) {
+            // donothing
+        }
     }
 
     private void renderResult() {
