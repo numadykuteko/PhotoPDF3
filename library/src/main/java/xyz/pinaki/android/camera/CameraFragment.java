@@ -70,7 +70,10 @@ public class CameraFragment extends Fragment implements CameraView {
         public void onCameraOpen() {
             if (autoFitCameraView != null) {
                 autoFitCameraView.setPreview(viewFinderPreview);
-                autoFitCameraView.setAspectRatio(cameraPresenter.getAspectRatio());
+
+                if (cameraPresenter != null) {
+                    autoFitCameraView.setAspectRatio(cameraPresenter.getAspectRatio());
+                }
                 autoFitCameraView.requestLayout();
             }
 
@@ -174,13 +177,18 @@ public class CameraFragment extends Fragment implements CameraView {
         ViewFinderPreview.Callback viewFinderCallback = new ViewFinderPreview.Callback() {
             @Override
             public void onSurfaceChanged() {
-                cameraPresenter.setPreview(viewFinderPreview);
-                cameraPresenter.onStart(); // starts the camera
+                if (cameraPresenter != null) {
+                    cameraPresenter.setPreview(viewFinderPreview);
+                    cameraPresenter.onStart(); // starts the camera
+                }
+
             }
 
             @Override
             public void onSurfaceDestroyed() {
-                cameraPresenter.onStop();
+                if (cameraPresenter != null) {
+                    cameraPresenter.onStop();
+                }
             }
 
             @Override
@@ -200,8 +208,11 @@ public class CameraFragment extends Fragment implements CameraView {
                 @Override
                 public void onDisplayOrientationChanged(int displayOrientation) {
                     // update listeners
-                    cameraPresenter.setDisplayOrientation(displayOrientation);
-                    autoFitCameraView.setDisplayOrientation(displayOrientation);
+                    if (cameraPresenter != null) {
+                        cameraPresenter.setDisplayOrientation(displayOrientation);
+                        autoFitCameraView.setDisplayOrientation(displayOrientation);
+                    }
+
                 }
             };
         }

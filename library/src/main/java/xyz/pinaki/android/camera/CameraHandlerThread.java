@@ -48,6 +48,8 @@ final class CameraHandlerThread extends HandlerThread {
         @Override
         public void handleMessage(Message msg) {
             final Camera1 camera1 = (Camera1) msg.obj;
+            if (camera1 == null) return;
+
             super.handleMessage(msg);
             switch (msg.what) {
                 case Camera1.CAMERA1_ACTION_OPEN:

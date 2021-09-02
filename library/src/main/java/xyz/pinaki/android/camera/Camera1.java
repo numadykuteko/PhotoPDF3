@@ -227,16 +227,19 @@ class Camera1 extends BaseCamera {
     }
     private void takePictureInternal(Camera camera, final PhotoTakenCallback photoTakenCallback) {
         if (!isPictureCaptureInProgress.getAndSet(true)) {
-            camera.takePicture(null, null, new Camera.PictureCallback() {
-                @Override
-                public void onPictureTaken(byte[] data, Camera camera) {
-                    isPictureCaptureInProgress.set(false);
-                    // send to the presenter maybe via the thread ?
-                    photoTakenCallback.onPhotoTaken(data);
-                }
-            });
+            try {
+                camera.takePicture(null, null, new Camera.PictureCallback() {
+                    @Override
+                    public void onPictureTaken(byte[] data, Camera camera) {
+                        isPictureCaptureInProgress.set(false);
+                        // send to the presenter maybe via the thread ?
+                        photoTakenCallback.onPhotoTaken(data);
+                    }
+                });
+            } catch (Exception e) {
+                // donothing
+            }
         }
-
     }
 
     private void stopAndRelease() {

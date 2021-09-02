@@ -113,7 +113,6 @@ public class AppPurchase {
                 billingClient.querySkuDetailsAsync(params.build(), new SkuDetailsResponseListener() {
                     @Override
                     public void onSkuDetailsResponse(@NonNull BillingResult billingResult, @Nullable List<SkuDetails> list) {
-                        Log.d(TAG, "onSkuINAPDetailsResponse: " + list.size());
                         skuListINAPFromStore = list;
                         isListGot = true;
                         addSkuINAPToMap(list);
@@ -124,7 +123,6 @@ public class AppPurchase {
                 billingClient.querySkuDetailsAsync(params.build(), new SkuDetailsResponseListener() {
                     @Override
                     public void onSkuDetailsResponse(@NonNull BillingResult billingResult, @Nullable List<SkuDetails> list) {
-                        Log.d(TAG, "onSkuSubsDetailsResponse: " + list.size());
                         skuListSubsFromStore = list;
                         isListGot = true;
                         addSkuSubsToMap(list);
@@ -234,7 +232,6 @@ public class AppPurchase {
 
     //check  id INAP
     public boolean isPurchased(Context context, String productId) {
-        Log.d(TAG, "isPurchased: " + productId);
         Purchase.PurchasesResult resultINAP = billingClient.queryPurchases(BillingClient.SkuType.INAPP);
         if (resultINAP.getResponseCode() == BillingClient.BillingResponseCode.OK && resultINAP.getPurchasesList() != null) {
             for (Purchase purchase : resultINAP.getPurchasesList()) {
@@ -458,7 +455,6 @@ public class AppPurchase {
             ConsumeResponseListener listener = new ConsumeResponseListener() {
                 @Override
                 public void onConsumeResponse(BillingResult billingResult, String purchaseToken) {
-                    Log.d(TAG, "onConsumeResponse: " + billingResult.getDebugMessage());
                     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                     }
                 }
@@ -475,7 +471,7 @@ public class AppPurchase {
                     billingClient.acknowledgePurchase(acknowledgePurchaseParams, new AcknowledgePurchaseResponseListener() {
                         @Override
                         public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
-                            Log.d(TAG, "onAcknowledgePurchaseResponse: " + billingResult.getDebugMessage());
+
                         }
                     });
                 }
@@ -496,7 +492,6 @@ public class AppPurchase {
         SkuDetails skuDetails = skuDetailsINAPMap.get(productId);
         if (skuDetails == null)
             return "";
-        Log.e(TAG, "getPrice: " + skuDetails.getPrice());
 
         return skuDetails.getPrice();
     }
