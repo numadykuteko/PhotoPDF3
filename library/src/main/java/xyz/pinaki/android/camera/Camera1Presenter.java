@@ -69,9 +69,12 @@ class Camera1Presenter implements CameraPresenter {
     @Override
     public void onDestroy() {
         Log.i("pinaki-Camera1Presenter", "quit thread");
-        backgroundThread.quit();
-        backgroundThread.interrupt();
-        backgroundThread = null;
+        if (backgroundThread != null) {
+            backgroundThread.quit();
+            backgroundThread.interrupt();
+            backgroundThread = null;
+        }
+
     }
 
     // primarily used to open camera
@@ -128,10 +131,13 @@ class Camera1Presenter implements CameraPresenter {
     @Override
     public void takePicture() {
         // send a new message to the handler to start capturing a photo.
-        Message m = Message.obtain();
-        m.what = Camera1.CAMERA1_ACTION_TAKE_PICTURE;
-        m.obj = camera1;
-        backgroundThread.queueMessage(m);
+        if (camera1 != null) {
+            Message m = Message.obtain();
+            m.what = Camera1.CAMERA1_ACTION_TAKE_PICTURE;
+            m.obj = camera1;
+            backgroundThread.queueMessage(m);
+        }
+
     }
 
     @Override
