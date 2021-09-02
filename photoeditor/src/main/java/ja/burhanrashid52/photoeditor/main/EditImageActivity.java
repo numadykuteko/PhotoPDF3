@@ -139,7 +139,11 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
 
         mShapeBSFragment.setShapeBuilder(mShapeBuilder);
 
-        mPhotoEditorView.getSource().setImageURI(Uri.fromFile(new File(oldImagePath)));
+        try {
+            mPhotoEditorView.getSource().setImageURI(Uri.fromFile(new File(oldImagePath)));
+        } catch (Exception e) {
+            // donothing
+        }
     }
 
     private void initViews() {
