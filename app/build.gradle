@@ -10,8 +10,8 @@ android {
         applicationId "com.pdfconverter.jpg2pdf.pdf.converter"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 9
-        versionName "1.8"
+        versionCode 10
+        versionName "1.9"
 
         multiDexEnabled true
         ndk.abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'mips', 'mips64', 'arm64-v8a'
